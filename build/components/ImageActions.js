@@ -1,31 +1,32 @@
 "use strict";
 
-require("core-js/modules/es.object.define-property.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ImageActions = void 0;
 var _blockEditor = require("@wordpress/block-editor");
 var _components = require("@wordpress/components");
-var ImageActions = exports.ImageActions = function ImageActions(_ref) {
-  var imageId = _ref.imageId,
-    imageUrl = _ref.imageUrl,
-    imageAlt = _ref.imageAlt,
-    _ref$placeholder = _ref.placeholder,
-    placeholder = _ref$placeholder === void 0 ? false : _ref$placeholder,
-    onSelectImage = _ref.onSelectImage,
-    onRemoveImage = _ref.onRemoveImage,
-    _ref$className = _ref.className,
-    className = _ref$className === void 0 ? '' : _ref$className;
-  var hasImage = imageId && imageUrl;
+const ImageActions = _ref => {
+  let {
+    imageId,
+    imageUrl,
+    imageAlt,
+    placeholder = false,
+    onSelectImage,
+    onRemoveImage,
+    className = ''
+  } = _ref;
+  const hasImage = imageId && imageUrl;
   return /*#__PURE__*/React.createElement(_blockEditor.MediaUploadCheck, null, /*#__PURE__*/React.createElement(_blockEditor.MediaUpload, {
     onSelect: onSelectImage,
     allowedTypes: ['image'],
     value: imageId,
-    render: function render(_ref2) {
-      var open = _ref2.open;
+    render: _ref2 => {
+      let {
+        open
+      } = _ref2;
       return hasImage ? /*#__PURE__*/React.createElement("div", {
-        className: "bc-image-wrapper ".concat(className)
+        className: `bc-image-wrapper ${className}`
       }, /*#__PURE__*/React.createElement("img", {
         src: imageUrl,
         alt: imageAlt,
@@ -55,3 +56,4 @@ var ImageActions = exports.ImageActions = function ImageActions(_ref) {
     }
   }));
 };
+exports.ImageActions = ImageActions;

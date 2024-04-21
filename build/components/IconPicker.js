@@ -1,6 +1,5 @@
 "use strict";
 
-require("core-js/modules/es.object.define-property.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -8,21 +7,25 @@ exports.IconPicker = void 0;
 var _blockEditor = require("@wordpress/block-editor");
 var _components = require("@wordpress/components");
 var _icons = require("@wordpress/icons");
-var IconPicker = exports.IconPicker = function IconPicker(_ref) {
-  var imageId = _ref.imageId,
-    imageUrl = _ref.imageUrl,
-    imageAlt = _ref.imageAlt,
-    svgCode = _ref.svgCode,
-    onSelect = _ref.onSelect,
-    onRemove = _ref.onRemove;
-  var hasImage = imageId && imageUrl;
-  var isSvg = hasImage && svgCode;
+const IconPicker = _ref => {
+  let {
+    imageId,
+    imageUrl,
+    imageAlt,
+    svgCode,
+    onSelect,
+    onRemove
+  } = _ref;
+  const hasImage = imageId && imageUrl;
+  const isSvg = hasImage && svgCode;
   return /*#__PURE__*/React.createElement(_blockEditor.MediaUploadCheck, null, /*#__PURE__*/React.createElement(_blockEditor.MediaUpload, {
     onSelect: onSelect,
     allowedTypes: ['image'],
     value: imageId,
-    render: function render(_ref2) {
-      var open = _ref2.open;
+    render: _ref2 => {
+      let {
+        open
+      } = _ref2;
       return hasImage ? /*#__PURE__*/React.createElement("div", {
         className: "bc-image-wrapper"
       }, hasImage && (isSvg ? /*#__PURE__*/React.createElement("div", {
@@ -64,3 +67,4 @@ var IconPicker = exports.IconPicker = function IconPicker(_ref) {
     }
   }));
 };
+exports.IconPicker = IconPicker;
