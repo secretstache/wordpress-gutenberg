@@ -1,6 +1,5 @@
 "use strict";
 
-require("core-js/modules/es.object.define-property.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -8,12 +7,16 @@ exports.PreviewToggle = void 0;
 var _blockEditor = require("@wordpress/block-editor");
 var _components = require("@wordpress/components");
 var _icons = require("@wordpress/icons");
-var PreviewToggle = exports.PreviewToggle = function PreviewToggle(_ref) {
-  var attributes = _ref.attributes,
-    setAttributes = _ref.setAttributes,
-    disabled = _ref.disabled;
-  var isPreview = attributes.isPreview;
-  var handlePreviewChange = function handlePreviewChange() {
+const PreviewToggle = _ref => {
+  let {
+    attributes,
+    setAttributes,
+    disabled
+  } = _ref;
+  const {
+    isPreview
+  } = attributes;
+  const handlePreviewChange = () => {
     setAttributes({
       isPreview: !isPreview
     });
@@ -33,3 +36,4 @@ var PreviewToggle = exports.PreviewToggle = function PreviewToggle(_ref) {
     disabled: disabled
   }));
 };
+exports.PreviewToggle = PreviewToggle;

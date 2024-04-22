@@ -1,10 +1,5 @@
 "use strict";
 
-require("core-js/modules/es.array.for-each.js");
-require("core-js/modules/es.object.define-property.js");
-require("core-js/modules/es.object.keys.js");
-require("core-js/modules/es.object.to-string.js");
-require("core-js/modules/web.dom-collections.for-each.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -20,49 +15,49 @@ var _exportNames = {
 };
 Object.defineProperty(exports, "BCImageRenderer", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _MediaPicker.BCImageRenderer;
   }
 });
 Object.defineProperty(exports, "BCMediaPicker", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _MediaPicker.BCMediaPicker;
   }
 });
 Object.defineProperty(exports, "BCVideoRenderer", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _MediaPicker.BCVideoRenderer;
   }
 });
 Object.defineProperty(exports, "ColorPaletteControl", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _ColorPaletteControl.ColorPaletteControl;
   }
 });
 Object.defineProperty(exports, "IconPicker", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _IconPicker.IconPicker;
   }
 });
 Object.defineProperty(exports, "ImageActions", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _ImageActions.ImageActions;
   }
 });
 Object.defineProperty(exports, "LinkControl", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _LinkControl.LinkControl;
   }
 });
 Object.defineProperty(exports, "PreviewToggle", {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _PreviewToggle.PreviewToggle;
   }
 });
@@ -79,7 +74,7 @@ Object.keys(_utils).forEach(function (key) {
   if (key in exports && exports[key] === _utils[key]) return;
   Object.defineProperty(exports, key, {
     enumerable: true,
-    get: function get() {
+    get: function () {
       return _utils[key];
     }
   });
