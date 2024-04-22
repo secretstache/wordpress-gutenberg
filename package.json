@@ -4,6 +4,13 @@
   "description": "",
   "author": "The WordPress Contributors",
   "license": "GPL-2.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/secretstache/wordpress-gutenberg"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "build/index.js",
   "scripts": {
     "build": "babel src --out-dir build --copy-files",
@@ -33,6 +40,10 @@
   },
   "eslintConfig": {
     "extends": "eslint-config-secretstache"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "wpScripts": {
     "entry": "src/index.js"
