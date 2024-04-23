@@ -1,7 +1,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { useSelect } from '@wordpress/data';
-import slugify from 'slugify';
 import { useEffect, useRef } from '@wordpress/element';
+import slugify from 'slugify';
 
 export const loadSelectOptions = async (inputValue, postType, mapper = null) => {
     const response = await apiFetch({
@@ -208,6 +208,7 @@ export const useEntityRecords = (entityType, postType, options) => {
             _embed: true,
         };
 
+        // TODO: refactor
         if (query?.LATEST_BY_CATEGORY && selectedCategories?.length) {
             queryArgs[categoryKey] = selectedCategories.join(',');
         } else if (query?.BY_CATEGORY && selectedCategories?.length) {
@@ -261,6 +262,8 @@ export const useColorChange = (colors, setAttributes) => (colorValue, property) 
     });
 };
 
+// TODO: refactor fn name
 export const useLinkChange = (setAttributes) => (value, property) => {
     setAttributes({ [property]: value });
 };
+

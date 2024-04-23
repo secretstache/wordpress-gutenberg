@@ -1,24 +1,16 @@
-import { BlockControls } from '@wordpress/block-editor';
-import { ToolbarButton, ToggleControl } from '@wordpress/components';
-import { brush as brushIcon } from '@wordpress/icons';
+import { ToggleControl } from '@wordpress/components';
 
 export const PreviewToggle = ({ attributes, setAttributes, disabled }) => {
     const { isPreview } = attributes;
 
+    // TODO: useState instead of attributes
     const handlePreviewChange = () => {
         setAttributes({ isPreview: !isPreview });
     };
 
+    // TODO: <BlockControls> will be duplicated if the parent block has the another one <BlockControls>
     return (
         <>
-            <BlockControls group="inline">
-                <ToolbarButton
-                    icon={brushIcon}
-                    onClick={handlePreviewChange}
-                    isActive={isPreview}
-                    disabled={disabled}
-                />
-            </BlockControls>
             <ToggleControl
                 label="Enable Preview"
                 help="Please check this option to see how the block will actually look and behave on the frontend."
