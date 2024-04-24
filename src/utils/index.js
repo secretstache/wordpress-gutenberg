@@ -208,13 +208,17 @@ export const useEntityRecords = (entityType, postType, options) => {
             _embed: true,
         };
 
-        // TODO: refactor
-        if (query?.LATEST_BY_CATEGORY && selectedCategories?.length) {
-            queryArgs[categoryKey] = selectedCategories.join(',');
-        } else if (query?.BY_CATEGORY && selectedCategories?.length) {
-            queryArgs[categoryKey] = selectedCategories.map((category) => category.value).join(',');
-        } else if (query?.CURATED && curatedItems?.length) {
-            queryArgs.include = curatedItems.map((item) => item.value);
+        const handleQuery = (queryType, key, items) => {
+            if (query[queryType] && items?.length) {
+                queryArgs[key] = items.map((item) => item.value).join(',');
+            }
+        }
+
+        handleQuery('LATEST_BY_CATEGORY', categoryKey, selectedCategories);
+        handleQuery('BY_CATEGORY', categoryKey, selectedCategories);
+        handleQuery('CURATED', 'include', curatedItems);
+
+        if (query?.CURATED && curatedItems?.length) {
             queryArgs.orderby = 'include';
         }
 
