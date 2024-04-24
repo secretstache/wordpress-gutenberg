@@ -1,30 +1,31 @@
 import { BaseControl, CheckboxControl } from '@wordpress/components';
 import { URLInput } from '@wordpress/block-editor';
-import { useLinkChange } from '../utils/index';
+import { useUpdateAttribute } from '../utils/index';
 
-// TODO: refactor props names
 export const LinkControl = ({
-    buttonSource,
-    isButtonOpenInNewTab,
+    url,
+    openInNewTab,
     setAttributes,
+    urlAttributeName,
+    openInNewTabAttributeName,
 }) => {
-    const onLinkChange = useLinkChange(setAttributes);
+    const updateAttribute = useUpdateAttribute(setAttributes);
 
     return (
         <>
             <BaseControl label="Source">
                 <URLInput
                     className="bc-url-input"
-                    value={buttonSource}
-                    // TODO: this doesn't work if the attribute has a different name
-                    onChange={(newUrl) => onLinkChange(newUrl, 'buttonSource')}
+                    value={url}
+                    onChange={(newUrl) => updateAttribute(urlAttributeName, newUrl)}
                 />
             </BaseControl>
             <CheckboxControl
-                checked={isButtonOpenInNewTab}
+                checked={openInNewTab}
                 label="Open in a new tab"
-                onChange={(newIsOpenInNewTab) =>
-                    onLinkChange(newIsOpenInNewTab, 'isButtonOpenInNewTab')}
+                onChange={(newOpenInNewTab) =>
+                    updateAttribute(openInNewTabAttributeName, newOpenInNewTab)
+                }
             />
         </>
     );

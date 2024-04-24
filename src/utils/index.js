@@ -262,8 +262,7 @@ export const useColorChange = (colors, setAttributes) => (colorValue, property) 
     });
 };
 
-// TODO: refactor fn name
-export const useLinkChange = (setAttributes) => (value, property) => {
-    setAttributes({ [property]: value });
+export const useUpdateAttribute = (setAttributes) => (attributeName, value) => {
+    setAttributes({ [attributeName]: value });
 };
 
