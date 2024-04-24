@@ -1,23 +1,22 @@
 import { ToggleControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 
-export const PreviewToggle = ({ attributes, setAttributes, disabled }) => {
-    const { isPreview } = attributes;
+export const PreviewToggle = ({ disabled, onPreviewChange }) => {
+    const [isPreview, setIsPreview] = useState(false);
 
-    // TODO: useState instead of attributes
     const handlePreviewChange = () => {
-        setAttributes({ isPreview: !isPreview });
+        const newPreviewState = !isPreview;
+        setIsPreview(newPreviewState);
+        onPreviewChange(newPreviewState);
     };
 
-    // TODO: <BlockControls> will be duplicated if the parent block has the another one <BlockControls>
     return (
-        <>
-            <ToggleControl
-                label="Enable Preview"
-                help="Please check this option to see how the block will actually look and behave on the frontend."
-                checked={isPreview}
-                onChange={handlePreviewChange}
-                disabled={disabled}
-            />
-        </>
+        <ToggleControl
+            label="Enable Preview"
+            help="Please check this option to see how the block will actually look and behave on the frontend."
+            checked={isPreview}
+            onChange={handlePreviewChange}
+            disabled={disabled}
+        />
     );
 };
