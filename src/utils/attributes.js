@@ -1,41 +1,36 @@
 export const linkControlAttributes = {
-    "label": {
-        "type": 'string',
-        "default": '',
+    linkLabel: {
+        type: 'string',
+        default: '',
     },
-    "source": {
-        "type": 'string',
-        "default": '#',
+    linkSource: {
+        type: 'string',
+        default: '#',
     },
-    "isOpenInNewTab": {
-        "type": 'boolean',
-        "default": false,
+    linkIsOpenInNewTab: {
+        type: 'boolean',
+        default: false,
     },
 };
 
-
 export const mediaAttributes = {
-    "mediaId": {
-        "type": "number",
-        "default": null
+    media: {
+        type: 'object',
+        default: {
+            id: null,
+            url: '',
+            alt: '',
+        },
     },
-    "mediaUrl": {
-        "type": "string",
-        "default": null
-    },
-    "mediaAlt": {
-        "type": "string",
-        "default": ""
-    }
 }
 
 export const contentAttributes = {
-    "title": {
-        "type": "string",
-        "default": "Title"
+    title: {
+        type: 'string',
+        default: 'Title',
     },
-    "description": {
-        "type": "string",
-        "default": "Description"
-    }
+    description: {
+        type: 'string',
+        default: 'Description',
+    },
 };

@@ -3,29 +3,27 @@ import { URLInput } from '@wordpress/block-editor';
 import { useUpdateAttribute } from '../utils/index';
 
 export const LinkControl = ({
-    url,
-    openInNewTab,
+    url = { value: '#', attrName: 'linkSource' },
+    isOpenInNewTab = { value: false, attrName: 'linkIsOpenInNewTab'},
     setAttributes,
-    urlAttributeName,
-    openInNewTabAttributeName,
+    label = 'Source',
 }) => {
     const updateAttribute = useUpdateAttribute(setAttributes);
 
     return (
         <>
-            <BaseControl label="Source">
+            <BaseControl label={label}>
                 <URLInput
                     className="bc-url-input"
-                    value={url}
-                    onChange={(newUrl) => updateAttribute(urlAttributeName, newUrl)}
+                    value={url.value}
+                    onChange={(newUrl) => setAttributes({ [url.attrName]: newUrl })}
                 />
             </BaseControl>
+
             <CheckboxControl
-                checked={openInNewTab}
+                checked={isOpenInNewTab.value}
                 label="Open in a new tab"
-                onChange={(newOpenInNewTab) =>
-                    updateAttribute(openInNewTabAttributeName, newOpenInNewTab)
-                }
+                onChange={(newIsOpenInNewTab) => setAttributes({ [isOpenInNewTab.attrName]: newIsOpenInNewTab })}
             />
         </>
     );
