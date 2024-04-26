@@ -166,27 +166,7 @@ export const getLocationAddress = (location) => {
     return addressParts.join('');
 };
 
-//for package
-
-export const useSlider = (isPreview, items, setup) => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        let instance;
-
-        if (isPreview && items?.length && ref?.current) {
-            instance = setup(ref.current);
-        }
-
-        return () => {
-            instance?.destroy();
-        };
-    }, [isPreview, items]);
-
-    return ref;
-};
-
-
+// TODO: move to a separate file
 export const useEntityRecords = (entityType, postType, options) => {
     const {
         query,
@@ -242,6 +222,7 @@ export const useEntityRecords = (entityType, postType, options) => {
     };
 };
 
+// TODO: move to a separate file
 export const useThemeColors = (allowedColors = []) => {
     return useSelect((select) => {
         const { getSettings } = select('core/block-editor');
@@ -253,6 +234,7 @@ export const useThemeColors = (allowedColors = []) => {
     }, []);
 };
 
+// TODO: move to a separate file
 export const useColorChange = (colors, setAttributes) => (colorValue, property) => {
     const selectedColor = colors.find(color => color.color === colorValue);
 

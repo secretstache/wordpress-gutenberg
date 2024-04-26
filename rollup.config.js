@@ -4,6 +4,8 @@ import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 
+const isProd = !process.env.ROLLUP_WATCH;
+
 export default {
     input: './src/index.js',
     output: {
@@ -35,6 +37,6 @@ export default {
             extensions: ['.js', '.jsx'],
         }),
         resolve({ extensions: ['.js', '.jsx'] }),
-        terser(),
+        isProd && terser(),
     ],
 };
