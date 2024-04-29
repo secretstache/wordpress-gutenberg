@@ -48,7 +48,7 @@ export const animationAttributes = {
         }
     },
     isAnimationLooped: {
-        type: boolean,
+        type: 'boolean',
         default: true
     }
 }

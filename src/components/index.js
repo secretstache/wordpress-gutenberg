@@ -4,3 +4,4 @@ export { ImageActions } from './ImageActions';
 export { LinkControl } from './LinkControl';
 export { BCImageRenderer, BCVideoRenderer, BCMediaPicker } from './MediaPicker';
 export { SortableSelectAsync, SortableSelect } from './SortableSelectAsync'
+export { QueryControls } from './QueryControls.js'
