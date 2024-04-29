@@ -1,24 +1,19 @@
 import { useEffect, useRef } from '@wordpress/element';
 
-export const useSlider = ({ isEnabled, setupSlider, dependencies }) => {
-    const sliderElRef = useRef(null);
-    const sliderInstance = useRef(null);
+export const useSlider = (isPreview, items, setup) => {
+    const ref = useRef(null);
 
     useEffect(() => {
-        if (isEnabled && sliderElRef?.current) {
-            sliderInstance.current = setupSlider(sliderElRef.current);
+        let instance;
+
+        if (isPreview && items?.length && ref?.current) {
+            instance = setup(ref.current);
         }
 
         return () => {
-            if (sliderInstance.current) {
-                sliderInstance.current?.destroy();
-                sliderInstance.current = null;
-            }
+            instance?.destroy();
         };
-    }, [isEnabled, ...dependencies]);
+    }, [isPreview, items]);
 
-    return {
-        sliderElRef,
-        sliderInstance: sliderInstance.current,
-    };
+    return ref;
 };

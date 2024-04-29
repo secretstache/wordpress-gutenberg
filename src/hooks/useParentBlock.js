@@ -1,3 +1,5 @@
+import { useSelect } from '@wordpress/data';
+
 /**
  * Hook to find a parent block of a specific type, optionally scoped within a certain root block.
  *

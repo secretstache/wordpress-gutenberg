@@ -40,6 +40,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.4"
   },
   "dependencies": {
+    "react-select": "5.7.5",
+    "react-sortable-hoc": "2.0.0",
     "slugify": "^1.6.6"
   },
   "peerDependencies": {
