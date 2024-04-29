@@ -34,3 +34,21 @@ export const contentAttributes = {
         default: 'Description',
     },
 };
+
+
+export const animationAttributes = {
+    animationFile: {
+        type: 'object',
+        default: {
+            id: null,
+            url: null,
+            name: null,
+            filename: null,
+            mime: null
+        }
+    },
+    isAnimationLooped: {
+        type: boolean,
+        default: true
+    }
+}
