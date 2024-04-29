@@ -1,6 +1,6 @@
 import { BaseControl, CheckboxControl } from '@wordpress/components';
 import { URLInput } from '@wordpress/block-editor';
-import { useUpdateAttribute } from '../utils/index';
+import { useUpdateAttribute } from '../hooks';
 
 export const LinkControl = ({
     url = { value: '#', attrName: 'linkSource' },

@@ -1,5 +1,5 @@
 import { ColorPalette } from '@wordpress/components';
-import { useThemeColors, useColorChange } from '../utils/index';
+import { useThemeColors, useColorChange } from '../hooks';
 
 export const ColorPaletteControl = ({ allowedColors, colorAttribute, attributeName, setAttributes }) => {
     const colors = useThemeColors(allowedColors);
