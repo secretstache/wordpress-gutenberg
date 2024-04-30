@@ -22,7 +22,7 @@ export const mediaAttributes = {
             alt: '',
         },
     },
-}
+};
 
 export const contentAttributes = {
     title: {
@@ -35,7 +35,6 @@ export const contentAttributes = {
     },
 };
 
-
 export const animationAttributes = {
     animationFile: {
         type: 'object',
@@ -44,11 +43,70 @@ export const animationAttributes = {
             url: null,
             name: null,
             filename: null,
-            mime: null
-        }
+            mime: null,
+        },
     },
     isAnimationLooped: {
         type: 'boolean',
-        default: true
+        default: true,
+    },
+};
+
+export const curatedPostsAttributes = {
+    curatedPosts: {
+        type: 'array',
+        default: [],
+        items: {
+            type: 'object',
+            properties: {
+                value: {
+                    type: 'number'
+                },
+                label: {
+                    type: 'string'
+                }
+            }
+        }
     }
-}
+};
+
+export const numberOfPostsAttributes = {
+    numberOfPosts: {
+        type: 'number',
+        default: 5,
+    },
+};
+
+export const getDataQueryAttributes = (
+    sourcesList,
+    queriesList,
+    hasCuratedPosts = true,
+    hasNumberOfPosts = false,
+) => {
+    let dataSourceConfig = {
+        type: 'string'
+    };
+
+    if (sourcesList && sourcesList?.length > 0) {
+        dataSourceConfig.enum = sourcesList;
+        dataSourceConfig.default = sourcesList[0];
+    }
+
+    let queryTypeConfig = {
+        type: 'string'
+    };
+
+    if (queriesList && queriesList?.length > 0) {
+        queryTypeConfig.enum = [
+            ...queriesList
+        ];
+        queryTypeConfig.default = queriesList[0];
+    }
+
+    return {
+        dataSource: dataSourceConfig,
+        queryType: queryTypeConfig,
+        ...(hasCuratedPosts ? curatedPostsAttributes : {} ),
+        ...(hasNumberOfPosts ? numberOfPostsAttributes : {} ),
+    };
+};

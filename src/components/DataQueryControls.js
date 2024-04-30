@@ -1,11 +1,17 @@
 import { RadioControl } from '@wordpress/components';
 
-export const QueryControls = (props) => {
+// TODO: add support of curated posts, categories; consider merging with the useDataQuery hook
+export const DataQueryControls = (props) => {
     const {
+        dataSourceLabel = 'Data Source',
         dataSource,
+        onDataSourceChange,
+
+        queryTypeLabel = 'Query',
         queryType,
+        onQueryTypeChange,
+
         settings,
-        setAttributes,
     } = props;
 
     const sourcesList = settings
@@ -14,26 +20,29 @@ export const QueryControls = (props) => {
 
     const queriesList = settings.find((source) => source.value === dataSource)?.queries || [];
 
+    const hasSources = sourcesList && sourcesList?.length > 0;
+    const hasQueries = queriesList && queriesList?.length > 0;
+
     return (
         <>
             {
-                sourcesList && sourcesList?.length > 0 && (
+                hasSources && (
                     <RadioControl
-                        label="Data Source"
+                        label={dataSourceLabel}
                         selected={dataSource}
                         options={sourcesList}
-                        onChange={(dataSource) => setAttributes({ dataSource })}
+                        onChange={onDataSourceChange}
                     />
                 )
             }
 
             {
-                queriesList && queriesList?.length > 0 && (
+                hasQueries && (
                     <RadioControl
-                        label="Query"
+                        label={queryTypeLabel}
                         selected={queryType}
                         options={queriesList}
-                        onChange={(queryType) => setAttributes({ queryType })}
+                        onChange={onQueryTypeChange}
                     />
                 )
             }
