@@ -1,4 +1,4 @@
-export const linkControlAttributes = {
+export const linkControlAttribute = {
     linkLabel: {
         type: 'string',
         default: '',
@@ -13,7 +13,7 @@ export const linkControlAttributes = {
     },
 };
 
-export const mediaAttributes = {
+export const mediaAttribute = {
     media: {
         type: 'object',
         default: {
@@ -24,7 +24,7 @@ export const mediaAttributes = {
     },
 };
 
-export const contentAttributes = {
+export const contentAttribute = {
     title: {
         type: 'string',
         default: 'Title',
@@ -35,7 +35,7 @@ export const contentAttributes = {
     },
 };
 
-export const animationAttributes = {
+export const animationAttribute = {
     animationFile: {
         type: 'object',
         default: {
@@ -52,7 +52,7 @@ export const animationAttributes = {
     },
 };
 
-export const curatedPostsAttributes = {
+export const curatedPostsAttribute = {
     curatedPosts: {
         type: 'array',
         default: [],
@@ -70,7 +70,25 @@ export const curatedPostsAttributes = {
     }
 };
 
-export const numberOfPostsAttributes = {
+export const curatedCategoriesAttribute = {
+    curatedCategories: {
+        type: 'array',
+        default: [],
+        items: {
+            type: 'object',
+            properties: {
+                value: {
+                    type: 'number'
+                },
+                label: {
+                    type: 'string'
+                }
+            }
+        }
+    }
+};
+
+export const numberOfPostsAttribute = {
     numberOfPosts: {
         type: 'number',
         default: 5,
@@ -82,6 +100,7 @@ export const getDataQueryAttributes = (
     queriesList,
     hasCuratedPosts = true,
     hasNumberOfPosts = false,
+    hasCategories = false,
 ) => {
     let dataSourceConfig = {
         type: 'string'
@@ -106,7 +125,8 @@ export const getDataQueryAttributes = (
     return {
         dataSource: dataSourceConfig,
         queryType: queryTypeConfig,
-        ...(hasCuratedPosts ? curatedPostsAttributes : {} ),
-        ...(hasNumberOfPosts ? numberOfPostsAttributes : {} ),
+        ...(hasCuratedPosts ? curatedPostsAttribute : {} ),
+        ...(hasNumberOfPosts ? numberOfPostsAttribute : {} ),
+        ...(hasCategories ? curatedCategoriesAttribute : {} ),
     };
 };
