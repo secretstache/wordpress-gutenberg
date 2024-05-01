@@ -24,7 +24,7 @@ export const useDataQuery = (props) => {
             ...extraQueryArgs,
         };
 
-        if (queryType === QUERY_TYPES.BY_CATEGORY && categoriesTaxonomy && curatedCategoriesIds.length) {
+        if (queryType === QUERY_TYPES.BY_CATEGORY && categoriesTaxonomy && curatedCategoriesIds?.length > 0) {
             queryArgs[categoriesTaxonomy] = curatedCategoriesIds.join(',');
         } else if (queryType === QUERY_TYPES.CURATED && curatedPostsIds?.length > 0) {
             queryArgs['include'] = curatedPostsIds;
