@@ -125,8 +125,45 @@ export const getDataQueryAttributes = (
     return {
         dataSource: dataSourceConfig,
         queryType: queryTypeConfig,
-        ...(hasCuratedPosts ? curatedPostsAttribute : {} ),
-        ...(hasCuratedCategories ? curatedCategoriesAttribute : {} ),
-        ...(hasNumberOfPosts ? numberOfPostsAttribute : {} ),
+        ...(hasCuratedPosts ? curatedPostsAttribute : {}),
+        ...(hasCuratedCategories ? curatedCategoriesAttribute : {}),
+        ...(hasNumberOfPosts ? numberOfPostsAttribute : {}),
     };
 };
+
+
+export const baseBackgroundAttributes = {
+    backgroundColor: {
+        type: 'object',
+        default: {
+            value: '#ffffff',
+            slug: 'white',
+        },
+    },
+    backgroundImage: {
+        type: 'object',
+        default: {
+            id: null,
+            url: '',
+        },
+    },
+    isIncludeBackgroundMedia: {
+        type: 'boolean',
+        default: false,
+    },
+    backgroundMediaType: {
+        type: 'string',
+        default: 'image',
+    },
+    backgroundVideo: {
+        type: 'object',
+        default: {
+            id: null,
+            url: '',
+        },
+    },
+    isIncludeOverlay: {
+        type: 'boolean',
+        default: true,
+    },
+}
