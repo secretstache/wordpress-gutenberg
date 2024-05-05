@@ -4,6 +4,7 @@ import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
+import postcssInject from 'postcss-inject';
 
 const isProd = !process.env.ROLLUP_WATCH;
 
@@ -39,9 +40,9 @@ export default {
         }),
         resolve({ extensions: ['.js', '.jsx'] }),
         postcss({
-            extract: true,
+            extract: false,
             use: ['sass'],
-            extensions: ['.scss'],
+            plugins: [postcssInject({ prepend: true })],
         }),
         isProd && terser(),
     ],
