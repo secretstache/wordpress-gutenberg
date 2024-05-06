@@ -1,0 +1,16 @@
+.bc-selected-media-wrapper {
+    max-width: 200px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.bc-selected-media {
+    width: 100%;
+}
+
+.bc-select-btn,
+.bc-remove-btn {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+}
