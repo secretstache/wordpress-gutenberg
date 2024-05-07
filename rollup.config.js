@@ -42,6 +42,7 @@ export default {
         postcss({
             extract: path.resolve('build/index.css'),
             use: ['sass'],
+            extensions: ['.scss'],
         }),
         isProd && terser(),
     ],
