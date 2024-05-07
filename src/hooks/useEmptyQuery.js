@@ -1,0 +1,41 @@
+import { Notice, Placeholder, Spinner } from '@wordpress/components';
+
+export const useEmptyQuery = ({
+    isLoading,
+    isEmpty,
+    hasData,
+    emptyMessage,
+    placeholderProps,
+}) => {
+    const renderEmptyResult = () => (
+        <Notice status="info" isDismissible={false}>
+            <p>{emptyMessage}</p>
+        </Notice>
+    );
+
+    const renderPlaceholder = () => (
+        <Placeholder {...placeholderProps} />
+    );
+
+    const renderLoading = () => (
+        <Spinner className="bc-spinner" />
+    );
+
+    const renderQueryResult = () => {
+        if (isLoading) {
+            return renderLoading();
+        }
+
+        if (hasData) {
+            return null;
+        }
+
+        if (isEmpty) {
+            return renderEmptyResult();
+        }
+
+        return renderPlaceholder();
+    };
+
+    return renderQueryResult;
+};
