@@ -131,8 +131,15 @@ export const getDataQueryAttributes = (
     };
 };
 
-
-export const baseBackgroundAttributes = {
+export const baseBackgroundAttribute = {
+    isIncludeBackgroundMedia: {
+        type: 'boolean',
+        default: false,
+    },
+    backgroundMediaType: {
+        type: 'string',
+        default: 'color',
+    },
     backgroundColor: {
         type: 'object',
         default: {
@@ -147,14 +154,6 @@ export const baseBackgroundAttributes = {
             url: '',
         },
     },
-    isIncludeBackgroundMedia: {
-        type: 'boolean',
-        default: false,
-    },
-    backgroundMediaType: {
-        type: 'string',
-        default: 'image',
-    },
     backgroundVideo: {
         type: 'object',
         default: {
@@ -164,6 +163,6 @@ export const baseBackgroundAttributes = {
     },
     isIncludeOverlay: {
         type: 'boolean',
-        default: true,
+        default: false,
     },
 }
