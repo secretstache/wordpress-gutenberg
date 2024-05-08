@@ -3,7 +3,6 @@ import { Notice, Placeholder, Spinner } from '@wordpress/components';
 export const useEmptyQuery = ({
     isLoading,
     isEmpty,
-    hasData,
     emptyMessage,
     placeholderProps,
 }) => {
@@ -26,12 +25,12 @@ export const useEmptyQuery = ({
             return renderLoading();
         }
 
-        if (hasData) {
-            return null;
-        }
-
         if (isEmpty) {
             return renderEmptyResult();
+        }
+
+        if (!isLoading && !isEmpty) {
+            return null;
         }
 
         return renderPlaceholder();
