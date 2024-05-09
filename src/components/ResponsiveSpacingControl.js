@@ -9,14 +9,14 @@ export const ResponsiveSpacingControl = ({
      hasMargin = true,
      hasPadding = true,
      onChange,
-     values = { desktop: { margin: {}, padding: {} }, mobile: { margin: {}, padding: {} } }
+     value = { desktop: { margin: {}, padding: {} }, mobile: { margin: {}, padding: {} } }
  }) => {
-    const [desktop, setDesktop] = useState(values.desktop || { margin: {}, padding: {} });
-    const [mobile, setMobile] = useState(values.mobile || { margin: {}, padding: {} });
+    const [ desktop, setDesktop ] = useState(value?.desktop || { margin: {}, padding: {} });
+    const [ mobile, setMobile ] = useState(value?.mobile || { margin: {}, padding: {} });
 
     useEffect(() => {
         onChange({ desktop, mobile });
-    }, [desktop, mobile]);
+    }, [ desktop, mobile ]);
 
     return (
         <TabPanel
@@ -36,8 +36,8 @@ export const ResponsiveSpacingControl = ({
                                 hasPadding={hasPadding}
                                 max={max}
                                 min={min}
-                                values={desktop}
-                                onChange={(values) => setDesktop(values)}
+                                value={desktop}
+                                onChange={(value) => setDesktop(value)}
                             />
                         );
                     case 'mobile':
@@ -48,8 +48,8 @@ export const ResponsiveSpacingControl = ({
                                 hasPadding={hasPadding}
                                 max={max}
                                 min={min}
-                                values={mobile}
-                                onChange={(values) => setMobile(values)}
+                                value={mobile}
+                                onChange={(value) => setMobile(value)}
                             />
                         );
                     default:

@@ -14,19 +14,19 @@ const Control = ({ label, max, min, value, onChange }) => (
 );
 
 export const SpacingControl = ({
-   hasMargin = true,
-   hasPadding = true,
-   max = 5,
-   min = 0,
-   onChange,
-   values = { margin: {}, padding: {} }
+    hasMargin = true,
+    hasPadding = true,
+    max = 5,
+    min = 0,
+    onChange,
+    value = { margin: {}, padding: {} }
 }) => {
-    const [margin, setMargin] = useState(values.margin || {});
-    const [padding, setPadding] = useState(values.padding || {});
+    const [ margin, setMargin ] = useState(value?.margin || {});
+    const [ padding, setPadding ] = useState(value?.padding || {});
 
     useEffect(() => {
         onChange({ margin, padding });
-    }, [margin, padding]);
+    }, [ margin, padding ]);
 
     return (
         <>
