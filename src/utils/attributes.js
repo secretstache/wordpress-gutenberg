@@ -166,3 +166,29 @@ export const baseBackgroundAttribute = {
         default: false,
     },
 }
+
+export const spacingAttribute = {
+    spacing: {
+        type: 'object',
+        default: {
+            margin: { top: 0, bottom: 0 },
+            padding: { top: 0, bottom: 0 },
+        },
+    },
+}
+
+export const responsiveSpacingAttribute = {
+    spacing: {
+        type: 'object',
+        default: {
+            desktop: {
+                margin: { top: 0, bottom: 0 },
+                padding: { top: 0, bottom: 0 },
+            },
+            mobile: {
+                margin: { top: 0, bottom: 0 },
+                padding: { top: 0, bottom: 0 },
+            } ,
+        },
+    },
+}

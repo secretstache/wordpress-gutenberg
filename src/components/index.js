@@ -6,3 +6,5 @@ export { BCImageRenderer, BCVideoRenderer, BCMediaPicker } from './MediaPicker';
 export { SortableSelect, SortableSelectAsync } from './SortableSelect';
 export { DataQueryControls } from './DataQueryControls.js';
 export { AnimationFileRenderer } from './AnimationFileRenderer.js';
+export { SpacingControl } from './SpacingControl.js';
+export { ResponsiveSpacingControl } from './ResponsiveSpacingControl.js';
