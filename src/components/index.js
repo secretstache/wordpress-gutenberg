@@ -8,5 +8,5 @@ export { DataQueryControls } from './DataQueryControls.js';
 export { AnimationFileRenderer } from './AnimationFileRenderer.js';
 export { SpacingControl } from './SpacingControl.js';
 export { ResponsiveSpacingControl } from './ResponsiveSpacingControl.js';
-export { EmptyStateWrapper } from './EmptyStateWrapper.js'
+export { ResourcesWrapper } from './ResourcesWrapper.js'
 export { DividersControl } from './DividersControl.js'
