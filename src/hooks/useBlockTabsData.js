@@ -1,7 +1,7 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useLayoutEffect, useState } from '@wordpress/element';
-import { useParentBlock } from '@scripts/editor/utilis/index.js';
+import { useParentBlock } from './useParentBlock';
 import { createBlock } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
 import { plus as plusIcon } from '@wordpress/icons';
