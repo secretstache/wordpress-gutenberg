@@ -1,16 +1,24 @@
-import { ColorPalette } from '@wordpress/components';
+import { BaseControl, ColorPalette } from '@wordpress/components';
 import { useThemeColors, useColorChange } from '../hooks';
 
-export const ColorPaletteControl = ({ allowedColors, colorAttribute, attributeName, setAttributes }) => {
+export const ColorPaletteControl = ({
+    label = 'Color',
+    value,
+    attributeName,
+    setAttributes,
+    allowedColors,
+}) => {
     const colors = useThemeColors(allowedColors);
     const onColorChange = useColorChange(colors, setAttributes);
 
     return (
-        <ColorPalette
-            colors={colors}
-            value={colorAttribute?.value}
-            disableCustomColors={true}
-            onChange={(colorValue) => onColorChange(colorValue, attributeName)}
-        />
+        <BaseControl label={label}>
+            <ColorPalette
+                colors={colors}
+                value={value}
+                disableCustomColors={true}
+                onChange={(colorValue) => onColorChange(colorValue, attributeName)}
+            />
+        </BaseControl>
     );
 };
