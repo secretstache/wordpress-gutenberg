@@ -20,6 +20,7 @@ export const mediaAttribute = {
             id: null,
             url: '',
             alt: '',
+            filename: '',
         },
     },
 };
@@ -131,6 +132,7 @@ export const getDataQueryAttributes = (
     };
 };
 
+// TODO: make more flexible
 export const baseBackgroundAttribute = {
     isIncludeBackgroundMedia: {
         type: 'boolean',

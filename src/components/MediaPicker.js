@@ -1,5 +1,8 @@
-import { Button } from '@wordpress/components';
+import { Button, Icon as WPIcon } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { page as pageIcon } from '@wordpress/icons';
+
+import { MEDIA_TYPES } from '../utils/index.js';
 
 export const BCImageRenderer = ({
     imageId,
@@ -71,14 +74,39 @@ export const BCVideoRenderer = ({
     );
 };
 
-const MEDIA_TYPES = {
-    IMAGE: 'image',
-    VIDEO: 'video',
+export const BCAnimationRenderer = ({
+    animationFileId,
+    animationFileUrl,
+    animationFileName,
+    onSelectClick,
+    onRemoveClick,
+}) => {
+    return animationFileId && animationFileUrl ? (
+        <>
+            <div className="bc-animation-block-json-file" onClick={onSelectClick}>
+                <WPIcon icon={pageIcon} size={36}/>
+                <span>{animationFileName}</span>
+            </div>
+            <Button
+                variant="secondary"
+                isDestructive
+                className="bc-remove-btn"
+                onClick={onRemoveClick}
+            >
+                Remove File
+            </Button>
+        </>
+    ) : (
+        <Button variant="secondary" onClick={onSelectClick}>
+            Select File
+        </Button>
+    )
 };
 
 export const BCMediaPicker = ({
     mediaId,
     mediaUrl,
+    mediaFileName = '',
     onSelect,
     onRemove,
     type = MEDIA_TYPES.IMAGE,
@@ -121,6 +149,26 @@ export const BCMediaPicker = ({
                         />
                     )}
                     { ...other }
+                />
+            </MediaUploadCheck>
+        );
+    } else if (type === MEDIA_TYPES.ANIMATION) {
+        return (
+            <MediaUploadCheck>
+                <MediaUpload
+                    onSelect={onSelect}
+                    allowedTypes={['application/json', 'text/plain', 'application/lottie']}
+                    value={mediaId}
+                    render={({ open }) => (
+                        <BCAnimationRenderer
+                            animationFileId={mediaId}
+                            animationFileUrl={mediaUrl}
+                            animationFileName={mediaFileName}
+                            onSelectClick={open}
+                            onRemoveClick={onRemove}
+                        />
+                    )}
+                    {...other}
                 />
             </MediaUploadCheck>
         );
