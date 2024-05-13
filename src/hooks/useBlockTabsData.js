@@ -2,12 +2,11 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useLayoutEffect, useState } from '@wordpress/element';
 import { useParentBlock } from './useParentBlock';
-import { createBlock } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
 import { plus as plusIcon } from '@wordpress/icons';
 
-export const useBlockTabsData = (clientId, itemBlockName) => {
-    const { insertBlock } = useDispatch('core/block-editor');
+export const useBlockTabsData = (clientId, itemBlockName, createBlock) => {
+    const { insertBlock } = useDispatch(blockEditorStore);
 
     const {
         childBlocks,
@@ -71,12 +70,7 @@ export const useBlockTabsData = (clientId, itemBlockName) => {
     };
 
     const AddNewTabButton = ({ label = 'Add new tab' }) => (
-        <Button
-            className="add-new-child-btn"
-            icon={plusIcon}
-            label={label}
-            onClick={handleAddNewItem}
-        />
+        <Button className="add-new-child-btn" icon={plusIcon} label={label} onClick={handleAddNewItem} />
     );
 
     return {
