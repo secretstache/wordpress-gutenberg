@@ -109,7 +109,7 @@ export const getDataQueryAttributes = (
 
     if (sourcesList && sourcesList?.length > 0) {
         dataSourceConfig.enum = sourcesList;
-        dataSourceConfig.default = sourcesList[0];
+        dataSourceConfig.default = sourcesList[0]; // TODO: should be sourcesList[0].value
     }
 
     let queryTypeConfig = {
@@ -120,7 +120,7 @@ export const getDataQueryAttributes = (
         queryTypeConfig.enum = [
             ...queriesList
         ];
-        queryTypeConfig.default = queriesList[0];
+        queryTypeConfig.default = queriesList[0]; // TODO: should be queriesList[0].value
     }
 
     return {
@@ -133,6 +133,7 @@ export const getDataQueryAttributes = (
 };
 
 // TODO: make more flexible
+// TODO: set backgroundMediaType to null
 export const baseBackgroundAttribute = {
     isIncludeBackgroundMedia: {
         type: 'boolean',
@@ -142,7 +143,7 @@ export const baseBackgroundAttribute = {
         type: 'string',
         default: 'color',
     },
-    backgroundColor: {
+    backgroundColor: { // TODO: remove default, since it can affects a block without the 'white' allowed color
         type: 'object',
         default: {
             value: '#ffffff',

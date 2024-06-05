@@ -103,6 +103,7 @@ export const BCAnimationRenderer = ({
     )
 };
 
+// TODO: find better name
 export const BCMediaPicker = ({
     mediaId,
     mediaUrl,

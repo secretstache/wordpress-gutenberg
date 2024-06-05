@@ -26,6 +26,7 @@ export const MediaTypeControl = (props) => {
     return (
         <>
             {
+                // TODO: add custom label
                 mediaTypes && (
                     <SelectControl
                         label="Media Type"

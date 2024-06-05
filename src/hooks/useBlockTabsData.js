@@ -58,17 +58,20 @@ export const useBlockTabsData = (clientId, itemBlockName, createBlock) => {
         }
     }, [selectedBlock, parentItem, clientId, parentBlockId]);
 
+    // TODO: export
     const addNewChildBlock = (blockName, attributes = {}, position = innerBlocksCount) => {
         const newBlock = createBlock(blockName, attributes);
         insertBlock(newBlock, position, clientId);
         return newBlock;
     };
 
+    // TODO: rename/export
     const handleAddNewItem = () => {
         const newItem = addNewChildBlock(itemBlockName);
         setActiveItemId(newItem.clientId);
     };
 
+    // TODO: make more flexible
     const AddNewTabButton = ({ label = 'Add new tab' }) => (
         <Button className="add-new-child-btn" icon={plusIcon} label={label} onClick={handleAddNewItem} />
     );
