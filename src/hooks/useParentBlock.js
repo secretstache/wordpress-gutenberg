@@ -1,55 +1,57 @@
 import { useSelect } from '@wordpress/data';
 
 /**
- * Hook to find a parent block of a specific type, optionally scoped within a certain root block.
+ * Hook to find a parent block of a specific type, scoped within a certain root block.
  *
- * @param {string} selectedBlockId - The clientId of the currently selected block.
  * @param {string} parentBlockName - The block type name to search for as a parent.
- * @param {Object} options - Optional settings for the search.
- * @param {string} [options.rootBlockId] - The clientId of the block to limit the search within. If not provided, searches the entire block tree.
- * @param {boolean} [options.includeSelf] - Whether to include the selected block itself if it matches the parentBlockName.
+ * @param {string} blockClientIdToLimitSearch - The clientId of the block to limit the search within
  * @returns {Object|null} The matching parent block, or null if none is found.
  */
-export const useParentBlock = (selectedBlockId, parentBlockName, options = {}) => {
+export const useParentBlock = (
+    parentBlockName,
+    blockClientIdToLimitSearch,
+) => {
     return useSelect((select) => {
-        const { getBlock, getBlockRootClientId, getBlockHierarchyRootClientId } = select('core/block-editor');
+        const { getBlock, getBlockParents, getSelectedBlock } = select('core/block-editor');
 
-        if (!selectedBlockId) {
+        const currentBlock = getSelectedBlock();
+
+        if (!currentBlock) {
             return null;
         }
 
-        // Destructure with default values to handle optional parameters.
-        const { rootBlockId = '', includeSelf = false } = options;
+        // Get the list of parent blocks for the current block, from down to top
+        const parentBlocks = getBlockParents(currentBlock.clientId, true);
 
-        // If rootBlockId is provided, verify the selected block is within its scope.
-        if (rootBlockId) {
-            const hierarchyRootClientId = getBlockHierarchyRootClientId(selectedBlockId);
-            if (hierarchyRootClientId !== rootBlockId) {
-                return null; // The selected block is out of the scope of the root block.
-            }
+        // Check if the blockClientIdToLimitSearch is located in the hierarchy of parents blocks
+        // of the current(selected) block, i.e. check if it's in the scope of searching
+        if (!parentBlocks.includes(blockClientIdToLimitSearch)) {
+            return null;
         }
 
-        let currentBlockId = selectedBlockId;
-        let currentBlock = getBlock(currentBlockId);
-
-        // Optionally include the selected block if it matches the target type.
-        if (includeSelf && currentBlock?.name === parentBlockName) {
+        // Return the selected block if it already matches the target type
+        if (currentBlock?.name === parentBlockName) {
             return currentBlock;
         }
 
-        let parentBlockId = getBlockRootClientId(currentBlockId);
-        let parentBlock = getBlock(parentBlockId);
+        if (parentBlocks?.length) {
+            // Traverse the list of parent blocks to find the target parent block type
+            for (let i = 0; i < parentBlocks.length; i++) {
+                const parentBlockId = parentBlocks[i];
+                const parentBlock = getBlock(parentBlockId);
 
-        // Traverse up the hierarchy to find the target parent block.
-        while (parentBlock && (rootBlockId ? parentBlockId !== rootBlockId : true) && parentBlockId) {
-            if (parentBlock.name === parentBlockName) {
-                return parentBlock; // Target parent found.
+                if (parentBlock?.name === parentBlockName) {
+                    return parentBlock;
+                }
+
+                // Stop searching if we reach the top of the scope
+                if (blockClientIdToLimitSearch && parentBlockId === blockClientIdToLimitSearch) {
+                    break;
+                }
             }
-            currentBlockId = parentBlockId;
-            parentBlockId = getBlockRootClientId(currentBlockId);
-            parentBlock = getBlock(parentBlockId);
         }
 
-        return null; // No matching parent found within the constraints.
-    }, [selectedBlockId, parentBlockName, options.rootBlockId, options.includeSelf]);
+        // No matching parent found within the constraints.
+        return null;
+    }, [ parentBlockName, blockClientIdToLimitSearch ]);
 };

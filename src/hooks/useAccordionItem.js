@@ -18,6 +18,7 @@ export const useAccordionItem = (itemId, activeItemId, setActiveItemId, contentS
         }
     };
 
+    // TODO: rename to toggleItem
     const toggleContent = () => {
         setActiveItemId(isActive ? null : itemId);
     };
