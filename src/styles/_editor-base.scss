@@ -23,6 +23,18 @@
                 color 1s;
         }
 
+        & > .block-list-appender.wp-block:only-child {
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        & > .block-list-appender.wp-block:only-child,
+        & > p.wp-block:only-child {
+            margin: 2rem 0;
+        }
+
     }
 }
 
