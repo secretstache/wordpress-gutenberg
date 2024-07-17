@@ -109,3 +109,11 @@ export const getLocationAddress = (location) => {
 
     return addressParts.join('');
 };
+
+export const getBackgroundColorClass = (backgroundColor) => {
+    if (!backgroundColor?.value) return '';
+    if (backgroundColor.slug === 'custom') {
+        return `has-custom-${backgroundColor.value.replace('#', '')}-background-color`;
+    }
+    return `has-${backgroundColor.slug}-background-color`;
+};

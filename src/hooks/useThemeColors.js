@@ -8,5 +8,5 @@ export const useThemeColors = (allowedColors = []) => {
         return allowedColors.length > 0
             ? colors?.filter((color) => allowedColors.includes(color.slug))
             : colors;
-    }, []);
+    }, [allowedColors]);
 };
