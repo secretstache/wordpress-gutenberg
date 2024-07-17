@@ -44,6 +44,7 @@ const blockProps = useBlockProps.save({
 const style = backgroundColor?.slug === 'custom' 
     ? { backgroundColor: backgroundColor.value } 
     : {};
+```
 
 ## Parameters
 
