@@ -3,3 +3,28 @@
         margin-bottom: 2rem;
     }
 }
+
+.bc-spacing-control-wrapper {
+    margin-bottom: 35px;
+}
+
+.bc-spacing-range-control {
+    padding: 0 6px;
+
+    .components-base-control__label {
+        margin-left: -9px;
+    }
+
+    .components-range-control__root {
+        .components-range-control__wrapper {
+            margin-bottom: 0;
+
+            .components-range-control__marks {
+                .components-range-control__mark-label {
+                    left: 8px !important;
+                    margin-top: 7px !important;
+                }
+            }
+        }
+    }
+}
