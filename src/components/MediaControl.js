@@ -4,7 +4,7 @@ import { page as pageIcon } from '@wordpress/icons';
 
 import { MEDIA_TYPES } from '../utils/index.js';
 
-export const BCImageRenderer = ({
+export const ImageRenderer = ({
     imageId,
     imageUrl,
     onImageClick,
@@ -44,7 +44,7 @@ export const BCImageRenderer = ({
     );
 };
 
-export const BCVideoRenderer = ({
+export const VideoRenderer = ({
     videoId,
     videoUrl,
     onRemoveClick,
@@ -78,7 +78,7 @@ export const BCVideoRenderer = ({
     );
 };
 
-export const BCAnimationRenderer = ({
+export const AnimationRenderer = ({
     animationFileId,
     animationFileUrl,
     animationFileName,
@@ -109,7 +109,7 @@ export const BCAnimationRenderer = ({
     )
 };
 
-export const BCMediaSelector = ({
+export const MediaControl = ({
     mediaId,
     mediaUrl,
     mediaFileName = '',
@@ -129,7 +129,7 @@ export const BCMediaSelector = ({
                     accept="image/*"
                     value={mediaId}
                     render={({ open }) => (
-                        <BCImageRenderer
+                        <ImageRenderer
                             imageId={mediaId}
                             imageUrl={mediaUrl}
                             onImageClick={open}
@@ -151,7 +151,7 @@ export const BCMediaSelector = ({
                     allowedTypes={['video']}
                     value={mediaId}
                     render={({ open }) => (
-                        <BCVideoRenderer
+                        <VideoRenderer
                             videoId={mediaId}
                             videoUrl={mediaUrl}
                             onSelectClick={open}
@@ -172,7 +172,7 @@ export const BCMediaSelector = ({
                     allowedTypes={['application/json', 'text/plain', 'application/lottie']}
                     value={mediaId}
                     render={({ open }) => (
-                        <BCAnimationRenderer
+                        <AnimationRenderer
                             animationFileId={mediaId}
                             animationFileUrl={mediaUrl}
                             animationFileName={mediaFileName}

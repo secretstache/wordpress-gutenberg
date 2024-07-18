@@ -2,7 +2,7 @@ export { ColorPaletteControl } from './ColorPaletteControl';
 export { IconPicker } from './IconPicker';
 export { ImageActions } from './ImageActions';
 export { LinkControl } from './LinkControl';
-export { BCImageRenderer, BCVideoRenderer, BCAnimationRenderer, BCMediaPicker } from './MediaPicker';
+export { ImageRenderer, VideoRenderer, AnimationRenderer, MediaControl } from './MediaControl.js';
 export { SortableSelect, SortableSelectAsync } from './SortableSelect';
 export { DataQueryControls } from './DataQueryControls.js';
 export { SpacingControl } from './SpacingControl.js';
