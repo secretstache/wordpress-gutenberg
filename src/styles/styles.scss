@@ -1,6 +1,6 @@
-@import "editor-base";
 
 .block-editor__container {
+    @import "editor-base";
     @import "animation-file-renderer";
     @import "icon-picker";
     @import "image-wrapper";
@@ -8,5 +8,5 @@
     @import "media-picker";
     @import "sortable-select";
     @import "responsive-spacing";
-    @import "new-tab-button";
+    @import "new-child-btn";
 }
