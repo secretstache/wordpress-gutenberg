@@ -1,5 +1,4 @@
-import { BaseControl, ColorPalette, RadioControl } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { BaseControl, ColorPalette } from '@wordpress/components';
 import { useThemeColors, useColorChange } from '../hooks';
 
 export const ColorPaletteControl = ({
@@ -8,28 +7,20 @@ export const ColorPaletteControl = ({
     attributeName,
     setAttributes,
     allowedColors = [],
+    extraColors = [],
 }) => {
-    const [colorMode, setColorMode] = useState('theme');
     const themeColors = useThemeColors(allowedColors);
     const onColorChange = useColorChange(themeColors, setAttributes);
 
-    const colorModes = [
-        { label: 'Theme Colors', value: 'theme' },
-        { label: 'Custom Color', value: 'custom' },
-    ];
+    const allColors = [...themeColors, ...extraColors];
 
     return (
         <BaseControl label={label}>
-            <RadioControl
-                selected={colorMode}
-                options={colorModes}
-                onChange={(newMode) => setColorMode(newMode)}
-            />
             <ColorPalette
-                colors={colorMode === 'theme' ? themeColors : []}
-                value={value}
+                colors={allColors}
+                value={value?.value}
                 onChange={(colorValue) => onColorChange(colorValue, attributeName)}
-                disableCustomColors={colorMode === 'theme'}
+                disableCustomColors={true}
             />
         </BaseControl>
     );
