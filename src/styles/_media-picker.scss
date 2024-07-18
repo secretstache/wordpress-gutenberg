@@ -6,6 +6,10 @@
 
 .bc-selected-media {
     width: 100%;
+
+    &--image {
+        max-height: 300px;
+    }
 }
 
 .bc-select-btn,
