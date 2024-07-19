@@ -179,3 +179,55 @@ Hook for executing data queries based on selected parameters.
 * When using `QUERY_TYPES.BY_CATEGORY`, make sure to provide both `categoriesTaxonomy` and `curatedCategoriesIds`.
 * The component and hook are designed to work together but can also be used independently if needed.
 
+# DividersControl
+
+A flexible component for managing top and bottom dividers, as well as an optional vertical line in Gutenberg blocks.
+
+## Usage
+
+```jsx
+import { DividersControl } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { dividers } = attributes;
+
+    return (
+        <InspectorControls>
+            <PanelBody title="Divider Settings">
+                <DividersControl
+                    topDividers={[
+                        { label: 'Wave', value: 'wave' },
+                        { label: 'Triangle', value: 'triangle' },
+                    ]}
+                    bottomDividers={[
+                        { label: 'Curve', value: 'curve' },
+                        { label: 'Slant', value: 'slant' },
+                    ]}
+                    value={dividers}
+                    onChange={(newDividers) => setAttributes({ dividers: newDividers })}
+                />
+            </PanelBody>
+        </InspectorControls>
+    );
+};
+```
+
+### Parameters
+
+* `topDividers`: Array of objects, defines available top divider options
+* `bottomDividers`: Array of objects, defines available bottom divider options
+* `value`: Object, current divider settings (default: `{ topDivider: '', bottomDivider: '', isIncludeLine: false }`)
+* `hasLine`: Boolean, whether to include the vertical line option (default: true)
+* `onChange`: Function, called when divider settings change
+
+### Return Value
+
+The component returns an object with the following properties:
+
+* `topDivider`: String, selected top divider value
+* `bottomDivider`: String, selected bottom divider value
+* `isIncludeLine`: Boolean, whether to include the vertical line
+
+### Notes
+
+The `DividersControl` component provides a user-friendly interface for selecting top and bottom dividers, as well as an option to include a vertical line. It's designed to work seamlessly within Gutenberg block settings.
