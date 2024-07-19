@@ -59,3 +59,123 @@ const style = backgroundColor?.slug === 'custom'
 * `useThemeColors`: Hook to get theme colors
 * `useColorChange`: Hook to handle color changes
 * `getBackgroundColorClass`: Function to generate background color class
+
+
+# DataQueryControls and useDataQuery
+
+Flexible components for managing data sources and query types in Gutenberg blocks, allowing users to select and retrieve data from various sources with customizable query parameters.
+
+## Usage
+
+```jsx
+import { DataQueryControls, useDataQuery, QUERY_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { dataSource, queryType, curatedPosts, curatedCategories, numberOfPosts } = attributes;
+
+    const {
+        postsToShow,
+        isLoading,
+    } = useDataQuery({
+        getPostType: () => 'post',
+        queryType,
+        curatedPostsIds: curatedPosts.map((post) => post.value),
+        categoriesTaxonomy: 'category',
+        curatedCategoriesIds: curatedCategories.map((category) => category.value),
+        numberOfPosts,
+        extraQueryArgs: { status: 'publish' },
+        dependencies: [dataSource, queryType, curatedPosts, curatedCategories, numberOfPosts],
+    });
+
+    return (
+        <InspectorControls>
+
+            {/* code */}
+
+                <DataQueryControls
+                    dataSourceLabel="Select Data Source"
+                    dataSource={dataSource}
+                    onDataSourceChange={(dataSource) => setAttributes({ dataSource })}
+                    queryTypeLabel="Select Query Type"
+                    queryType={queryType}
+                    onQueryTypeChange={(queryType) => setAttributes({ queryType })}
+                    settings={[
+                        { label: 'Posts', value: 'posts', queries: [
+                            { label: 'Latest', value: QUERY_TYPES.LATEST },
+                            { label: 'Curated', value: QUERY_TYPES.CURATED },
+                            { label: 'By Category', value: QUERY_TYPES.BY_CATEGORY },
+                        ]},
+                        { label: 'Pages', value: 'pages', queries: [
+                            { label: 'All', value: QUERY_TYPES.LATEST },
+                            { label: 'Selected', value: QUERY_TYPES.CURATED },
+                        ]},
+                    ]}
+                />
+
+            {/* code */}
+
+        </InspectorControls>
+    );
+};
+```
+
+## DataQueryControls
+
+### Parameters
+
+* `dataSourceLabel`: String, label for data source selection (default: "Data Source")
+* `dataSource`: String, current selected data source
+* `onDataSourceChange`: Function, called when data source changes
+* `queryTypeLabel`: String, label for query type selection (default: "Query")
+* `queryType`: String, current selected query type
+* `onQueryTypeChange`: Function, called when query type changes
+* `settings`: Array of objects, defines available data sources and their corresponding query types
+
+### Settings Object Structure
+
+```jsx
+{
+    label: String, // Display label for the data source
+    value: String, // Unique identifier for the data source
+    queries: [     // Array of available query types for this data source
+        {
+            label: String, // Display label for the query type
+            value: String, // Unique identifier for the query type
+        },
+        // ... more query types
+    ]
+}
+```
+
+## useDataQuery
+
+Hook for executing data queries based on selected parameters.
+
+### Parameters
+
+* `getPostType`: Function returning the post type for the query
+* `queryType`: String, type of query (e.g., QUERY_TYPES.CURATED, QUERY_TYPES.LATEST, QUERY_TYPES.BY_CATEGORY)
+* `curatedPostsIds`: Array of IDs for curated posts (used if `queryType === QUERY_TYPES.CURATED`)
+* `categoriesTaxonomy`: String, name of the category taxonomy (used if `queryType === QUERY_TYPES.BY_CATEGORY`)
+* `curatedCategoriesIds`: Array of category IDs (used if `queryType === QUERY_TYPES.BY_CATEGORY`)
+* `numberOfPosts`: Number of posts to query (default: -1, all posts)
+* `extraQueryArgs`: Object, additional query arguments to be passed to the WordPress API
+* `dependencies`: Array of dependencies for re-running the query
+
+### Return Values
+
+* `postsToShow`: Array of retrieved posts
+* `isLoading`: Boolean indicating if data is loading
+
+## Additional Exports
+
+* `QUERY_TYPES`: Object with query type constants
+  * `LATEST`: For retrieving the latest posts
+  * `CURATED`: For retrieving specific curated posts
+  * `BY_CATEGORY`: For retrieving posts from specific categories
+
+## Notes
+
+* When using `QUERY_TYPES.BY_CATEGORY`, make sure to provide both `categoriesTaxonomy` and `curatedCategoriesIds`.
+* The component and hook are designed to work together but can also be used independently if needed.
+
