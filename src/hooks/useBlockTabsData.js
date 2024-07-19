@@ -1,11 +1,13 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useLayoutEffect, useState } from '@wordpress/element';
-import { useParentBlock } from './useParentBlock';
 import { Button } from '@wordpress/components';
 import { plus as plusIcon } from '@wordpress/icons';
+import { createBlock } from '@wordpress/blocks';
 
-export const useBlockTabsData = (clientId, itemBlockName, createBlock) => {
+import { useParentBlock } from './useParentBlock';
+
+export const useBlockTabsData = (clientId, itemBlockName) => {
     const { insertBlock } = useDispatch(blockEditorStore);
 
     const {
@@ -45,10 +47,7 @@ export const useBlockTabsData = (clientId, itemBlockName, createBlock) => {
         }
     }, [childBlocks, activeItemId]);
 
-    const parentItem = useParentBlock(selectedBlock?.clientId, itemBlockName, {
-        rootBlockId: clientId,
-        includeSelf: true,
-    });
+    const parentItem = useParentBlock(selectedBlock?.clientId, clientId);
 
     useLayoutEffect(() => {
         if (parentItem) {
@@ -62,6 +61,7 @@ export const useBlockTabsData = (clientId, itemBlockName, createBlock) => {
     const addNewChildBlock = (blockName, attributes = {}, position = innerBlocksCount) => {
         const newBlock = createBlock(blockName, attributes);
         insertBlock(newBlock, position, clientId);
+
         return newBlock;
     };
 
