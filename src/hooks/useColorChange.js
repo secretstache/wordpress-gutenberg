@@ -2,10 +2,10 @@ export const useColorChange = (colors, setAttributes) => (colorValue, property) 
     const selectedColor = colors.find(color => color.color === colorValue);
 
     setAttributes({
-        [property]: selectedColor
+        [property]: colorValue
             ? {
                 value: colorValue,
-                slug: selectedColor.slug,
+                slug: selectedColor ? selectedColor.slug : 'custom',
             }
             : null,
     });

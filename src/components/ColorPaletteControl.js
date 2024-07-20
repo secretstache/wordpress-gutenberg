@@ -6,18 +6,21 @@ export const ColorPaletteControl = ({
     value,
     attributeName,
     setAttributes,
-    allowedColors,
+    allowedColors = [],
+    extraColors = [],
 }) => {
-    const colors = useThemeColors(allowedColors);
-    const onColorChange = useColorChange(colors, setAttributes);
+    const themeColors = useThemeColors(allowedColors);
+    const onColorChange = useColorChange(themeColors, setAttributes);
+
+    const allColors = [...themeColors, ...extraColors];
 
     return (
         <BaseControl label={label}>
             <ColorPalette
-                colors={colors}
-                value={value}
-                disableCustomColors={true}
+                colors={allColors}
+                value={value?.value}
                 onChange={(colorValue) => onColorChange(colorValue, attributeName)}
+                disableCustomColors={true}
             />
         </BaseControl>
     );
