@@ -231,3 +231,76 @@ The component returns an object with the following properties:
 ### Notes
 
 The `DividersControl` component provides a user-friendly interface for selecting top and bottom dividers, as well as an option to include a vertical line. It's designed to work seamlessly within Gutenberg block settings.
+
+
+# IconPicker
+
+A versatile component for selecting and managing icon images in Gutenberg blocks, supporting both regular images and SVG files.
+
+## Usage
+
+```jsx
+import { IconPicker, cleanSvgString } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+  const { imageId, imageUrl, imageAlt, svgCode } = attributes;
+
+    const onRemoveImage = () => setAttributes({
+        imageId: null,
+        imageUrl: '',
+        imageAlt: '',
+        svgCode: '',
+    });
+
+    const onSelectImage = (media) => {
+        const newAttributes = {
+            imageId: media.id,
+            imageUrl: media.url,
+            imageAlt: media.alt,
+        };
+
+        if (media.mime === 'image/svg+xml') {
+            fetch(media.url)
+                .then(response => response.text())
+                .then(svgString => {
+                    const cleanedSvgString = cleanSvgString(svgString);
+                    setAttributes({ ...newAttributes, svgCode: cleanedSvgString });
+                });
+        } else {
+            setAttributes({ ...newAttributes, svgCode: '' });
+        }
+    };
+
+    return (
+        <IconPicker
+            imageId={imageId}
+            imageUrl={imageUrl}
+            imageAlt={imageAlt}
+            svgCode={svgCode}
+            onSelect={onSelectImage}
+            onRemove={onRemoveImage}
+        />
+    );
+};
+```
+
+### Parameters
+
+* `imageId`: Number, ID of the selected image
+* `imageUrl`: String, URL of the selected image
+* `imageAlt`: String, alt text for the selected image
+* `svgCode`: String, SVG code if the selected image is an SVG file
+* `onSelect`: Function, called when an image is selected
+* `onRemove`: Function, called when the image is removed
+
+### Features
+
+* Supports both regular images and SVG files
+* Provides a media placeholder when no image is selected
+* Displays a preview of the selected image or SVG
+* Offers options to replace or remove the selected image
+* Uses WordPress components for consistent UI and functionality
+
+### Notes
+
+The `IconPicker` component provides a user-friendly interface for selecting and managing icon images within Gutenberg blocks. It integrates seamlessly with the WordPress media library and handles both regular images and SVG files.
