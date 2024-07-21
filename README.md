@@ -517,3 +517,67 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `MediaControl` component provides a flexible solution for handling various types of media within Gutenberg blocks. It adapts its UI based on the specified media type, offering a consistent experience for managing different media assets. The component also allows for customization of button labels to fit specific use cases.
+
+# MediaTypeControl
+
+A versatile component for selecting media types and managing media in Gutenberg blocks, supporting multiple media types.
+
+## Usage
+
+```jsx
+import { MediaTypeControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { mediaId, mediaUrl, mediaFileName, mediaType } = attributes;
+
+    const handleSelectMedia = (media) => {
+        setAttributes({
+            mediaId: media.id,
+            mediaUrl: media.url,
+            mediaFileName: media.filename,
+            mediaType: media.type,
+        });
+    };
+
+    const handleRemoveMedia = () => {
+        setAttributes({
+            mediaId: null,
+            mediaUrl: null,
+            mediaFileName: null,
+            mediaType: null,
+        });
+    };
+
+    return (
+        <MediaTypeControl
+            mediaTypes={[MEDIA_TYPES.IMAGE, MEDIA_TYPES.VIDEO, MEDIA_TYPES.ANIMATION]}
+            mediaId={mediaId}
+            mediaUrl={mediaUrl}
+            mediaFileName={mediaFileName}
+            mediaOnSelect={handleSelectMedia}
+            mediaOnRemove={handleRemoveMedia}
+        />
+    );
+};
+```
+
+### Parameters
+
+* `mediaTypes`: Array of `MEDIA_TYPES`, defines available media type options
+* `mediaId`: Number, ID of the selected media
+* `mediaUrl`: String, URL of the selected media
+* `mediaFileName`: String, filename of the selected media (used for animation files)
+* `mediaOnSelect`: Function, called when media is selected
+* `mediaOnRemove`: Function, called when media is removed
+
+### Features
+
+* Allows selection of media type from provided options
+* Dynamically renders appropriate `BCMediaPicker` based on selected media type
+* Supports multiple media types (Image, Video, Animation)
+* Uses WordPress components for consistent UI and functionality
+* Integrates seamlessly with the WordPress media library
+
+### Notes
+
+The `MediaTypeControl` component provides a flexible solution for handling various types of media within Gutenberg blocks. It combines media type selection with media management, offering a comprehensive interface for working with different media assets.
