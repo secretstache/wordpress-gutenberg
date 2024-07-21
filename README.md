@@ -304,3 +304,60 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `IconPicker` component provides a user-friendly interface for selecting and managing icon images within Gutenberg blocks. It integrates seamlessly with the WordPress media library and handles both regular images and SVG files.
+
+# LinkControl
+
+A comprehensive component for managing link attributes in Gutenberg blocks, including URL input and the option to open links in a new tab.
+
+## Usage
+
+```jsx
+import { LinkControl } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { linkSource, linkIsOpenInNewTab } = attributes;
+
+    return (
+        <InspectorControls>
+            <PanelBody title="Link Settings">
+                <LinkControl
+                    url={{
+                        value: linkSource,
+                        attrName: 'linkSource',
+                    }}
+                    isOpenInNewTab={{
+                        value: linkIsOpenInNewTab,
+                        attrName: 'linkIsOpenInNewTab',
+                    }}
+                    setAttributes={setAttributes}
+                    label="Button Source"
+                />
+            </PanelBody>
+        </InspectorControls>
+    );
+};
+```
+
+### Parameters
+
+* `url`: Object, contains the URL value and attribute name
+  * `value`: String, the current URL value (default: '#')
+  * `attrName`: String, the attribute name for storing the URL (default: 'linkSource')
+
+* `isOpenInNewTab`: Object, contains the "open in new tab" value and attribute name
+  * `value`: Boolean, whether the link should open in a new tab (default: false)
+  * `attrName`: String, the attribute name for storing the "open in new tab" setting (default: 'linkIsOpenInNewTab')
+
+* `setAttributes`: Function, used to update block attributes
+* `label`: String, label for the URL input field (default: 'Source')
+
+### Features
+
+* Provides a URL input field using the WordPress URLInput component
+* Includes a checkbox for setting whether the link should open in a new tab
+* Uses WordPress components for consistent UI and functionality
+* Integrates with block attributes for easy state management
+
+### Notes
+
+The `LinkControl` component simplifies the process of adding and managing links within Gutenberg blocks. It handles both the URL input and the "open in new tab" option, providing a complete solution for link management.
