@@ -581,3 +581,81 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `MediaTypeControl` component provides a flexible solution for handling various types of media within Gutenberg blocks. It combines media type selection with media management, offering a comprehensive interface for working with different media assets.
+
+# ResourcesWrapper
+
+A flexible component for handling different states of resource loading and display in Gutenberg blocks.
+
+## Usage
+
+```jsx
+import { ResourcesWrapper, useDataQuery, QUERY_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes }) => {
+    const { queryType, curatedPostsIds, numberOfPosts } = attributes;
+
+    const {
+        postsToShow,
+        isLoading,
+    } = useDataQuery({
+        getPostType: () => 'post',
+        queryType,
+        curatedPostsIds,
+        numberOfPosts: queryType === QUERY_TYPES.CURATED ? -1 : numberOfPosts,
+        dependencies: [queryType, curatedPostsIds, numberOfPosts],
+    });
+
+    const isEmpty = !isLoading && postsToShow?.length === 0;
+    const isPlaceholder = !queryType;
+
+    return (
+        <ResourcesWrapper
+            isLoading={isLoading}
+            isEmpty={isEmpty}
+            isPlaceholder={isPlaceholder}
+            emptyMessage="No posts found. Try adjusting your query settings."
+            placeholderProps={{
+                icon: 'admin-post',
+                instructions: 'Configure your post query in the sidebar.',
+                label: 'Posts Block'
+            }}
+        >
+            {postsToShow?.map((post) => (
+                <div key={post.id}>{post.title.rendered}</div>
+            ))}
+        </ResourcesWrapper>
+    );
+};
+```
+
+### Parameters
+
+* `isLoading`: Boolean, indicates if resources are currently being loaded
+* `isEmpty`: Boolean, indicates if no resources were found
+* `isPlaceholder`: Boolean, indicates if the block should display a placeholder (e.g., when not configured)
+* `emptyMessage`: String, custom message to display when no resources are found
+* `placeholderProps`: Object, props to pass to the `Placeholder` component
+* `children`: React nodes to render when resources are available
+
+### Features
+
+* Handles multiple states of resource loading and display:
+  * **Loading state** with a spinner
+  * **Empty state** with a customizable message
+  * **Placeholder state** for unconfigured blocks
+  * **Content state** for displaying loaded resources
+* Uses WordPress components for consistent UI
+* Customizable messages and placeholder content
+
+### Subcomponents
+
+* **EmptyNotice**
+  * Displays a notice when no resources are found.
+* **LoadingSpinner**
+  * Shows a spinner during the loading state.
+* **PlaceholderContent**
+  * Renders a placeholder with customizable content when the block is not configured.
+
+### Notes
+
+The `ResourcesWrapper` component provides a comprehensive solution for handling various states in resource-dependent Gutenberg blocks. It improves user experience by clearly communicating the current state of the block and guiding users through the configuration process.
