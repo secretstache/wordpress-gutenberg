@@ -361,3 +361,159 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `LinkControl` component simplifies the process of adding and managing links within Gutenberg blocks. It handles both the URL input and the "open in new tab" option, providing a complete solution for link management.
+
+
+# MediaControl
+
+A versatile component for selecting and managing various types of media (images, videos, and animation files) in Gutenberg blocks.
+
+## Usage
+
+### Image
+
+```jsx
+import { MediaControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { backgroundImage } = attributes;
+
+    const handleSelectImage = (media) => {
+        setAttributes({
+            backgroundImage: {
+                id: media.id,
+                url: media.url,
+            },
+        });
+    };
+
+    const handleRemoveImage = () => {
+        setAttributes({
+            backgroundImage: {},
+        });
+    };
+
+    return (
+        <MediaControl
+            mediaId={backgroundImage?.id}
+            mediaUrl={backgroundImage?.url}
+            onSelect={handleSelectImage}
+            onRemove={handleRemoveImage}
+            type={MEDIA_TYPES.IMAGE}
+            selectButtonLabel="Select Background Image"
+            removeButtonLabel="Remove Background Image"
+        />
+    );
+};
+```
+
+### Video
+
+```jsx
+import { MediaControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { backgroundVideo } = attributes;
+
+    const handleSelectVideo = (media) => {
+        setAttributes({
+            backgroundVideo: {
+                id: media.id,
+                url: media.url,
+            },
+        });
+    };
+
+    const handleRemoveVideo = () => {
+        setAttributes({
+            backgroundVideo: {},
+        });
+    };
+
+    return (
+        <MediaControl
+            mediaId={backgroundVideo?.id}
+            mediaUrl={backgroundVideo?.url}
+            onSelect={handleSelectVideo}
+            onRemove={handleRemoveVideo}
+            type={MEDIA_TYPES.VIDEO}
+            selectButtonLabel="Select Background Video"
+            removeButtonLabel="Remove Background Video"
+        />
+    );
+};
+```
+
+### Animation
+
+```jsx
+import { MediaControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { animationFile } = attributes;
+
+    const handleSelectAnimation = (media) => {
+        setAttributes({
+            animationFile: {
+                id: media.id,
+                url: media.url,
+                filename: media.filename,
+            },
+        });
+    };
+
+    const handleRemoveAnimation = () => {
+        setAttributes({
+            animationFile: {},
+        });
+    };
+
+    return (
+        <MediaControl
+            mediaId={animationFile?.id}
+            mediaUrl={animationFile?.url}
+            mediaFileName={animationFile?.filename}
+            onSelect={handleSelectAnimation}
+            onRemove={handleRemoveAnimation}
+            type={MEDIA_TYPES.ANIMATION}
+            selectButtonLabel="Select Animation File"
+            removeButtonLabel="Remove Animation File"
+        />
+    );
+};
+```
+
+### Parameters
+
+* `mediaId`: Number, ID of the selected media
+* `mediaUrl`: String, URL of the selected media
+* `mediaFileName`: String, filename of the selected media (used for animation files)
+* `onSelect`: Function, called when media is selected
+* `onRemove`: Function, called when media is removed
+* `type`: String, type of media to handle (`MEDIA_TYPES.IMAGE`, `MEDIA_TYPES.VIDEO`, or `MEDIA_TYPES.ANIMATION`)
+* `selectButtonLabel`: String, custom label for the select button
+* `removeButtonLabel`: String, custom label for the remove button
+* `...other`: Additional props passed to the `MediaUpload` component
+
+### Features
+
+* Supports three types of media: images, videos, and animation files
+* Provides appropriate UI for each media type:
+  * **Images**: displays the image with options to replace or remove
+  * **Videos**: displays a video player with options to replace or remove
+  * **Animation files**: displays the filename with options to replace or remove
+* Uses WordPress components for consistent UI and functionality
+* Integrates seamlessly with the WordPress media library
+* Allows customization of button labels
+
+### Subcomponents
+
+* **ImageRenderer**
+  * Renders the UI for image selection and management.
+* **VideoRenderer**
+  * Renders the UI for video selection and management.
+* **AnimationRenderer**
+  * Renders the UI for animation file selection and management.
+
+### Notes
+
+The `MediaControl` component provides a flexible solution for handling various types of media within Gutenberg blocks. It adapts its UI based on the specified media type, offering a consistent experience for managing different media assets. The component also allows for customization of button labels to fit specific use cases.
