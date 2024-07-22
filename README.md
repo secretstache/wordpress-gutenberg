@@ -15,6 +15,8 @@
   - [ResourcesWrapper](#resourceswrapper)
   - [SortableSelectAsync](#sortableselectasync)
 
+---
+
 # ColorPaletteControl
 
 A versatile color selection component for Gutenberg blocks, allowing users to choose between theme colors and custom colors.
@@ -65,17 +67,22 @@ const style = backgroundColor?.slug === 'custom'
 
 ### Parameters
 
-* `label`: String, control label (default: "Color")
-* `value`: String, current color value
-* `attributeName`: String, attribute name for storing color
-* `setAttributes`: Function to update block attributes
-* `allowedColors`: Array of strings, limits theme color choices (optional). If not provided or empty, all colors from theme.json will be displayed.
+| Parameter       | Type          | Description                                                                                     |
+|-----------------|---------------|-------------------------------------------------------------------------------------------------|
+| `label`         | String        | Control label (default: "Color")                                                                |
+| `value`         | String        | Current color value                                                                             |
+| `attributeName` | String        | Attribute name for storing color                                                                |
+| `setAttributes` | Function      | Function to update block attributes                                                             |
+| `allowedColors` | Array[String] | Limits theme color choices (optional). If not provided or empty, all colors from theme.json will be displayed. |
+
 
 ### Additional Exports
 
 * `useThemeColors`: Hook to get theme colors
 * `useColorChange`: Hook to handle color changes
 * `getBackgroundColorClass`: Function to generate background color class
+
+---
 
 # DataQueryControls and useDataQuery
 
@@ -137,13 +144,15 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `dataSourceLabel`: String, label for data source selection (default: "Data Source")
-* `dataSource`: String, current selected data source
-* `onDataSourceChange`: Function, called when data source changes
-* `queryTypeLabel`: String, label for query type selection (default: "Query")
-* `queryType`: String, current selected query type
-* `onQueryTypeChange`: Function, called when query type changes
-* `settings`: Array of objects, defines available data sources and their corresponding query types
+| Parameter           | Type          | Description                                                                                      |
+|---------------------|---------------|--------------------------------------------------------------------------------------------------|
+| `dataSourceLabel`   | String        | Label for data source selection (default: "Data Source")                                         |
+| `dataSource`        | String        | Current selected data source                                                                     |
+| `onDataSourceChange`| Function      | Called when data source changes                                                                  |
+| `queryTypeLabel`    | String        | Label for query type selection (default: "Query")                                                |
+| `queryType`         | String        | Current selected query type                                                                      |
+| `onQueryTypeChange` | Function      | Called when query type changes                                                                   |
+| `settings`          | Array[Object] | Defines available data sources and their corresponding query types                               |
 
 ### Settings Object Structure
 
@@ -161,20 +170,25 @@ export const edit = ({ attributes, setAttributes }) => {
 }
 ```
 
+---
+
 ## useDataQuery
 
 Hook for executing data queries based on selected parameters.
 
 ### Parameters
 
-* `getPostType`: Function returning the post type for the query
-* `queryType`: String, type of query (e.g., QUERY_TYPES.CURATED, QUERY_TYPES.LATEST, QUERY_TYPES.BY_CATEGORY)
-* `curatedPostsIds`: Array of IDs for curated posts (used if `queryType === QUERY_TYPES.CURATED`)
-* `categoriesTaxonomy`: String, name of the category taxonomy (used if `queryType === QUERY_TYPES.BY_CATEGORY`)
-* `curatedCategoriesIds`: Array of category IDs (used if `queryType === QUERY_TYPES.BY_CATEGORY`)
-* `numberOfPosts`: Number of posts to query (default: -1, all posts)
-* `extraQueryArgs`: Object, additional query arguments to be passed to the WordPress API
-* `dependencies`: Array of dependencies for re-running the query
+| Parameter            | Type          | Description                                                                                                    |
+|----------------------|---------------|----------------------------------------------------------------------------------------------------------------|
+| `getPostType`        | Function      | Function returning the post type for the query                                                                 |
+| `queryType`          | String        | Type of query (e.g., QUERY_TYPES.CURATED, QUERY_TYPES.LATEST, QUERY_TYPES.BY_CATEGORY)                         |
+| `curatedPostsIds`    | Array         | Array of IDs for curated posts (used if `queryType === QUERY_TYPES.CURATED`)                                   |
+| `categoriesTaxonomy` | String        | Name of the category taxonomy (used if `queryType === QUERY_TYPES.BY_CATEGORY`)                                |
+| `curatedCategoriesIds`| Array        | Array of category IDs (used if `queryType === QUERY_TYPES.BY_CATEGORY`)                                        |
+| `numberOfPosts`      | Number        | Number of posts to query (default: -1, all posts)                                                              |
+| `extraQueryArgs`     | Object        | Additional query arguments to be passed to the WordPress API                                                   |
+| `dependencies`       | Array         | Array of dependencies for re-running the query                                                                 |
+
 
 ### Return Values
 
@@ -192,6 +206,8 @@ Hook for executing data queries based on selected parameters.
 
 * When using `QUERY_TYPES.BY_CATEGORY`, make sure to provide both `categoriesTaxonomy` and `curatedCategoriesIds`.
 * The component and hook are designed to work together but can also be used independently if needed.
+
+---
 
 # DividersControl
 
@@ -228,11 +244,14 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `topDividers`: Array of objects, defines available top divider options
-* `bottomDividers`: Array of objects, defines available bottom divider options
-* `value`: Object, current divider settings (default: `{ topDivider: '', bottomDivider: '', isIncludeLine: false }`)
-* `hasLine`: Boolean, whether to include the vertical line option (default: true)
-* `onChange`: Function, called when divider settings change
+| Parameter        | Type          | Description                                                                                               |
+|------------------|---------------|-----------------------------------------------------------------------------------------------------------|
+| `topDividers`    | Array[Object] | Defines available top divider options                                                                     |
+| `bottomDividers` | Array[Object] | Defines available bottom divider options                                                                  |
+| `value`          | Object        | Current divider settings (default: `{ topDivider: '', bottomDivider: '', isIncludeLine: false }`)         |
+| `hasLine`        | Boolean       | Whether to include the vertical line option (default: true)                                               |
+| `onChange`       | Function      | Called when divider settings change                                                                       |
+
 
 ### Return Value
 
@@ -246,6 +265,7 @@ The component returns an object with the following properties:
 
 The `DividersControl` component provides a user-friendly interface for selecting top and bottom dividers, as well as an option to include a vertical line. It's designed to work seamlessly within Gutenberg block settings.
 
+---
 
 # IconPicker
 
@@ -300,12 +320,15 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `imageId`: Number, ID of the selected image
-* `imageUrl`: String, URL of the selected image
-* `imageAlt`: String, alt text for the selected image
-* `svgCode`: String, SVG code if the selected image is an SVG file
-* `onSelect`: Function, called when an image is selected
-* `onRemove`: Function, called when the image is removed
+| Parameter  | Type     | Description                                    |
+|------------|----------|------------------------------------------------|
+| `imageId`  | Number   | ID of the selected image                       |
+| `imageUrl` | String   | URL of the selected image                      |
+| `imageAlt` | String   | Alt text for the selected image                |
+| `svgCode`  | String   | SVG code if the selected image is an SVG file  |
+| `onSelect` | Function | Called when an image is selected               |
+| `onRemove` | Function | Called when the image is removed               |
+
 
 ### Features
 
@@ -318,6 +341,8 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `IconPicker` component provides a user-friendly interface for selecting and managing icon images within Gutenberg blocks. It integrates seamlessly with the WordPress media library and handles both regular images and SVG files.
+
+---
 
 # LinkControl
 
@@ -354,16 +379,16 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `url`: Object, contains the URL value and attribute name
-  * `value`: String, the current URL value (default: '#')
-  * `attrName`: String, the attribute name for storing the URL (default: 'linkSource')
-
-* `isOpenInNewTab`: Object, contains the "open in new tab" value and attribute name
-  * `value`: Boolean, whether the link should open in a new tab (default: false)
-  * `attrName`: String, the attribute name for storing the "open in new tab" setting (default: 'linkIsOpenInNewTab')
-
-* `setAttributes`: Function, used to update block attributes
-* `label`: String, label for the URL input field (default: 'Source')
+| Parameter         | Type     | Description                                                                                   |
+|-------------------|----------|-----------------------------------------------------------------------------------------------|
+| `url`             | Object   | Contains the URL value and attribute name                                                     |
+| `url.value`       | String   | The current URL value (default: '#')                                                          |
+| `url.attrName`    | String   | The attribute name for storing the URL (default: 'linkSource')                                |
+| `isOpenInNewTab`  | Object   | Contains the "open in new tab" value and attribute name                                       |
+| `isOpenInNewTab.value` | Boolean  | Whether the link should open in a new tab (default: false)                                      |
+| `isOpenInNewTab.attrName` | String  | The attribute name for storing the "open in new tab" setting (default: 'linkIsOpenInNewTab')         |
+| `setAttributes`   | Function | Used to update block attributes                                                               |
+| `label`           | String   | Label for the URL input field (default: 'Source')                                             |
 
 ### Features
 
@@ -376,6 +401,7 @@ export const edit = ({ attributes, setAttributes }) => {
 
 The `LinkControl` component simplifies the process of adding and managing links within Gutenberg blocks. It handles both the URL input and the "open in new tab" option, providing a complete solution for link management.
 
+---
 
 # MediaControl
 
@@ -498,15 +524,18 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `mediaId`: Number, ID of the selected media
-* `mediaUrl`: String, URL of the selected media
-* `mediaFileName`: String, filename of the selected media (used for animation files)
-* `onSelect`: Function, called when media is selected
-* `onRemove`: Function, called when media is removed
-* `type`: String, type of media to handle (`MEDIA_TYPES.IMAGE`, `MEDIA_TYPES.VIDEO`, or `MEDIA_TYPES.ANIMATION`)
-* `selectButtonLabel`: String, custom label for the select button
-* `removeButtonLabel`: String, custom label for the remove button
-* `...other`: Additional props passed to the `MediaUpload` component
+| Parameter           | Type     | Description                                                                 |
+|---------------------|----------|-----------------------------------------------------------------------------|
+| `mediaId`           | Number   | ID of the selected media                                                    |
+| `mediaUrl`          | String   | URL of the selected media                                                   |
+| `mediaFileName`     | String   | Filename of the selected media (used for animation files)                   |
+| `onSelect`          | Function | Called when media is selected                                               |
+| `onRemove`          | Function | Called when media is removed                                                |
+| `type`              | String   | Type of media to handle (`MEDIA_TYPES.IMAGE`, `MEDIA_TYPES.VIDEO`, or `MEDIA_TYPES.ANIMATION`) |
+| `selectButtonLabel` | String   | Custom label for the select button                                          |
+| `removeButtonLabel` | String   | Custom label for the remove button                                          |
+| `...other`          | Object   | Additional props passed to the `MediaUpload` component                      |
+
 
 ### Features
 
@@ -531,6 +560,8 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `MediaControl` component provides a flexible solution for handling various types of media within Gutenberg blocks. It adapts its UI based on the specified media type, offering a consistent experience for managing different media assets. The component also allows for customization of button labels to fit specific use cases.
+
+---
 
 # MediaTypeControl
 
@@ -577,12 +608,14 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `mediaTypes`: Array of `MEDIA_TYPES`, defines available media type options
-* `mediaId`: Number, ID of the selected media
-* `mediaUrl`: String, URL of the selected media
-* `mediaFileName`: String, filename of the selected media (used for animation files)
-* `mediaOnSelect`: Function, called when media is selected
-* `mediaOnRemove`: Function, called when media is removed
+| Parameter           | Type          | Description                                                                 |
+|---------------------|---------------|-----------------------------------------------------------------------------|
+| `mediaTypes`        | Array         | Array of `MEDIA_TYPES`, defines available media type options                 |
+| `mediaId`           | Number        | ID of the selected media                                                    |
+| `mediaUrl`          | String        | URL of the selected media                                                   |
+| `mediaFileName`     | String        | Filename of the selected media (used for animation files)                   |
+| `mediaOnSelect`     | Function      | Called when media is selected                                               |
+| `mediaOnRemove`     | Function      | Called when media is removed                                                |
 
 ### Features
 
@@ -595,6 +628,8 @@ export const edit = ({ attributes, setAttributes }) => {
 ### Notes
 
 The `MediaTypeControl` component provides a flexible solution for handling various types of media within Gutenberg blocks. It combines media type selection with media management, offering a comprehensive interface for working with different media assets.
+
+---
 
 # ResourcesWrapper
 
@@ -644,12 +679,14 @@ export const edit = ({ attributes }) => {
 
 ### Parameters
 
-* `isLoading`: Boolean, indicates if resources are currently being loaded
-* `isEmpty`: Boolean, indicates if no resources were found
-* `isPlaceholder`: Boolean, indicates if the block should display a placeholder (e.g., when not configured)
-* `emptyMessage`: String, custom message to display when no resources are found
-* `placeholderProps`: Object, props to pass to the `Placeholder` component
-* `children`: React nodes to render when resources are available
+| Parameter         | Type     | Description                                                                  |
+|-------------------|----------|------------------------------------------------------------------------------|
+| `isLoading`       | Boolean  | Indicates if resources are currently being loaded                            |
+| `isEmpty`         | Boolean  | Indicates if no resources were found                                         |
+| `isPlaceholder`   | Boolean  | Indicates if the block should display a placeholder (e.g., when not configured) |
+| `emptyMessage`    | String   | Custom message to display when no resources are found                        |
+| `placeholderProps`| Object   | Props to pass to the `Placeholder` component                                 |
+| `children`        | ReactNode| React nodes to render when resources are available                           |
 
 ### Features
 
@@ -673,6 +710,8 @@ export const edit = ({ attributes }) => {
 ### Notes
 
 The `ResourcesWrapper` component provides a comprehensive solution for handling various states in resource-dependent Gutenberg blocks. It improves user experience by clearly communicating the current state of the block and guiding users through the configuration process.
+
+---
 
 # SortableSelectAsync
 
@@ -717,11 +756,14 @@ export const edit = ({ attributes, setAttributes }) => {
 
 ### Parameters
 
-* `placeholder`: String, placeholder text for the select input
-* `loadOptions`: Function, asynchronous function to load options based on input
-* `value`: Array, currently selected options
-* `onChange`: Function, callback when selected options change
-* `onSortEnd`: Function, callback when the order of selected options changes
+| Parameter     | Type     | Description                                                        |
+|---------------|----------|--------------------------------------------------------------------|
+| `placeholder` | String   | Placeholder text for the select input                              |
+| `loadOptions` | Function | Asynchronous function to load options based on input               |
+| `value`       | Array    | Currently selected options                                         |
+| `onChange`    | Function | Callback when selected options change                              |
+| `onSortEnd`   | Function | Callback when the order of selected options changes                |
+
 
 ### Features
 
