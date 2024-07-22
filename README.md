@@ -8,9 +8,9 @@
   - [IconPicker](#iconpicker)
   - [LinkControl](#linkcontrol)
   - [MediaControl](#mediacontrol)
-    - [Image] (#image)
-    - [Video] (#video)
-    - [Animation] (#animation)
+    - [Image](#image)
+    - [Video](#video)
+    - [Animation](#animation)
   - [MediaTypeControl](#mediatypecontrol)
   - [ResourcesWrapper](#resourceswrapper)
   - [SortableSelectAsync](#sortableselectasync)
@@ -383,7 +383,7 @@ A versatile component for selecting and managing various types of media (images,
 
 ## Usage
 
-### Image
+## Image
 
 ```jsx
 import { MediaControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
@@ -420,7 +420,7 @@ export const edit = ({ attributes, setAttributes }) => {
 };
 ```
 
-### Video
+## Video
 
 ```jsx
 import { MediaControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
@@ -457,7 +457,7 @@ export const edit = ({ attributes, setAttributes }) => {
 };
 ```
 
-### Animation
+## Animation
 
 ```jsx
 import { MediaControl, MEDIA_TYPES } from '@secretstache/wordpress-gutenberg';
