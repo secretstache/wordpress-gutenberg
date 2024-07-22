@@ -1,6 +1,7 @@
 # Documentation
 
-- [Components](#components)
+## Components
+
   - [ColorPaletteControl](#colorpalettecontrol)
   - [DataQueryControls and useDataQuery](#dataquerycontrols-and-usedataquery)
   - [DividersControl](#dividerscontrol)
@@ -10,8 +11,6 @@
   - [MediaTypeControl](#mediatypecontrol)
   - [ResourcesWrapper](#resourceswrapper)
   - [SortableSelectAsync](#sortableselectasync)
-
-# Components
 
 # ColorPaletteControl
 
@@ -61,7 +60,7 @@ const style = backgroundColor?.slug === 'custom'
     : {};
 ```
 
-## Parameters
+### Parameters
 
 * `label`: String, control label (default: "Color")
 * `value`: String, current color value
@@ -69,12 +68,11 @@ const style = backgroundColor?.slug === 'custom'
 * `setAttributes`: Function to update block attributes
 * `allowedColors`: Array of strings, limits theme color choices (optional). If not provided or empty, all colors from theme.json will be displayed.
 
-## Additional Exports
+### Additional Exports
 
 * `useThemeColors`: Hook to get theme colors
 * `useColorChange`: Hook to handle color changes
 * `getBackgroundColorClass`: Function to generate background color class
-
 
 # DataQueryControls and useDataQuery
 
@@ -134,8 +132,6 @@ export const edit = ({ attributes, setAttributes }) => {
 };
 ```
 
-## DataQueryControls
-
 ### Parameters
 
 * `dataSourceLabel`: String, label for data source selection (default: "Data Source")
@@ -182,14 +178,14 @@ Hook for executing data queries based on selected parameters.
 * `postsToShow`: Array of retrieved posts
 * `isLoading`: Boolean indicating if data is loading
 
-## Additional Exports
+### Additional Exports
 
 * `QUERY_TYPES`: Object with query type constants
   * `LATEST`: For retrieving the latest posts
   * `CURATED`: For retrieving specific curated posts
   * `BY_CATEGORY`: For retrieving posts from specific categories
 
-## Notes
+### Notes
 
 * When using `QUERY_TYPES.BY_CATEGORY`, make sure to provide both `categoriesTaxonomy` and `curatedCategoriesIds`.
 * The component and hook are designed to work together but can also be used independently if needed.
