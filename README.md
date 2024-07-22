@@ -659,3 +659,66 @@ export const edit = ({ attributes }) => {
 ### Notes
 
 The `ResourcesWrapper` component provides a comprehensive solution for handling various states in resource-dependent Gutenberg blocks. It improves user experience by clearly communicating the current state of the block and guiding users through the configuration process.
+
+# SortableSelectAsync
+
+A customizable React component that combines the functionality of react-select/async with react-sortable-hoc to create a sortable multi-select dropdown with asynchronous option loading.
+
+## Usage
+
+```jsx
+import {
+  ResourcesWrapper,
+  useDataQuery,
+  QUERY_TYPES,
+  prepareTextWithCodedSymbols
+} from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { curatedPosts } = attributes;
+
+    const loadOptions = (inputValue) => {
+        return loadSelectOptions(inputValue, 'post_type', (post) => ({
+            value: post.id,
+            label: prepareTextWithCodedSymbols(post?.title?.rendered),
+        }));
+    };
+
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        const newCuratedPosts = arrayMove(curatedPosts, oldIndex, newIndex);
+        setAttributes({ curatedPosts: newCuratedPosts });
+    };
+
+    return (
+        <SortableSelectAsync
+            placeholder="Items to show"
+            loadOptions={loadOptions}
+            value={curatedPosts}
+            onChange={(curatedPosts) => setAttributes({ curatedPosts })}
+            onSortEnd={onSortEnd}
+        />
+    );
+};
+```
+
+### Parameters
+
+* `placeholder`: String, placeholder text for the select input
+* `loadOptions`: Function, asynchronous function to load options based on input
+* `value`: Array, currently selected options
+* `onChange`: Function, callback when selected options change
+* `onSortEnd`: Function, callback when the order of selected options changes
+
+### Features
+
+* Asynchronous option loading
+* Multi-select functionality
+* Drag-and-drop sorting of selected items
+* Integration with WordPress block editor attributes
+* Customizable placeholder text
+
+### Notes
+
+* This component is part of the `@secretstache/wordpress-gutenberg` package and is designed to work seamlessly with WordPress Gutenberg blocks. It's particularly useful for creating curated lists of posts or custom post types within block editor settings.
+* The component relies on external utilities like `loadSelectOptions` for fetching options and `arrayMove` from 'react-sortable-hoc' for handling the sorting functionality.
+* When used in WordPress blocks, it's typically placed within the `InspectorControls` component to appear in the block's sidebar settings.
