@@ -17,6 +17,14 @@
 
 ## Hooks
 
+- [useAllowedBlocks](#useallowedblocks)
+- [useAccordionItem](#useaccordionitem)
+- [useBlockTabsData](#useblocktabsdata)
+- [useColorChange](#usecolorchange)
+- [useDataQuery](#usedataquery)
+- [usePreviewToggle](#usepreviewtoggle)
+- [useSlider](#useslider)
+
 ---
 
 # ColorPaletteControl
