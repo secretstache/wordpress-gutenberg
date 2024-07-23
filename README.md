@@ -94,7 +94,7 @@ const style = backgroundColor?.slug === 'custom'
 
 ---
 
-# DataQueryControls and useDataQuery
+# DataQueryControls
 
 Flexible components for managing data sources and query types in Gutenberg blocks, allowing users to select and retrieve data from various sources with customizable query parameters.
 
@@ -179,43 +179,6 @@ export const edit = ({ attributes, setAttributes }) => {
     ]
 }
 ```
-
----
-
-## useDataQuery
-
-Hook for executing data queries based on selected parameters.
-
-### Parameters
-
-| Parameter            | Type          | Description                                                                                                    |
-|----------------------|---------------|----------------------------------------------------------------------------------------------------------------|
-| `getPostType`        | Function      | Function returning the post type for the query                                                                 |
-| `queryType`          | String        | Type of query (e.g., QUERY_TYPES.CURATED, QUERY_TYPES.LATEST, QUERY_TYPES.BY_CATEGORY)                         |
-| `curatedPostsIds`    | Array         | Array of IDs for curated posts (used if `queryType === QUERY_TYPES.CURATED`)                                   |
-| `categoriesTaxonomy` | String        | Name of the category taxonomy (used if `queryType === QUERY_TYPES.BY_CATEGORY`)                                |
-| `curatedCategoriesIds`| Array        | Array of category IDs (used if `queryType === QUERY_TYPES.BY_CATEGORY`)                                        |
-| `numberOfPosts`      | Number        | Number of posts to query (default: -1, all posts)                                                              |
-| `extraQueryArgs`     | Object        | Additional query arguments to be passed to the WordPress API                                                   |
-| `dependencies`       | Array         | Array of dependencies for re-running the query                                                                 |
-
-
-### Return Values
-
-* `postsToShow`: Array of retrieved posts
-* `isLoading`: Boolean indicating if data is loading
-
-### Additional Exports
-
-* `QUERY_TYPES`: Object with query type constants
-  * `LATEST`: For retrieving the latest posts
-  * `CURATED`: For retrieving specific curated posts
-  * `BY_CATEGORY`: For retrieving posts from specific categories
-
-### Notes
-
-* When using `QUERY_TYPES.BY_CATEGORY`, make sure to provide both `categoriesTaxonomy` and `curatedCategoriesIds`.
-* The component and hook are designed to work together but can also be used independently if needed.
 
 ---
 
@@ -1139,16 +1102,16 @@ const { postsToShow, isLoading } = useDataQuery({
 
 ### Parameters
 
-| Parameter             | Type      | Description                                               |
-|-----------------------|-----------|-----------------------------------------------------------|
-| `getPostType`         | Function  | Function that returns the post type to query              |
-| `queryType`           | String    | Type of query (e.g., LATEST, CURATED, BY_CATEGORY)        |
-| `curatedPostsIds`     | Array     | Array of post IDs for curated query                       |
-| `categoriesTaxonomy`  | String    | Taxonomy to use for category queries                      |
-| `curatedCategoriesIds`| Array     | Array of category IDs for category queries                |
-| `numberOfPosts`       | Number    | Number of posts to fetch (-1 for all)                     |
-| `extraQueryArgs`      | Object    | Additional query arguments                                |
-| `dependencies`        | Array     | Dependencies array for useSelect hook                     |
+| Parameter            | Type          | Description                                                                                                    |
+|----------------------|---------------|----------------------------------------------------------------------------------------------------------------|
+| `getPostType`        | Function      | Function returning the post type for the query                                                                 |
+| `queryType`          | String        | Type of query (e.g., QUERY_TYPES.CURATED, QUERY_TYPES.LATEST, QUERY_TYPES.BY_CATEGORY)                         |
+| `curatedPostsIds`    | Array         | Array of IDs for curated posts (used if `queryType === QUERY_TYPES.CURATED`)                                   |
+| `categoriesTaxonomy` | String        | Name of the category taxonomy (used if `queryType === QUERY_TYPES.BY_CATEGORY`)                                |
+| `curatedCategoriesIds`| Array        | Array of category IDs (used if `queryType === QUERY_TYPES.BY_CATEGORY`)                                        |
+| `numberOfPosts`      | Number        | Number of posts to query (default: -1, all posts)                                                              |
+| `extraQueryArgs`     | Object        | Additional query arguments to be passed to the WordPress API                                                   |
+| `dependencies`       | Array         | Array of dependencies for re-running the query                                                                 |
 
 ### Return Value
 
@@ -1161,7 +1124,8 @@ The hook returns an object with the following properties:
 
 ### Note
 
-This hook is useful for fetching posts based on various query types and parameters, including curated posts, category-based queries, and additional query arguments. It handles loading state and returns the fetched posts.
+* When using `QUERY_TYPES.BY_CATEGORY`, make sure to provide both `categoriesTaxonomy` and `curatedCategoriesIds`.
+* The component and hook are designed to work together but can also be used independently if needed.
 
 ---
 
