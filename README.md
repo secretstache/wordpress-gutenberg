@@ -1156,3 +1156,84 @@ The hook returns an object with the following properties:
 This hook is useful for fetching posts based on various query types and parameters, including curated posts, category-based queries, and additional query arguments. It handles loading state and returns the fetched posts.
 
 ---
+
+# usePreviewToggle
+
+A custom hook that provides a toggle control for previewing block content in the Gutenberg editor.
+
+## Usage
+
+```jsx
+import { usePreviewToggle } from '@secretstache/wordpress-gutenberg';
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { isPreview, renderPreviewToggle } = usePreviewToggle();
+
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody title="Preview Settings">
+                    {renderPreviewToggle()}
+                </PanelBody>
+            </InspectorControls>
+
+            <div {...useBlockProps()}>
+                {isPreview ? (
+                    <div className="preview-mode">
+                        {/* Render preview content */}
+                    </div>
+                ) : (
+                    <div className="edit-mode">
+                        {/* Render editable content */}
+                    </div>
+                )}
+            </div>
+        </>
+    );
+};
+```
+
+## Custom Label and Help Text
+
+```jsx
+const { isPreview, renderPreviewToggle } = usePreviewToggle({
+    label: 'Show Live Version',
+    helpText: 'Toggle to see the live version of this block.'
+});
+```
+
+## Disabled Toggle
+
+```jsx
+const { isPreview, renderPreviewToggle } = usePreviewToggle({
+    disabled: true,
+    helpText: 'Preview is currently unavailable.'
+});
+```
+
+### Parameters
+
+The hook accepts an optional configuration object with the following properties:
+
+| Parameter  | Type     | Default            | Description                                                                                           |
+|------------|----------|--------------------|-------------------------------------------------------------------------------------------------------|
+| `disabled` | Boolean  | false              | Whether the toggle control should be disabled                                                         |
+| `label`    | String   | 'Enable Preview'   | Label for the toggle control                                                                          |
+| `helpText` | String   | 'Please check this option to see how the block will actually look and behave on the frontend.' | Help text for the toggle control                                                                      |
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Property             | Type     | Description                                        |
+|----------------------|----------|----------------------------------------------------|
+| `isPreview`          | Boolean  | The current state of the preview toggle            |
+| `renderPreviewToggle`| Function | A function that renders the ToggleControl component|
+
+### Note
+
+This hook simplifies the process of adding a preview toggle to your Gutenberg blocks. It's particularly useful for blocks that have a significant difference between their edit and frontend appearance. The preview functionality allows content creators to see how their block will look on the live site without leaving the editor.
+
+---
