@@ -1034,3 +1034,125 @@ export const edit = ({ attributes, setAttributes }) => {
 This hook simplifies the process of updating color attributes in Gutenberg blocks. It automatically handles the conversion between color values and color objects, including the color slug when available. If the selected color is not found in the predefined palette, it sets the attribute to null.
 
 ---
+
+# useDataQuery
+
+A custom hook for fetching and managing post data in Gutenberg blocks.
+
+## Usage
+
+```jsx
+import { useDataQuery, QUERY_TYPES } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const {
+        queryType,
+        curatedPostsIds,
+        categoriesTaxonomy,
+        curatedCategoriesIds,
+        numberOfPosts
+    } = attributes;
+
+    const { postsToShow, isLoading } = useDataQuery({
+        getPostType: () => 'post',
+        queryType,
+        curatedPostsIds,
+        categoriesTaxonomy,
+        curatedCategoriesIds,
+        numberOfPosts,
+        extraQueryArgs: { status: 'publish' },
+        dependencies: [queryType, curatedPostsIds, categoriesTaxonomy, curatedCategoriesIds, numberOfPosts],
+    });
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    return (
+        <div>
+            {postsToShow.map(post => (
+                <h2 key={post.id}>{post.title.rendered}</h2>
+            ))}
+        </div>
+    );
+};
+```
+
+## Latest Posts
+
+```jsx
+const { postsToShow, isLoading } = useDataQuery({
+    getPostType: () => 'post',
+    queryType: QUERY_TYPES.LATEST,
+    numberOfPosts: 5,
+    dependencies: [numberOfPosts],
+});
+```
+
+## Curated Posts
+
+```jsx
+const { postsToShow, isLoading } = useDataQuery({
+    getPostType: () => 'post',
+    queryType: QUERY_TYPES.CURATED,
+    curatedPostsIds: [1, 2, 3, 4, 5],
+    dependencies: [curatedPostsIds],
+});
+```
+
+## Posts by Category
+
+```jsx
+const { postsToShow, isLoading } = useDataQuery({
+    getPostType: () => 'post',
+    queryType: QUERY_TYPES.BY_CATEGORY,
+    categoriesTaxonomy: 'category',
+    curatedCategoriesIds: [10, 20, 30],
+    numberOfPosts: -1, // all posts
+    dependencies: [curatedCategoriesIds],
+});
+```
+
+## Custom Post Type with Extra Query Args
+
+```jsx
+const { postsToShow, isLoading } = useDataQuery({
+    getPostType: () => 'custom_post_type',
+    queryType: QUERY_TYPES.LATEST,
+    numberOfPosts: 10,
+    extraQueryArgs: { 
+        status: 'publish',
+        meta_key: 'featured',
+        meta_value: 'yes'
+    },
+    dependencies: [numberOfPosts],
+});
+```
+
+### Parameters
+
+| Parameter             | Type      | Description                                               |
+|-----------------------|-----------|-----------------------------------------------------------|
+| `getPostType`         | Function  | Function that returns the post type to query              |
+| `queryType`           | String    | Type of query (e.g., LATEST, CURATED, BY_CATEGORY)        |
+| `curatedPostsIds`     | Array     | Array of post IDs for curated query                       |
+| `categoriesTaxonomy`  | String    | Taxonomy to use for category queries                      |
+| `curatedCategoriesIds`| Array     | Array of category IDs for category queries                |
+| `numberOfPosts`       | Number    | Number of posts to fetch (-1 for all)                     |
+| `extraQueryArgs`      | Object    | Additional query arguments                                |
+| `dependencies`        | Array     | Dependencies array for useSelect hook                     |
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Property      | Type     | Description                                |
+|---------------|----------|--------------------------------------------|
+| `postsToShow` | Array    | Array of fetched posts                     |
+| `isLoading`   | Boolean  | Indicates whether the query is still loading|
+
+### Note
+
+This hook is useful for fetching posts based on various query types and parameters, including curated posts, category-based queries, and additional query arguments. It handles loading state and returns the fetched posts.
+
+---
