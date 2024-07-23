@@ -983,3 +983,54 @@ export const edit = ({ clientId }) => {
 This hook provides functionality for managing tabs in Gutenberg blocks, including adding new tabs, tracking the active tab, and working with child blocks. It's particularly useful when creating complex blocks with nested structures. The example shows how to integrate it within the edit function of a Gutenberg block, including the use of `InspectorControls` for block settings.
 
 ---
+
+# useColorChange
+
+A custom hook for handling color changes in Gutenberg blocks.
+
+## Usage
+
+```jsx
+import { useColorChange } from '@secretstache/wordpress-gutenberg';
+import { ColorPalette } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const colors = useSelect(select => select('core/editor').getEditorSettings().colors, []);
+    const handleColorChange = useColorChange(colors, setAttributes);
+
+    return (
+        <ColorPalette
+            colors={colors}
+            value={attributes.backgroundColor?.value}
+            onChange={(color) => handleColorChange(color, 'backgroundColor')}
+        />
+    );
+};
+```
+
+### Parameters
+
+| Parameter      | Type     | Description                                         |
+|----------------|----------|-----------------------------------------------------|
+| `colors`       | Array    | Array of color objects from editor settings         |
+| `setAttributes`| Function | Function to update block attributes                 |
+
+### Return Value
+
+| Parameter     | Type     | Description                                         |
+|---------------|----------|-----------------------------------------------------|
+| `colorValue`  | String   | The selected color value                            |
+| `property`    | String   | The attribute property to update with the new color |
+
+### Features
+
+- Finds the selected color in the provided colors array
+- Updates the specified attribute with the selected color information
+- Handles cases where the selected color is not in the predefined palette
+
+### Note
+
+This hook simplifies the process of updating color attributes in Gutenberg blocks. It automatically handles the conversion between color values and color objects, including the color slug when available. If the selected color is not found in the predefined palette, it sets the attribute to null.
+
+---
