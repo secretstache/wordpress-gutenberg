@@ -15,6 +15,8 @@
   - [ResourcesWrapper](#resourceswrapper)
   - [SortableSelectAsync](#sortableselectasync)
 
+## Hooks
+
 ---
 
 # ColorPaletteControl
@@ -778,3 +780,120 @@ export const edit = ({ attributes, setAttributes }) => {
 * This component is part of the `@secretstache/wordpress-gutenberg` package and is designed to work seamlessly with WordPress Gutenberg blocks. It's particularly useful for creating curated lists of posts or custom post types within block editor settings.
 * The component relies on external utilities like `loadSelectOptions` for fetching options and `arrayMove` from 'react-sortable-hoc' for handling the sorting functionality.
 * When used in WordPress blocks, it's typically placed within the `InspectorControls` component to appear in the block's sidebar settings.
+
+---
+
+# Hooks
+
+---
+
+# useAllowedBlocks
+
+A hook for filtering allowed blocks based on a parent block name and a list of excluded blocks.
+
+## Usage
+
+```jsx
+import { useAllowedBlocks } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const allowedBlocks = useAllowedBlocks('core/group', ['core/paragraph']);
+
+    return (
+        <InnerBlocks
+            allowedBlocks={allowedBlocks}
+        />
+    );
+};
+```
+
+### Parameters
+
+| Parameter       | Type     | Description                                       |
+|-----------------|----------|---------------------------------------------------|
+| `blockName`     | String   | The name of the parent block                      |
+| `excludedBlocks`| Array    | An array of block names to exclude                |
+
+### Features
+
+- Filters blocks based on the parent block
+- Excludes specified blocks from the allowed list
+- Considers blocks with specified parent or ancestor
+- Memoizes the result for performance optimization
+
+### Return Value
+
+The hook returns an array of strings containing the names of allowed blocks.
+
+### Dependencies
+
+- `@wordpress/data`: For accessing WordPress data store
+- `@wordpress/element`: For using the `useMemo` hook
+
+### Note
+
+This hook is particularly useful when working with nested blocks in Gutenberg, where you need to restrict the types of blocks that can be added inside a specific parent block.
+
+---
+
+# useAccordionItem
+
+A custom hook for managing accordion item behavior in Gutenberg blocks.
+
+## Usage
+
+```jsx
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import { useAccordionItem } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ clientId, context }) => {
+    const { activeItemClientId, setActiveItemClientId } = context;
+
+    const { blockRef, toggleContent, isActive } = useAccordionItem(
+        clientId,
+        activeItemClientId,
+        setActiveItemClientId,
+        '.wp-block-ssm-accordion__content'
+    );
+
+    const blockProps = useBlockProps({
+        ref: blockRef,
+        className: `wp-block-ssm-accordion__item ${isActive ? 'is-active' : ''}`,
+    });
+
+    return (
+        <div {...blockProps}>
+            <header className="wp-block-ssm-accordion__header" onClick={toggleContent}>
+                <h3>Accordion Title</h3>
+            </header>
+            <div className="wp-block-ssm-accordion__content">
+                <InnerBlocks />
+            </div>
+        </div>
+    );
+};
+```
+
+### Parameters
+
+| Parameter       | Type     | Description                                                   |
+|-----------------|----------|---------------------------------------------------------------|
+| `itemId`        | String   | The unique identifier for the accordion item                  |
+| `activeItemId`  | String   | The currently active item's ID                                |
+| `setActiveItemId`| Function | Function to set the active item ID                            |
+| `contentSelector`| String   | CSS selector for the accordion content element                |
+
+### Return Value
+
+| Property       | Type     | Description                                                   |
+|----------------|----------|---------------------------------------------------------------|
+| `blockRef`     | Object   | Ref object for the accordion item container                   |
+| `toggleContent`| Function | Function to toggle the accordion item's open state            |
+| `isActive`     | Boolean  | Whether the accordion item is currently active/open           |
+
+### Note
+
+These examples demonstrate how to use the `useAccordionItem` hook in various scenarios, including basic usage, integration with the Gutenberg block editor, and handling dynamic content. The hook provides the necessary functionality to manage accordion behavior, including toggling, active state tracking, and content height adjustments.
+
+---
+
