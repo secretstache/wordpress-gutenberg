@@ -1237,3 +1237,93 @@ The hook returns an object with the following properties:
 This hook simplifies the process of adding a preview toggle to your Gutenberg blocks. It's particularly useful for blocks that have a significant difference between their edit and frontend appearance. The preview functionality allows content creators to see how their block will look on the live site without leaving the editor.
 
 ---
+
+# useSlider
+
+A custom hook for initializing and managing a slider component in Gutenberg blocks.
+
+## Usage
+
+```jsx
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
+import classNames from 'classnames';
+import { useSlider, usePreviewToggle } from '@secretstache/wordpress-gutenberg';
+
+import { setupSlider } from './slider-setup';
+
+export const edit = ({ attributes, setAttributes }) => {
+    const { isPreview, renderPreviewToggle } = usePreviewToggle({
+        label: 'Enable Slider Preview',
+        helpText: 'Toggle to see how the slider will appear on the frontend.',
+    });
+
+    const { sliderElRef, sliderInstance } = useSlider({
+        isEnabled: isPreview,
+        setupSlider,
+        dependencies: [isPreview],
+    });
+
+    const blockProps = useBlockProps({
+        className: classNames({
+            'is-slider': isPreview,
+        }),
+    });
+
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody title="Slider Settings">
+                    {renderPreviewToggle()}
+                </PanelBody>
+            </InspectorControls>
+
+            <div {...blockProps}>
+                {isPreview ? (
+                    <div ref={sliderElRef} className="slider-container">
+                        <div className="slider-wrapper">
+                            {/* Slider items */}
+                        </div>
+                    </div>
+                ) : (
+                    <div className="regular-content">
+                        {/* Regular block content */}
+                    </div>
+                )}
+            </div>
+        </>
+    );
+};
+```
+
+### Parameters
+
+The hook accepts an object with the following properties:
+
+| Parameter       | Type     | Description                                               |
+|-----------------|----------|-----------------------------------------------------------|
+| `isEnabled`     | Boolean  | Whether the slider should be initialized                  |
+| `setupSlider`   | Function | Function to initialize the slider                         |
+| `dependencies`  | Array    | Additional dependencies for re-initializing the slider    |
+
+### Return Value
+
+The hook returns an object with the following properties:
+
+| Property        | Type     | Description                                            |
+|-----------------|----------|--------------------------------------------------------|
+| `sliderElRef`   | Object   | Ref object to attach to the slider container           |
+| `sliderInstance`| Object   | The current instance of the initialized slider         |
+
+### Features
+
+- Initializes a slider when enabled
+- Cleans up the slider instance when the component unmounts or when dependencies change
+- Allows for custom slider setup logic
+- Provides access to the slider instance for further manipulation
+
+### Note
+
+This hook is useful for initializing and managing a slider component in your React application. It handles the setup and teardown of the slider instance, providing a ref for the slider container and access to the slider instance for further manipulation.
+
+---
