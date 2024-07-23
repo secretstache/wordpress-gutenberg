@@ -897,3 +897,89 @@ These examples demonstrate how to use the `useAccordionItem` hook in various sce
 
 ---
 
+# useBlockTabsData
+
+A hook for managing tabs in a Gutenberg block.
+
+## Usage
+
+```jsx
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import { createBlock } from '@wordpress/blocks';
+import { useBlockTabsData } from '@secretstache/wordpress-gutenberg';
+
+export const edit = ({ clientId }) => {
+    const {
+        childBlocks,
+        activeItemId,
+        setActiveItemId,
+        AddNewTabButton,
+    } = useBlockTabsData(clientId, 'ssm/tabs-item', createBlock);
+
+    const blockProps = useBlockProps();
+    const innerBlocksProps = useInnerBlocksProps(
+        { className: 'wp-block-ssm-tabs__content' },
+        {
+            allowedBlocks: ['ssm/tabs-item'],
+            template: [['ssm/tabs-item', { title: 'Tab 1' }]],
+            renderAppender: false,
+            orientation: 'horizontal',
+            __experimentalCaptureToolbars: true,
+        }
+    );
+
+    return (
+        <div {...blockProps}>
+            <div className="wp-block-ssm-tabs__container">
+                <nav className="wp-block-ssm-tabs__wrapper">
+                    {childBlocks.map((block) => (
+                        <div
+                            key={block.clientId}
+                            className={`wp-block-ssm-tabs__item-title ${
+                                activeItemId === block.clientId ? 'is-active' : ''
+                            }`}
+                            onClick={() => setActiveItemId(block.clientId)}
+                        >
+                            {block.attributes.title}
+                        </div>
+                    ))}
+                </nav>
+
+                <div {...innerBlocksProps}>
+                    {innerBlocksProps.children}
+                </div>
+            </div>
+
+            <AddNewTabButton />
+        </div>
+    );
+};
+```
+
+### Parameters
+
+| Parameter       | Type     | Description                                                       |
+|-----------------|----------|-------------------------------------------------------------------|
+| `clientId`      | String   | ID of the block for which tabs are being created                  |
+| `itemBlockName` | String   | Name of the block used for individual tabs                        |
+| `createBlock`   | Function | Function to create a new block                                    |
+
+### Return Value
+
+| Property              | Type          | Description                                                       |
+|-----------------------|---------------|-------------------------------------------------------------------|
+| `childBlocks`         | Array         | Array of child blocks (tabs)                                      |
+| `activeItemId`        | String        | ID of the active tab                                              |
+| `setActiveItemId`     | Function      | Function to set the active tab                                    |
+| `AddNewTabButton`     | Component     | Component for adding a new tab button                             |
+| `innerBlocksCount`    | Number        | Number of child blocks                                            |
+| `selectedBlock`       | Object        | Currently selected block                                          |
+| `selectedBlockClientId`| String       | ID of the selected block                                          |
+| `parentBlockId`       | String        | ID of the parent block                                            |
+| `getBlockRootClientId`| Function      | Function to get the root block ID                                 |
+
+### Note
+
+This hook provides functionality for managing tabs in Gutenberg blocks, including adding new tabs, tracking the active tab, and working with child blocks. It's particularly useful when creating complex blocks with nested structures. The example shows how to integrate it within the edit function of a Gutenberg block, including the use of `InspectorControls` for block settings.
+
+---
