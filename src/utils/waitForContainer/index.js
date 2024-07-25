@@ -2,6 +2,7 @@
  * Periodically checks for the presence of the container and initializes the script when found.
  *
  * @param {function} initializeFn - The initialization function to call when the container is found.
+ *                                  This function receives the root container element as an argument.
  * @param {string} [containerClass='.is-root-container'] - The CSS class of the container to check for. Default is '.is-root-container'.
  * @param {number} [maxAttempts=50] - The maximum number of attempts to check for the root container.
  * @param {number} [interval=100] - The interval between each check in milliseconds.
@@ -12,7 +13,7 @@ export const waitForContainer = (initializeFn, containerClass = '.is-root-contai
         const rootContainer = document.querySelector(containerClass);
         if (rootContainer) {
             clearInterval(checkInterval);
-            initializeFn();
+            initializeFn(rootContainer);
         } else {
             attempts += 1;
             if (attempts >= maxAttempts) {

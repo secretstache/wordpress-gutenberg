@@ -1,8 +1,8 @@
 import { addFilter } from '@wordpress/hooks';
-import { initRootAppender } from '../../utils/index.js';
+import { initRootBlockAppender } from '../../utils/index.js';
 
 /**
- * Sets the root block in the Gutenberg editor and optionally customizes the tooltip text for the root appender.
+ * Sets the root block in the Gutenberg editor and optionally adds the root appender.
  *
  * This function registers a filter to override the inserter support for blocks that are not the specified root block name.
  * It also optionally initializes the root appender with the provided block name and tooltip text, and makes the click
@@ -27,6 +27,6 @@ export const setRootBlock = (rootBlockName, initAppender = true, appenderTooltip
     );
 
     if (initAppender) {
-        initRootAppender(rootBlockName, appenderTooltipText);
+        initRootBlockAppender(rootBlockName, appenderTooltipText);
     }
 }
