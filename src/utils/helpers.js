@@ -109,3 +109,10 @@ export const getLocationAddress = (location) => {
 
     return addressParts.join('');
 };
+
+export const decodeHtmlEntities = (text) => {
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = text;
+
+    return tempElement.textContent || tempElement.innerText || '';
+};
