@@ -18,7 +18,7 @@ export const setRootBlock = (rootBlockName, initAppender = true, appenderTooltip
         'ssm/with-root-block',
         (settings, name) => {
             // Override the inserter support for blocks that are not the rootBlockName
-            if (name !== rootBlockName) {
+            if (name !== rootBlockName && !settings.ancestor) {
                 settings.ancestor = [rootBlockName];
             }
 

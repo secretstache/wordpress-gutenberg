@@ -109,7 +109,7 @@ export const getDataQueryAttributes = (
 
     if (sourcesList && sourcesList?.length > 0) {
         dataSourceConfig.enum = sourcesList;
-        dataSourceConfig.default = sourcesList[0]; // TODO: should be sourcesList[0].value
+        dataSourceConfig.default = sourcesList[0].value;
     }
 
     let queryTypeConfig = {
@@ -120,7 +120,7 @@ export const getDataQueryAttributes = (
         queryTypeConfig.enum = [
             ...queriesList
         ];
-        queryTypeConfig.default = queriesList[0]; // TODO: should be queriesList[0].value
+        queryTypeConfig.default = queriesList[0].value;
     }
 
     return {
@@ -132,50 +132,65 @@ export const getDataQueryAttributes = (
     };
 };
 
-// TODO: make more flexible
-// TODO: set backgroundMediaType to null
-export const baseBackgroundAttribute = {
-    isIncludeBackgroundMedia: {
-        type: 'boolean',
-        default: false,
-    },
-    backgroundMediaType: {
-        type: 'string',
-        default: 'color',
-    },
-    backgroundColor: { // TODO: remove default, since it can affects a block without the 'white' allowed color
-        type: 'object',
-        default: {
-            value: '#ffffff',
-            slug: 'white',
+/**
+ * Returns the base background attribute object with configurable default background color and media type.
+ *
+ * @param {string} [defaultBackgroundMediaType='color'] - The default background media type.
+ * @param {Object} defaultBackgroundColor - The background color configuration.
+ * @param {string} defaultBackgroundColor.value - The hex value of the background color.
+ * @param {string} defaultBackgroundColor.slug - The slug of the background color.
+ * @returns {Object} The base background attribute object.
+ */
+export const getBaseBackgroundAttribute = (
+    defaultBackgroundMediaType = 'color',
+    defaultBackgroundColor = { value: '', slug: '' },
+) => {
+    return {
+        isIncludeBackgroundMedia: {
+            type: 'boolean',
+            default: false,
         },
-    },
-    backgroundImage: {
-        type: 'object',
-        default: {
-            id: null,
-            url: '',
+        backgroundMediaType: {
+            type: 'string',
+            default: defaultBackgroundMediaType,
         },
-    },
-    backgroundVideo: {
-        type: 'object',
-        default: {
-            id: null,
-            url: '',
+        backgroundColor: {
+            type: 'object',
+            default: defaultBackgroundColor,
         },
-    },
-    isIncludeOverlay: {
-        type: 'boolean',
-        default: false,
-    },
-}
+        backgroundImage: {
+            type: 'object',
+            default: {
+                id: null,
+                url: '',
+            },
+        },
+        backgroundVideo: {
+            type: 'object',
+            default: {
+                id: null,
+                url: '',
+            },
+        },
+        isIncludeOverlay: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+};
 
 export const spacingAttribute = {
     spacing: {
         type: 'object',
         default: {
-            margin: { top: 0, bottom: 0 },
-            padding: { top: 0, bottom: 0 },
+            margin: {
+                top: -1,
+                bottom: -1,
+            },
+            padding: {
+                top: -1,
+                bottom: -1,
+            }
         },
     },
 }
@@ -185,13 +200,25 @@ export const responsiveSpacingAttribute = {
         type: 'object',
         default: {
             desktop: {
-                margin: { top: 0, bottom: 0 },
-                padding: { top: 0, bottom: 0 },
+                margin: {
+                    top: -1,
+                    bottom: -1,
+                },
+                padding: {
+                    top: -1,
+                    bottom: -1,
+                }
             },
             mobile: {
-                margin: { top: 0, bottom: 0 },
-                padding: { top: 0, bottom: 0 },
-            } ,
-        },
-    },
+                margin: {
+                    top: -1,
+                    bottom: -1,
+                },
+                padding: {
+                    top: -1,
+                    bottom: -1,
+                }
+            }
+        }
+    }
 }
