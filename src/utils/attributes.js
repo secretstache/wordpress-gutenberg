@@ -135,14 +135,14 @@ export const getDataQueryAttributes = (
 /**
  * Returns the base background attribute object with configurable default background color and media type.
  *
- * @param {string} [defaultBackgroundMediaType='color'] - The default background media type.
+ * @param {string} [defaultBackgroundMediaType=''] - The default background media type.
  * @param {Object} defaultBackgroundColor - The background color configuration.
  * @param {string} defaultBackgroundColor.value - The hex value of the background color.
  * @param {string} defaultBackgroundColor.slug - The slug of the background color.
  * @returns {Object} The base background attribute object.
  */
 export const getBaseBackgroundAttribute = (
-    defaultBackgroundMediaType = 'color',
+    defaultBackgroundMediaType = '',
     defaultBackgroundColor = { value: '', slug: '' },
 ) => {
     return {
@@ -152,7 +152,7 @@ export const getBaseBackgroundAttribute = (
         },
         backgroundMediaType: {
             type: 'string',
-            default: defaultBackgroundMediaType,
+            default: '',
         },
         backgroundColor: {
             type: 'object',
