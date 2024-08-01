@@ -1,22 +1,35 @@
-import { useEffect, useState } from '@wordpress/element';
 import { TabPanel } from '@wordpress/components';
+import { useCallback } from '@wordpress/element';
 
 import { SpacingControl } from './SpacingControl.js';
 
 export const ResponsiveSpacingControl = ({
-     max = 5,
-     min = 0,
+     max = 6,
+     min = -1,
      hasMargin = true,
      hasPadding = true,
      onChange,
-     value = { desktop: { margin: {}, padding: {} }, mobile: { margin: {}, padding: {} } }
+     value = { desktop: { margin: {}, padding: {} }, mobile: { margin: {}, padding: {} } },
  }) => {
-    const [ desktop, setDesktop ] = useState(value?.desktop || { margin: {}, padding: {} });
-    const [ mobile, setMobile ] = useState(value?.mobile || { margin: {}, padding: {} });
+    const handleDesktopChange = useCallback(
+        (desktop) => {
+            onChange({
+                desktop: desktop,
+                mobile: value.mobile,
+            });
+        },
+        [ onChange, value.mobile ],
+    );
 
-    useEffect(() => {
-        onChange({ desktop, mobile });
-    }, [ desktop, mobile ]);
+    const handleMobileChange = useCallback(
+        (mobile) => {
+            onChange({
+                mobile: mobile,
+                desktop: value.desktop,
+            });
+        },
+        [ onChange, value.desktop ],
+    );
 
     return (
         <TabPanel
@@ -36,8 +49,8 @@ export const ResponsiveSpacingControl = ({
                                 hasPadding={hasPadding}
                                 max={max}
                                 min={min}
-                                value={desktop}
-                                onChange={(value) => setDesktop(value)}
+                                value={value.desktop}
+                                onChange={handleDesktopChange}
                             />
                         );
                     case 'mobile':
@@ -48,8 +61,8 @@ export const ResponsiveSpacingControl = ({
                                 hasPadding={hasPadding}
                                 max={max}
                                 min={min}
-                                value={mobile}
-                                onChange={(value) => setMobile(value)}
+                                value={value.mobile}
+                                onChange={handleMobileChange}
                             />
                         );
                     default:

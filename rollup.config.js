@@ -40,7 +40,7 @@ export default {
         }),
         resolve({ extensions: ['.js', '.jsx'] }),
         postcss({
-            extract: path.resolve('build/index.css'),
+            extract: path.resolve('build/styles.css'),
             use: ['sass'],
             extensions: ['.scss'],
         }),

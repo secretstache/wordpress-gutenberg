@@ -1,32 +1,69 @@
-import { RangeControl } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { RangeControl, Tooltip } from '@wordpress/components';
+import { useCallback } from '@wordpress/element';
 
-const Control = ({ label, max, min, value, onChange }) => (
-    <RangeControl
-        label={label}
-        value={value}
-        onChange={onChange}
-        initialPosition={0}
-        max={max}
-        min={min}
-        marks={true}
-    />
+const generateMarks = (min, max) => [
+    { value: min, label: min === -1 ? 'Default' : min.toString() },
+    ...Array.from({ length: max - min }, (_, i) => ({
+        value: min + i + 1,
+        label: '',
+    })),
+];
+
+const Control = ({ label, max, min, value, onChange, disabled, tooltip, ...other }) => (
+    <div className="bc-spacing-control-wrapper">
+        <Tooltip
+            text={tooltip}
+            placement="bottom"
+            delay={0}
+        >
+            <div className="bc-spacing-control-content">
+                <RangeControl
+                    className="bc-spacing-range-control"
+                    label={label}
+                    value={value}
+                    disabled={disabled}
+                    onChange={onChange}
+                    min={min}
+                    max={max}
+                    marks={generateMarks(min, max)}
+                    resetFallbackValue={-1}
+                    help="Use -1 for default settings."
+                    renderTooltipContent={(value) => {
+                        if (value === -1) return 'Default';
+
+                        return value;
+                    }}
+                    {...other}
+                />
+            </div>
+        </Tooltip>
+    </div>
 );
 
 export const SpacingControl = ({
     hasMargin = true,
     hasPadding = true,
-    max = 5,
-    min = 0,
+    disabledMargin = { top: false, bottom: false },
+    disabledPadding = { top: false, bottom: false },
+    marginTooltips = { top: '', bottom: '' },
+    paddingTooltips = { top: '', bottom: '' },
+    max = 6,
+    min = -1,
     onChange,
-    value = { margin: {}, padding: {} }
+    value = { margin: {}, padding: {} },
 }) => {
-    const [ margin, setMargin ] = useState(value?.margin || {});
-    const [ padding, setPadding ] = useState(value?.padding || {});
-
-    useEffect(() => {
-        onChange({ margin, padding });
-    }, [ margin, padding ]);
+    const handleChange = useCallback(
+        (type, direction) => (newValue) => {
+            onChange({
+                ...value,
+                [type]: {
+                    ...value[type],
+                    [direction]: newValue,
+                },
+            });
+        },
+        [ onChange, value ],
+    );
 
     return (
         <>
@@ -36,20 +73,20 @@ export const SpacingControl = ({
                         label="Top Margin"
                         max={max}
                         min={min}
-                        value={margin.top || min}
-                        onChange={(topMargin) =>
-                            setMargin((prev) => ({ ...prev, top: topMargin }))
-                        }
+                        value={value.margin.top ?? min}
+                        onChange={handleChange('margin', 'top')}
+                        disabled={disabledMargin.top}
+                        tooltip={marginTooltips.top}
                     />
 
                     <Control
                         label="Bottom Margin"
                         max={max}
                         min={min}
-                        value={margin.bottom || min}
-                        onChange={(bottomMargin) =>
-                            setMargin((prev) => ({ ...prev, bottom: bottomMargin }))
-                        }
+                        value={value.margin.bottom ?? min}
+                        onChange={handleChange('margin', 'bottom')}
+                        disabled={disabledMargin.bottom}
+                        tooltip={marginTooltips.bottom}
                     />
                 </>
             )}
@@ -60,20 +97,20 @@ export const SpacingControl = ({
                         label="Top Padding"
                         max={max}
                         min={min}
-                        value={padding.top || min}
-                        onChange={(topPadding) =>
-                            setPadding((prev) => ({ ...prev, top: topPadding }))
-                        }
+                        value={value.padding.top ?? min}
+                        onChange={handleChange('padding', 'top')}
+                        disabled={disabledPadding.top}
+                        tooltip={paddingTooltips.top}
                     />
 
                     <Control
                         label="Bottom Padding"
                         max={max}
                         min={min}
-                        value={padding.bottom || min}
-                        onChange={(bottomPadding) =>
-                            setPadding((prev) => ({ ...prev, bottom: bottomPadding }))
-                        }
+                        value={value.padding.bottom ?? min}
+                        onChange={handleChange('padding', 'bottom')}
+                        disabled={disabledPadding.bottom}
+                        tooltip={paddingTooltips.bottom}
                     />
                 </>
             )}
