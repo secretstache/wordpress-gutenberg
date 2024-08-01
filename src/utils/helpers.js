@@ -1,5 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 import slugify from 'slugify';
+import classNames from 'classnames';
 
 export const loadSelectOptions = async (inputValue, postType, mapper = null) => {
     const response = await apiFetch({
@@ -115,4 +116,60 @@ export const decodeHtmlEntities = (text) => {
     tempElement.innerHTML = text;
 
     return tempElement.textContent || tempElement.innerText || '';
+};
+
+/**
+ * Generates a string of class names for spacing based on the provided spacing object.
+ *
+ * @param {Object} spacing - The spacing object containing margin and padding values.
+ * @param {Object} [desktopPrefixes] - Optional prefixes for desktop spacing classes.
+ * @param {string} [desktopPrefixes.marginTop='mt-'] - Prefix for desktop margin-top class.
+ * @param {string} [desktopPrefixes.marginBottom='mb-'] - Prefix for desktop margin-bottom class.
+ * @param {string} [desktopPrefixes.paddingTop='pt-'] - Prefix for desktop padding-top class.
+ * @param {string} [desktopPrefixes.paddingBottom='pb-'] - Prefix for desktop padding-bottom class.
+ * @param {Object} [mobilePrefixes] - Optional prefixes for mobile spacing classes.
+ * @param {string} [mobilePrefixes.marginTop='sm:mt-'] - Prefix for mobile margin-top class.
+ * @param {string} [mobilePrefixes.marginBottom='sm:mb-'] - Prefix for mobile margin-bottom class.
+ * @param {string} [mobilePrefixes.paddingTop='sm:pt-'] - Prefix for mobile padding-top class.
+ * @param {string} [mobilePrefixes.paddingBottom='sm:pb-'] - Prefix for mobile padding-bottom class.
+ * @returns {string} - A string of class names for the specified spacing.
+ */
+export const getSpacingClasses = (
+    spacing,
+    desktopPrefixes = {
+        marginTop: 'mt-',
+        marginBottom: 'mb-',
+        paddingTop: 'pt-',
+        paddingBottom: 'pb-',
+    },
+    mobilePrefixes = {
+        marginTop: 'sm:mt-',
+        marginBottom: 'sm:mb-',
+        paddingTop: 'sm:pt-',
+        paddingBottom: 'sm:pb-',
+    }
+) => {
+    if (spacing?.desktop || spacing?.mobile) {
+        return classNames({
+            [`${desktopPrefixes.marginTop}${spacing.desktop.margin.top}`]: spacing.desktop.margin.top !== -1,
+            [`${desktopPrefixes.marginBottom}${spacing.desktop.margin.bottom}`]: spacing.desktop.margin.bottom !== -1,
+
+            [`${desktopPrefixes.paddingTop}${spacing.desktop.padding.top}`]: spacing.desktop.padding.top !== -1,
+            [`${desktopPrefixes.paddingBottom}${spacing.desktop.padding.bottom}`]: spacing.desktop.padding.bottom !== -1,
+
+            [`${mobilePrefixes.marginTop}${spacing.mobile.margin.top}`]: spacing.mobile.margin.top !== -1,
+            [`${mobilePrefixes.marginBottom}${spacing.mobile.margin.bottom}`]: spacing.mobile.margin.bottom !== -1,
+
+            [`${mobilePrefixes.paddingTop}${spacing.mobile.padding.top}`]: spacing.mobile.padding.top !== -1,
+            [`${mobilePrefixes.paddingBottom}${spacing.mobile.padding.bottom}`]: spacing.mobile.padding.bottom !== -1,
+        });
+    } else {
+        return classNames({
+            [`${desktopPrefixes.marginTop}${spacing.margin.top}`]: spacing.margin.top !== -1,
+            [`${desktopPrefixes.marginBottom}${spacing.margin.bottom}`]: spacing.margin.bottom !== -1,
+
+            [`${desktopPrefixes.paddingTop}${spacing.padding.top}`]: spacing.padding.top !== -1,
+            [`${desktopPrefixes.paddingBottom}${spacing.padding.bottom}`]: spacing.padding.bottom !== -1,
+        });
+    }
 };
