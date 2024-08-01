@@ -141,7 +141,7 @@ export const getDataQueryAttributes = (
  * @param {string} defaultBackgroundColor.slug - The slug of the background color.
  * @returns {Object} The base background attribute object.
  */
-export const getBaseBackgroundAttribute = (
+export const getBaseBackgroundAttributes = (
     defaultBackgroundMediaType = '',
     defaultBackgroundColor = { value: '', slug: '' },
 ) => {
