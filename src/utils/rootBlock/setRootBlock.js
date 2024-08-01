@@ -1,5 +1,5 @@
 import { addFilter } from '@wordpress/hooks';
-import { initRootBlockAppender } from '../../utils/index.js';
+import { initRootBlockAppender } from './initRootBlockAppender.js';
 
 /**
  * Sets the root block in the Gutenberg editor and optionally adds the root appender.

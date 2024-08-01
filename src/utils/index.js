@@ -1,4 +1,4 @@
-export * from './initRootBlockAppender/index.js';
+export * from './rootBlock/index.js';
 export * from './waitForContainer/index.js';
 
 export * from './attributes.js';
