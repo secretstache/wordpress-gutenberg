@@ -1,6 +1,6 @@
 {
   "name": "@secretstache/wordpress-gutenberg",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "",
   "author": "Secret Stache",
   "license": "GPL-2.0-or-later",
@@ -12,7 +12,7 @@
     "node": ">=20"
   },
   "main": "build/index.js",
-  "module": "build/index.es.js",
+  "module": "build/index.js",
   "files": [
     "build",
     "src"
