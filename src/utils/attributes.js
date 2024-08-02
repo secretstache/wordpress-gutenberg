@@ -158,20 +158,9 @@ export const getBaseBackgroundAttributes = (
             type: 'object',
             default: defaultBackgroundColor,
         },
-        backgroundImage: {
-            type: 'object',
-            default: {
-                id: null,
-                url: '',
-            },
-        },
-        backgroundVideo: {
-            type: 'object',
-            default: {
-                id: null,
-                url: '',
-            },
-        },
+
+        ...mediaAttribute,
+
         isIncludeOverlay: {
             type: 'boolean',
             default: false,
