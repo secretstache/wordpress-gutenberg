@@ -4,12 +4,14 @@ import { page as pageIcon } from '@wordpress/icons';
 
 import { MEDIA_TYPES } from '../utils/index.js';
 
-export const BCImageRenderer = ({
+export const ImageRenderer = ({
     imageId,
     imageUrl,
     onImageClick,
     onRemoveClick,
     onSelectClick,
+    selectButtonLabel = "Select Image",
+    removeButtonLabel = "Remove Image",
 }) => {
     return imageId && imageUrl ? (
         <>
@@ -28,7 +30,7 @@ export const BCImageRenderer = ({
                 isSecondary
                 isDestructive
             >
-                Remove Image
+                {removeButtonLabel}
             </Button>
         </>
     ) : (
@@ -37,16 +39,18 @@ export const BCImageRenderer = ({
             onClick={onSelectClick}
             className="bc-select-btn"
         >
-            Select Image
+            {selectButtonLabel}
         </Button>
     );
 };
 
-export const BCVideoRenderer = ({
+export const VideoRenderer = ({
     videoId,
     videoUrl,
     onRemoveClick,
     onSelectClick,
+    selectButtonLabel = "Select Video",
+    removeButtonLabel = "Remove Video",
 }) => {
     return videoId && videoUrl ? (
         <>
@@ -60,7 +64,7 @@ export const BCVideoRenderer = ({
                 isSecondary
                 isDestructive
             >
-                Remove Video
+                {removeButtonLabel}
             </Button>
         </>
     ) : (
@@ -69,22 +73,24 @@ export const BCVideoRenderer = ({
             onClick={onSelectClick}
             className="bc-select-btn"
         >
-            Select Video
+            {selectButtonLabel}
         </Button>
     );
 };
 
-export const BCAnimationRenderer = ({
+export const AnimationRenderer = ({
     animationFileId,
     animationFileUrl,
     animationFileName,
     onSelectClick,
     onRemoveClick,
+    selectButtonLabel = "Select File",
+    removeButtonLabel = "Remove File",
 }) => {
     return animationFileId && animationFileUrl ? (
         <>
             <div className="bc-animation-block-json-file" onClick={onSelectClick}>
-                <WPIcon icon={pageIcon} size={36}/>
+                <WPIcon icon={pageIcon} size={36} />
                 <span>{animationFileName}</span>
             </div>
             <Button
@@ -93,24 +99,25 @@ export const BCAnimationRenderer = ({
                 className="bc-remove-btn"
                 onClick={onRemoveClick}
             >
-                Remove File
+                {removeButtonLabel}
             </Button>
         </>
     ) : (
         <Button variant="secondary" onClick={onSelectClick}>
-            Select File
+            {selectButtonLabel}
         </Button>
     )
 };
 
-// TODO: find better name
-export const BCMediaPicker = ({
+export const MediaControl = ({
     mediaId,
     mediaUrl,
     mediaFileName = '',
     onSelect,
     onRemove,
     type = MEDIA_TYPES.IMAGE,
+    selectButtonLabel,
+    removeButtonLabel,
     ...other
 }) => {
     if (type === MEDIA_TYPES.IMAGE) {
@@ -122,15 +129,17 @@ export const BCMediaPicker = ({
                     accept="image/*"
                     value={mediaId}
                     render={({ open }) => (
-                        <BCImageRenderer
+                        <ImageRenderer
                             imageId={mediaId}
                             imageUrl={mediaUrl}
                             onImageClick={open}
                             onSelectClick={open}
                             onRemoveClick={onRemove}
+                            selectButtonLabel={selectButtonLabel}
+                            removeButtonLabel={removeButtonLabel}
                         />
                     )}
-                    { ...other }
+                    {...other}
                 />
             </MediaUploadCheck>
         );
@@ -142,14 +151,16 @@ export const BCMediaPicker = ({
                     allowedTypes={['video']}
                     value={mediaId}
                     render={({ open }) => (
-                        <BCVideoRenderer
+                        <VideoRenderer
                             videoId={mediaId}
                             videoUrl={mediaUrl}
                             onSelectClick={open}
                             onRemoveClick={onRemove}
+                            selectButtonLabel={selectButtonLabel}
+                            removeButtonLabel={removeButtonLabel}
                         />
                     )}
-                    { ...other }
+                    {...other}
                 />
             </MediaUploadCheck>
         );
@@ -161,12 +172,14 @@ export const BCMediaPicker = ({
                     allowedTypes={['application/json', 'text/plain', 'application/lottie']}
                     value={mediaId}
                     render={({ open }) => (
-                        <BCAnimationRenderer
+                        <AnimationRenderer
                             animationFileId={mediaId}
                             animationFileUrl={mediaUrl}
                             animationFileName={mediaFileName}
                             onSelectClick={open}
                             onRemoveClick={onRemove}
+                            selectButtonLabel={selectButtonLabel}
+                            removeButtonLabel={removeButtonLabel}
                         />
                     )}
                     {...other}

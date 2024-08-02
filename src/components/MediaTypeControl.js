@@ -1,8 +1,8 @@
 import { useState } from '@wordpress/element';
 import { SelectControl } from '@wordpress/components';
 
-import { BCMediaPicker } from './MediaPicker.js';
-import { MEDIA_TYPE_LABELS} from '../utils/index.js';
+import { MediaControl } from './MediaControl.js';
+import { MEDIA_TYPE_LABELS } from '../utils/index.js';
 
 export const MediaTypeControl = (props) => {
     const {
@@ -14,7 +14,7 @@ export const MediaTypeControl = (props) => {
         mediaOnRemove,
     } = props;
 
-    const [ selectedMediaType, setSelectedMediaType ] = useState(mediaTypes?.[0]);
+    const [selectedMediaType, setSelectedMediaType] = useState(mediaTypes?.[0]);
 
     const mediaTypesOptions = mediaTypes
         ?.filter((type) => MEDIA_TYPE_LABELS[type]) // Ensure it's an allowed type
@@ -39,7 +39,7 @@ export const MediaTypeControl = (props) => {
 
             {
                 selectedMediaType && (
-                    <BCMediaPicker
+                    <MediaControl
                         mediaId={mediaId}
                         mediaUrl={mediaUrl}
                         mediaFileName={mediaFileName}
