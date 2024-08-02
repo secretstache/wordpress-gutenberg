@@ -12,6 +12,7 @@ export const MediaTypeControl = (props) => {
         mediaFileName = '',
         mediaOnSelect,
         mediaOnRemove,
+        label = 'Media Type',
     } = props;
 
     const [selectedMediaType, setSelectedMediaType] = useState(mediaTypes?.[0]);
@@ -26,10 +27,9 @@ export const MediaTypeControl = (props) => {
     return (
         <>
             {
-                // TODO: add custom label
                 mediaTypes && (
                     <SelectControl
-                        label="Media Type"
+                        label={label}
                         value={selectedMediaType}
                         onChange={(mediaType) => setSelectedMediaType(mediaType)}
                         options={mediaTypesOptions}
