@@ -152,7 +152,7 @@ export const getBaseBackgroundAttributes = (
         },
         backgroundMediaType: {
             type: 'string',
-            default: '',
+            default: defaultBackgroundMediaType,
         },
         backgroundColor: {
             type: 'object',

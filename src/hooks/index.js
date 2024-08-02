@@ -9,3 +9,4 @@ export { useAccordionItem } from './useAccordionItem.js';
 export { useBlockTabsData } from './useBlockTabsData.js';
 export { useAllowedBlocks } from './useAllowedBlocks.js';
 export { useChildBlockPosition } from './useChildBlockPosition.js';
+export { useFilterBlocks } from './useFilterBlocks.js';
