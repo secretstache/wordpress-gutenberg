@@ -122,54 +122,26 @@ export const decodeHtmlEntities = (text) => {
  * Generates a string of class names for spacing based on the provided spacing object.
  *
  * @param {Object} spacing - The spacing object containing margin and padding values.
- * @param {Object} [desktopPrefixes] - Optional prefixes for desktop spacing classes.
- * @param {string} [desktopPrefixes.marginTop='mt-'] - Prefix for desktop margin-top class.
- * @param {string} [desktopPrefixes.marginBottom='mb-'] - Prefix for desktop margin-bottom class.
- * @param {string} [desktopPrefixes.paddingTop='pt-'] - Prefix for desktop padding-top class.
- * @param {string} [desktopPrefixes.paddingBottom='pb-'] - Prefix for desktop padding-bottom class.
- * @param {Object} [mobilePrefixes] - Optional prefixes for mobile spacing classes.
- * @param {string} [mobilePrefixes.marginTop='sm:mt-'] - Prefix for mobile margin-top class.
- * @param {string} [mobilePrefixes.marginBottom='sm:mb-'] - Prefix for mobile margin-bottom class.
- * @param {string} [mobilePrefixes.paddingTop='sm:pt-'] - Prefix for mobile padding-top class.
- * @param {string} [mobilePrefixes.paddingBottom='sm:pb-'] - Prefix for mobile padding-bottom class.
+ * @param desktopPrefix - Prefix for desktop classes
+ * @param mobilePrefix - Prefix for mobile classes
  * @returns {string} - A string of class names for the specified spacing.
  */
 export const getSpacingClasses = (
     spacing,
-    desktopPrefixes = {
-        marginTop: 'mt-',
-        marginBottom: 'mb-',
-        paddingTop: 'pt-',
-        paddingBottom: 'pb-',
-    },
-    mobilePrefixes = {
-        marginTop: 'sm:mt-',
-        marginBottom: 'sm:mb-',
-        paddingTop: 'sm:pt-',
-        paddingBottom: 'sm:pb-',
-    }
+    desktopPrefix = 'md:',
+    mobilePrefix = '',
 ) => {
-    if (spacing?.desktop || spacing?.mobile) {
-        return classNames({
-            [`${desktopPrefixes.marginTop}${spacing.desktop.margin.top}`]: spacing.desktop.margin.top !== -1,
-            [`${desktopPrefixes.marginBottom}${spacing.desktop.margin.bottom}`]: spacing.desktop.margin.bottom !== -1,
+    return classNames({
+        [`${desktopPrefix}mt-${spacing?.desktop?.margin?.top}`]: spacing?.desktop?.margin?.top !== -1,
+        [`${desktopPrefix}mb-${spacing?.desktop?.margin?.bottom}`]: spacing?.desktop?.margin?.bottom !== -1,
 
-            [`${desktopPrefixes.paddingTop}${spacing.desktop.padding.top}`]: spacing.desktop.padding.top !== -1,
-            [`${desktopPrefixes.paddingBottom}${spacing.desktop.padding.bottom}`]: spacing.desktop.padding.bottom !== -1,
+        [`${desktopPrefix}pt-${spacing?.desktop?.padding?.top}`]: spacing?.desktop?.padding?.top !== -1,
+        [`${desktopPrefix}pb-${spacing?.desktop?.padding?.bottom}`]: spacing?.desktop?.padding?.bottom !== -1,
 
-            [`${mobilePrefixes.marginTop}${spacing.mobile.margin.top}`]: spacing.mobile.margin.top !== -1,
-            [`${mobilePrefixes.marginBottom}${spacing.mobile.margin.bottom}`]: spacing.mobile.margin.bottom !== -1,
+        [`${mobilePrefix}mt-${spacing?.mobile?.margin?.top}`]: spacing?.mobile?.margin?.top !== -1,
+        [`${mobilePrefix}mb-${spacing?.mobile?.margin?.bottom}`]: spacing?.mobile?.margin?.bottom !== -1,
 
-            [`${mobilePrefixes.paddingTop}${spacing.mobile.padding.top}`]: spacing.mobile.padding.top !== -1,
-            [`${mobilePrefixes.paddingBottom}${spacing.mobile.padding.bottom}`]: spacing.mobile.padding.bottom !== -1,
-        });
-    } else {
-        return classNames({
-            [`${desktopPrefixes.marginTop}${spacing.margin.top}`]: spacing.margin.top !== -1,
-            [`${desktopPrefixes.marginBottom}${spacing.margin.bottom}`]: spacing.margin.bottom !== -1,
-
-            [`${desktopPrefixes.paddingTop}${spacing.padding.top}`]: spacing.padding.top !== -1,
-            [`${desktopPrefixes.paddingBottom}${spacing.padding.bottom}`]: spacing.padding.bottom !== -1,
-        });
-    }
+        [`${mobilePrefix}pt-${spacing?.mobile?.padding?.top}`]: spacing?.mobile?.padding?.top !== -1,
+        [`${mobilePrefix}pb-${spacing?.mobile?.padding?.bottom}`]: spacing?.mobile?.padding?.bottom !== -1,
+    });
 };
