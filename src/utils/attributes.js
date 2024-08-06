@@ -135,20 +135,21 @@ export const getDataQueryAttributes = (
 /**
  * Returns the base background attribute object with configurable default background color and media type.
  *
- * @param {string} [defaultBackgroundMediaType=''] - The default background media type.
- * @param {Object} defaultBackgroundColor - The background color configuration.
- * @param hasIncludeOverlayAttribute
- * @param hasIncludeBackgroundMediaAttribute
- * @param {string} defaultBackgroundColor.value - The hex value of the background color.
- * @param {string} defaultBackgroundColor.slug - The slug of the background color.
+ * @param {Object} options - The options for configuring the background attributes.
+ * @param {string} [options.defaultBackgroundMediaType=''] - The default background media type.
+ * @param {Object} options.defaultBackgroundColor - The background color configuration.
+ * @param {string} options.defaultBackgroundColor.value - The hex value of the background color.
+ * @param {string} options.defaultBackgroundColor.slug - The slug of the background color.
+ * @param {boolean} [options.hasIncludeBackgroundMediaAttribute=false] - Whether to include the background media attribute.
+ * @param {boolean} [options.hasIncludeOverlayAttribute=false] - Whether to include the overlay attribute.
  * @returns {Object} The base background attribute object.
  */
-export const getBaseBackgroundAttributes = (
+export const getBaseBackgroundAttributes = ({
     defaultBackgroundMediaType = '',
     defaultBackgroundColor = { value: '', slug: '' },
     hasIncludeBackgroundMediaAttribute = false,
     hasIncludeOverlayAttribute = false,
-) => {
+} = {}) => {
     const isIncludeOverlayAttribute = {
         isIncludeOverlay: {
             type: 'boolean',
