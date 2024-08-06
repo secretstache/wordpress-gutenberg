@@ -37,9 +37,12 @@ export const useDataQuery = (props) => {
         const isResolving = select('core/data').isResolving('core', 'getEntityRecords', ['postType', postType, queryArgs]);
         const isLoading = isResolving || postsToShow === undefined;
 
+        const isEmpty = postsToShow !== null && postsToShow?.length === 0;
+
         return {
             postsToShow,
             isLoading,
+            isEmpty,
         };
     }, dependencies);
 }
