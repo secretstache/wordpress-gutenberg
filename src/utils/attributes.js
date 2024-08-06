@@ -137,6 +137,8 @@ export const getDataQueryAttributes = (
  *
  * @param {string} [defaultBackgroundMediaType=''] - The default background media type.
  * @param {Object} defaultBackgroundColor - The background color configuration.
+ * @param hasIncludeOverlayAttribute
+ * @param hasIncludeBackgroundMediaAttribute
  * @param {string} defaultBackgroundColor.value - The hex value of the background color.
  * @param {string} defaultBackgroundColor.slug - The slug of the background color.
  * @returns {Object} The base background attribute object.
@@ -144,12 +146,26 @@ export const getDataQueryAttributes = (
 export const getBaseBackgroundAttributes = (
     defaultBackgroundMediaType = '',
     defaultBackgroundColor = { value: '', slug: '' },
+    hasIncludeBackgroundMediaAttribute = false,
+    hasIncludeOverlayAttribute = false,
 ) => {
-    return {
+    const isIncludeOverlayAttribute = {
+        isIncludeOverlay: {
+            type: 'boolean',
+            default: false,
+        }
+    };
+
+    const isIncludeBackgroundMediaAttribute = {
         isIncludeBackgroundMedia: {
             type: 'boolean',
             default: false,
-        },
+        }
+    };
+
+    return {
+        ...(hasIncludeBackgroundMediaAttribute ? isIncludeBackgroundMediaAttribute : {}),
+
         backgroundMediaType: {
             type: 'string',
             default: defaultBackgroundMediaType,
@@ -161,10 +177,7 @@ export const getBaseBackgroundAttributes = (
 
         ...mediaAttribute,
 
-        isIncludeOverlay: {
-            type: 'boolean',
-            default: false,
-        },
+        ...(hasIncludeOverlayAttribute ? isIncludeOverlayAttribute : {}),
     };
 };
 
