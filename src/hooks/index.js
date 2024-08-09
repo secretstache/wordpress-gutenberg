@@ -6,7 +6,7 @@ export { useThemeColors } from './useThemeColors';
 export { useUpdateAttribute } from './useUpdateAttribute';
 export { useDataQuery } from './useDataQuery';
 export { useAccordionItem } from './useAccordionItem.js';
-export { useBlockTabsData } from './useBlockTabsData.js';
+export { useTabs } from './useTabs.js';
 export { useAllowedBlocks } from './useAllowedBlocks.js';
 export { useChildBlockPosition } from './useChildBlockPosition.js';
 export { useFilterBlocks } from './useFilterBlocks.js';

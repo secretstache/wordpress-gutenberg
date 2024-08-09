@@ -96,6 +96,7 @@ export const numberOfPostsAttribute = {
     },
 };
 
+// TODO: make dataSource optional
 export const getDataQueryAttributes = (
     sourcesList,
     queriesList,
