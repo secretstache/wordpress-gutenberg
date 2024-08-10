@@ -8,9 +8,10 @@ export const hideRootBlockForOtherBlocks = (rootBlockName) => {
         'ssm/with-root-block',
         (blockSettings, blockName) => {
             const isRootBlock = blockName === rootBlockName;
-            const hasOwnAllowedBlocks = blockSettings?.allowedBlocks;
+            const hasOwnAllowedBlocks = !!blockSettings?.allowedBlocks;
+            const hasParent = !!blockSettings?.parent;
 
-            if (isRootBlock || hasOwnAllowedBlocks) {
+            if (isRootBlock || hasParent || hasOwnAllowedBlocks) {
                 return blockSettings;
             }
 
