@@ -132,55 +132,60 @@ export const getDataQueryAttributes = (
         ...(hasNumberOfPosts ? numberOfPostsAttribute : {}),
     };
 };
-
 /**
- * Returns the base background attribute object with configurable default background color and media type.
+ * Generates a set of attributes for background settings in a block, including options
+ * for background color, media, and overlays based on the provided configurations.
  *
- * @param {Object} options - The options for configuring the background attributes.
- * @param {string} [options.defaultBackgroundMediaType=''] - The default background media type.
- * @param {Object} options.defaultBackgroundColor - The background color configuration.
- * @param {string} options.defaultBackgroundColor.value - The hex value of the background color.
- * @param {string} options.defaultBackgroundColor.slug - The slug of the background color.
- * @param {boolean} [options.hasIncludeBackgroundMediaAttribute=false] - Whether to include the background media attribute.
- * @param {boolean} [options.hasIncludeOverlayAttribute=false] - Whether to include the overlay attribute.
- * @returns {Object} The base background attribute object.
+ * @param {Object} [options={}] - The options for generating background attributes.
+ * @param {Object} [options.defaultBackgroundColor={ value: '', slug: '' }] - The default background color attribute.
+ * @param {boolean} [options.hasBackgroundMedia=false] - Flag to determine if background media attributes should be included.
+ * @param {string} [options.defaultBackgroundMediaType=''] - The default type of background media if media attributes are included.
+ * @param {boolean} [options.hasOverlay=false] - Flag to determine if overlay attributes should be included.
+ * @param {Object} [options.defaultOverlayColor={ value: '', slug: '' }] - The default overlay color attribute if overlay attributes are included.
+ *
+ * @returns {Object} An object containing the attributes for the block's background configuration.
  */
 export const getBaseBackgroundAttributes = ({
-    defaultBackgroundMediaType = '',
     defaultBackgroundColor = { value: '', slug: '' },
-    hasIncludeBackgroundMediaAttribute = false,
-    hasIncludeOverlayAttribute = false,
-} = {}) => {
-    // TODO: add the overlay color attribute
-    const isIncludeOverlayAttribute = {
-        isIncludeOverlay: {
-            type: 'boolean',
-            default: false,
-        }
-    };
 
-    const isIncludeBackgroundMediaAttribute = {
+    hasBackgroundMedia = false,
+    defaultBackgroundMediaType = '',
+
+    hasOverlay = false,
+    defaultOverlayColor = { value: '', slug: '' },
+} = {}) => {
+    const backgroundMediaAttribute = {
         isIncludeBackgroundMedia: {
             type: 'boolean',
             default: false,
-        }
-    };
-
-    return {
-        ...(hasIncludeBackgroundMediaAttribute ? isIncludeBackgroundMediaAttribute : {}),
-
+        },
         backgroundMediaType: {
             type: 'string',
             default: defaultBackgroundMediaType,
         },
+        ...mediaAttribute,
+    };
+
+    const overlayAttribute = {
+        isIncludeOverlay: {
+            type: 'boolean',
+            default: false,
+        },
+        overlayColor: {
+            type: 'object',
+            default: defaultOverlayColor,
+        },
+    };
+
+    return {
         backgroundColor: {
             type: 'object',
             default: defaultBackgroundColor,
         },
 
-        ...mediaAttribute,
+        ...(hasBackgroundMedia ? backgroundMediaAttribute : {}),
 
-        ...(hasIncludeOverlayAttribute ? isIncludeOverlayAttribute : {}),
+        ...(hasOverlay ? overlayAttribute : {}),
     };
 };
 
