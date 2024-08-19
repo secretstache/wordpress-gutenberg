@@ -15,7 +15,7 @@ export const useSlider = ({ isEnabled, setupSlider, dependencies = [] }) => {
                 sliderInstance.current = null;
             }
         };
-    }, [isEnabled, ...dependencies]);
+    }, [ isEnabled, ...dependencies ]);
 
     return {
         sliderElRef,

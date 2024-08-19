@@ -1,6 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { QUERY_TYPES } from '../utils';
 
+// TODO: numberOfPosts -1 is not a valid value, the API requires the per_page to be >= 1
 export const useDataQuery = (props) => {
     const {
         getPostType,

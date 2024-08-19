@@ -1,6 +1,8 @@
 import { RadioControl } from '@wordpress/components';
 
-// TODO: add support of curated posts, categories; consider merging with the useDataQuery hook
+// TODO: 1. add support of curated posts, categories
+// TODO: 2. consider merging with the useDataQuery hook
+// TODO: 3. can't pass disabled prop to RadioControl
 export const DataQueryControls = (props) => {
     const {
         dataSourceLabel = 'Data Source',

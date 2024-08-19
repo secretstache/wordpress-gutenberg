@@ -1,4 +1,4 @@
-export { usePreviewToggle } from './usePreviewToggle.js';
+export { usePreviewControl } from './usePreviewControl.js';
 export { useSlider } from './useSlider.js';
 export { useParentBlock } from './useParentBlock.js';
 export { useColorChange } from './useColorChange';

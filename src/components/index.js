@@ -10,3 +10,4 @@ export { ResponsiveSpacingControl } from './ResponsiveSpacingControl.js';
 export { ResourcesWrapper } from './ResourcesWrapper.js'
 export { DividersControl } from './DividersControl.js'
 export { MediaTypeControl } from './MediaTypeControl.js'
+export { InsertBlockToolbar } from './InsertBlockToolbar.js'

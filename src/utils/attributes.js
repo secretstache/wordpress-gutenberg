@@ -96,7 +96,7 @@ export const numberOfPostsAttribute = {
     },
 };
 
-// TODO: make dataSource optional
+// TODO: make dataSource optional, rebuild it's not easy to use(need to pass sourcesList and queriesList in complex format)
 export const getDataQueryAttributes = (
     sourcesList,
     queriesList,
@@ -151,6 +151,7 @@ export const getBaseBackgroundAttributes = ({
     hasIncludeBackgroundMediaAttribute = false,
     hasIncludeOverlayAttribute = false,
 } = {}) => {
+    // TODO: add the overlay color attribute
     const isIncludeOverlayAttribute = {
         isIncludeOverlay: {
             type: 'boolean',
