@@ -1,4 +1,4 @@
-import { useState } from '@wordpress/element';
+import { useMemo } from '@wordpress/element';
 import { SelectControl } from '@wordpress/components';
 
 import { MediaControl } from './MediaControl.js';
@@ -8,26 +8,26 @@ export const MediaTypeControl = (props) => {
     const {
         types = [ MEDIA_TYPES.IMAGE, MEDIA_TYPES.VIDEO ],
 
-        selectedType = MEDIA_TYPES.IMAGE,
-        typeOnSelect,
+        selectedType,
+        onTypeChange,
 
         mediaId,
         mediaUrl,
         mediaFileName = '',
 
-        mediaOnSelect,
-        mediaOnRemove,
+        onMediaSelect,
+        onMediaRemove,
 
         label = 'Media Type',
     } = props;
 
-
-    const typesOptions = types
+    const typesOptions = useMemo(() => types
         ?.filter((type) => MEDIA_TYPE_LABELS[type]) // Ensure it's an allowed type
         ?.map((type) => ({
             label: MEDIA_TYPE_LABELS[type],
             value: type,
-        }));
+        }))
+    , [ types ]);
 
     return (
         <>
@@ -36,7 +36,7 @@ export const MediaTypeControl = (props) => {
                     <SelectControl
                         label={label}
                         value={selectedType}
-                        onChange={(type) => typeOnSelect(type)}
+                        onChange={onTypeChange}
                         options={typesOptions}
                     />
                 )
@@ -49,8 +49,8 @@ export const MediaTypeControl = (props) => {
                         mediaUrl={mediaUrl}
                         mediaFileName={mediaFileName}
                         type={selectedType}
-                        onSelect={mediaOnSelect}
-                        onRemove={mediaOnRemove}
+                        onSelect={onMediaSelect}
+                        onRemove={onMediaRemove}
                     />
                 )
             }

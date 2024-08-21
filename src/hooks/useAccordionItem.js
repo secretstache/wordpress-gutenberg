@@ -18,8 +18,7 @@ export const useAccordionItem = (itemId, activeItemId, setActiveItemId, contentS
         }
     };
 
-    // TODO: rename to toggleItem
-    const toggleContent = () => {
+    const toggleItem = () => {
         setActiveItemId(isActive ? null : itemId);
     };
 
@@ -29,7 +28,7 @@ export const useAccordionItem = (itemId, activeItemId, setActiveItemId, contentS
         } else {
             closeContent();
         }
-    }, [isActive]);
+    }, [ isActive ]);
 
     useEffect(() => {
         if (!isActive || !blockRef.current) return;
@@ -45,7 +44,13 @@ export const useAccordionItem = (itemId, activeItemId, setActiveItemId, contentS
         resizeObserver.observe(blockRef.current);
 
         return () => resizeObserver.disconnect();
-    }, [isActive]);
+    }, [ isActive ]);
 
-    return { blockRef, toggleContent, isActive };
+    return {
+        blockRef,
+        toggleItem,
+        openContent,
+        closeContent,
+        isActive,
+    };
 };

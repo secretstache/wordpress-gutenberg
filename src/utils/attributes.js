@@ -13,17 +13,19 @@ export const linkControlAttribute = {
     },
 };
 
-export const mediaAttribute = {
-    media: {
+export const getMediaAttribute = (name = 'media') => ({
+    [`${name}`]: {
         type: 'object',
         default: {
             id: null,
-            url: '',
-            alt: '',
-            filename: '',
+            url: null,
+            alt: null,
+            name: null,
+            filename: null,
+            mime: null,
         },
     },
-};
+});
 
 export const contentAttribute = {
     title: {
@@ -36,22 +38,13 @@ export const contentAttribute = {
     },
 };
 
-export const animationAttribute = {
-    animationFile: {
-        type: 'object',
-        default: {
-            id: null,
-            url: null,
-            name: null,
-            filename: null,
-            mime: null,
-        },
-    },
+export const getAnimationAttribute = (name = 'animationFile') => ({
+    ...getMediaAttribute(name),
     isAnimationLooped: {
         type: 'boolean',
         default: true,
     },
-};
+});
 
 export const curatedPostsAttribute = {
     curatedPosts: {
@@ -137,50 +130,44 @@ export const getDataQueryAttributes = (
  * for background color, media, and overlays based on the provided configurations.
  *
  * @param {Object} [options={}] - The options for generating background attributes.
- * @param {Object} [options.defaultBackgroundColor={ value: '', slug: '' }] - The default background color attribute.
  * @param {boolean} [options.hasBackgroundMedia=false] - Flag to determine if background media attributes should be included.
- * @param {string} [options.defaultBackgroundMediaType=''] - The default type of background media if media attributes are included.
+ * @param {string} [options.mediaAttributeName='media'] - Background media attribute name.
  * @param {boolean} [options.hasOverlay=false] - Flag to determine if overlay attributes should be included.
- * @param {Object} [options.defaultOverlayColor={ value: '', slug: '' }] - The default overlay color attribute if overlay attributes are included.
  *
  * @returns {Object} An object containing the attributes for the block's background configuration.
  */
 export const getBaseBackgroundAttributes = ({
-    defaultBackgroundColor = { value: '', slug: '' },
-
     hasBackgroundMedia = false,
-    defaultBackgroundMediaType = '',
-
+    mediaAttributeName = 'media',
     hasOverlay = false,
-    defaultOverlayColor = { value: '', slug: '' },
 } = {}) => {
     const backgroundMediaAttribute = {
         isIncludeBackgroundMedia: {
             type: 'boolean',
-            default: false,
+            default: null,
         },
         backgroundMediaType: {
             type: 'string',
-            default: defaultBackgroundMediaType,
+            default: null,
         },
-        ...mediaAttribute,
+        ...getMediaAttribute(mediaAttributeName),
     };
 
     const overlayAttribute = {
         isIncludeOverlay: {
             type: 'boolean',
-            default: false,
+            default: null,
         },
         overlayColor: {
             type: 'object',
-            default: defaultOverlayColor,
+            default: null,
         },
     };
 
     return {
         backgroundColor: {
             type: 'object',
-            default: defaultBackgroundColor,
+            default: null,
         },
 
         ...(hasBackgroundMedia ? backgroundMediaAttribute : {}),
