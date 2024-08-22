@@ -144,11 +144,9 @@ export const getBaseBackgroundAttributes = ({
     const backgroundMediaAttribute = {
         isIncludeBackgroundMedia: {
             type: 'boolean',
-            default: null,
         },
         backgroundMediaType: {
             type: 'string',
-            default: null,
         },
         ...getMediaAttribute(mediaAttributeName),
     };
@@ -156,18 +154,15 @@ export const getBaseBackgroundAttributes = ({
     const overlayAttribute = {
         isIncludeOverlay: {
             type: 'boolean',
-            default: null,
         },
         overlayColor: {
             type: 'object',
-            default: null,
         },
     };
 
     return {
         backgroundColor: {
             type: 'object',
-            default: null,
         },
 
         ...(hasBackgroundMedia ? backgroundMediaAttribute : {}),
