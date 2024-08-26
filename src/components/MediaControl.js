@@ -2,7 +2,7 @@ import { Button, Icon as WPIcon } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { page as pageIcon } from '@wordpress/icons';
 
-import { MEDIA_TYPES } from '../utils/index.js';
+import { MEDIA_TYPE } from '../utils/index.js';
 
 export const ImageRenderer = ({
     imageId,
@@ -115,12 +115,12 @@ export const MediaControl = ({
     mediaFileName = '',
     onSelect,
     onRemove,
-    type = MEDIA_TYPES.IMAGE,
+    type = MEDIA_TYPE.IMAGE,
     selectButtonLabel,
     removeButtonLabel,
     ...other
 }) => {
-    if (type === MEDIA_TYPES.IMAGE) {
+    if (type === MEDIA_TYPE.IMAGE) {
         return (
             <MediaUploadCheck>
                 <MediaUpload
@@ -143,7 +143,7 @@ export const MediaControl = ({
                 />
             </MediaUploadCheck>
         );
-    } else if (type === MEDIA_TYPES.VIDEO) {
+    } else if (type === MEDIA_TYPE.VIDEO) {
         return (
             <MediaUploadCheck>
                 <MediaUpload
@@ -164,7 +164,7 @@ export const MediaControl = ({
                 />
             </MediaUploadCheck>
         );
-    } else if (type === MEDIA_TYPES.ANIMATION) {
+    } else if (type === MEDIA_TYPE.ANIMATION) {
         return (
             <MediaUploadCheck>
                 <MediaUpload

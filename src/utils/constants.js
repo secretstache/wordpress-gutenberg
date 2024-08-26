@@ -1,17 +1,17 @@
-export const QUERY_TYPES = {
+export const QUERY_TYPE = {
     LATEST: 'latest',
     CURATED: 'curated',
     BY_CATEGORY: 'by_category'
 };
 
-export const MEDIA_TYPES = {
+export const MEDIA_TYPE = {
     IMAGE: 'image',
     VIDEO: 'video',
     ANIMATION: 'animation',
 };
 
-export const MEDIA_TYPE_LABELS = {
-    [MEDIA_TYPES.IMAGE]: 'Image',
-    [MEDIA_TYPES.VIDEO]: 'Video',
-    [MEDIA_TYPES.ANIMATION]: 'Animation',
+export const MEDIA_TYPE_LABEL = {
+    [MEDIA_TYPE.IMAGE]: 'Image',
+    [MEDIA_TYPE.VIDEO]: 'Video',
+    [MEDIA_TYPE.ANIMATION]: 'Animation',
 };

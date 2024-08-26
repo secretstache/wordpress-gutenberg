@@ -1,7 +1,9 @@
 import { useSelect } from '@wordpress/data';
-import { QUERY_TYPES } from '../utils';
+import { QUERY_TYPE } from '../utils';
 
-// TODO: numberOfPosts -1 is not a valid value, the API requires the per_page to be >= 1
+// TODO: 1. numberOfPosts -1 is not a valid value, the API requires the per_page to be >= 1
+// TODO: 2. make 'dependencies' the separate second argument
+// TODO: 3. consider supporting the string value for the getPostType as well as function
 export const useDataQuery = (props) => {
     const {
         getPostType,
@@ -25,9 +27,9 @@ export const useDataQuery = (props) => {
             ...extraQueryArgs,
         };
 
-        if (queryType === QUERY_TYPES.BY_CATEGORY && categoriesTaxonomy && curatedCategoriesIds?.length > 0) {
+        if (queryType === QUERY_TYPE.BY_CATEGORY && categoriesTaxonomy && curatedCategoriesIds?.length > 0) {
             queryArgs[categoriesTaxonomy] = curatedCategoriesIds.join(',');
-        } else if (queryType === QUERY_TYPES.CURATED && curatedPostsIds?.length > 0) {
+        } else if (queryType === QUERY_TYPE.CURATED && curatedPostsIds?.length > 0) {
             queryArgs['include'] = curatedPostsIds;
             queryArgs['orderby'] = 'include';
         }
