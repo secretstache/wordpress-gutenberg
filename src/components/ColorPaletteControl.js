@@ -1,5 +1,5 @@
 import { BaseControl, ColorPalette } from '@wordpress/components';
-import { useThemeColors, useColorChange } from '../hooks';
+import { useThemeColors, useColorChange } from '../hooks/index.js';
 
 export const ColorPaletteControl = ({
     label = 'Color',
