@@ -17,16 +17,19 @@ export const setRootBlock = (rootBlockName, initAppender = true, appenderTooltip
         'blocks.registerBlockType',
         'ssm/with-root-block',
         (settings, name) => {
-            // Override the inserter support for blocks that are not the rootBlockName
-            if (name !== rootBlockName && !settings.ancestor) {
+            const isRootBlock = name === rootBlockName;
+            const isBaseBlock = name === 'core/block';
+            const hasAncestor = !!settings?.ancestor;
+
+            if (!isRootBlock && !isBaseBlock && !hasAncestor) {
                 settings.ancestor = [rootBlockName];
             }
 
             return settings;
-        }
+        },
     );
 
     if (initAppender) {
         initRootBlockAppender(rootBlockName, appenderTooltipText);
     }
-}
+};

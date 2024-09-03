@@ -1,3 +1,10 @@
+.editor-visual-editor.is-resizable {
+    // Hide then editing a pattern/reusable block
+    .root-block-appender {
+        display: none;
+    }
+}
+
 .root-block-appender {
     position: absolute;
     bottom: 30px;
