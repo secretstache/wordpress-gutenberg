@@ -5,7 +5,7 @@ export const linkControlAttribute = {
     },
     linkSource: {
         type: 'string',
-        default: '#',
+        default: '',
     },
     linkIsOpenInNewTab: {
         type: 'boolean',
