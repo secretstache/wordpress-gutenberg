@@ -5,7 +5,7 @@ import { dispatch } from '@wordpress/data';
 export const hideRootBlockForOtherBlocks = (rootBlockName) => {
     addFilter(
         'blocks.registerBlockType',
-        'ssm/with-root-block',
+        'ssm/hide-root-block-for-other-blocks',
         (blockSettings, blockName) => {
             const isRootBlock = blockName === rootBlockName;
             const hasOwnAllowedBlocks = !!blockSettings?.allowedBlocks;
