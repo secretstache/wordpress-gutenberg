@@ -11,6 +11,7 @@ export const waitForContainer = (initializeFn, containerClass = '.is-root-contai
     let attempts = 0;
     const checkInterval = setInterval(() => {
         const rootContainer = document.querySelector(containerClass);
+
         if (rootContainer) {
             clearInterval(checkInterval);
             initializeFn(rootContainer);

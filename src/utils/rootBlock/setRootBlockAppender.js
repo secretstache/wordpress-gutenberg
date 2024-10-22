@@ -1,10 +1,10 @@
 import { createBlock } from '@wordpress/blocks';
 import { dispatch } from '@wordpress/data';
-import domReady from '@wordpress/dom-ready';
 
 import { waitForContainer } from '../waitForContainer/index.js';
 
 const ROOT_CONTAINER_SELECTOR = '.is-root-container';
+const ROOT_BLOCK_APPENDER_SELECTOR = '.is-root-container .root-block-appender';
 
 /**
  * Initializes the custom button for the root appender.
@@ -13,6 +13,7 @@ const ROOT_CONTAINER_SELECTOR = '.is-root-container';
  */
 const initialize = (blockName, tooltipText) => {
     const rootContainer = document.querySelector(ROOT_CONTAINER_SELECTOR);
+
     if (!rootContainer) {
         console.error('Root container not found');
 
@@ -40,6 +41,14 @@ const initialize = (blockName, tooltipText) => {
  * @param {string} blockName - The name of the block to be created when the appender is clicked.
  * @param {string} [tooltipText='Add Row'] - The tooltip text displayed on the appender.
  */
-export const initRootBlockAppender = (blockName, tooltipText = 'Add Row') => {
-    domReady(() => waitForContainer(() => initialize(blockName, tooltipText), ROOT_CONTAINER_SELECTOR));
+export const setRootBlockAppender = (blockName, tooltipText = 'Add Row') => {
+    waitForContainer(() => initialize(blockName, tooltipText), ROOT_CONTAINER_SELECTOR);
 };
+
+export const unsetRootBlockAppender = () => {
+    const appender = document.querySelector(ROOT_BLOCK_APPENDER_SELECTOR);
+
+    if (appender) {
+        appender.remove();
+    }
+}

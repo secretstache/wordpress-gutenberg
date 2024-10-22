@@ -1,21 +1,11 @@
-import { addFilter } from '@wordpress/hooks';
-import { initRootBlockAppender } from './initRootBlockAppender.js';
+import { addFilter, removeFilter } from '@wordpress/hooks';
+import { setRootBlockAppender, unsetRootBlockAppender } from './setRootBlockAppender.js';
+import { dispatch, select, subscribe } from '@wordpress/data';
 
-/**
- * Sets the root block in the Gutenberg editor and optionally adds the root appender.
- *
- * This function registers a filter to override the inserter support for blocks that are not the specified root block name.
- * It also optionally initializes the root appender with the provided block name and tooltip text, and makes the click
- * on the appender insert the specified block.
- *
- * @param {string} rootBlockName - The name of the block to be set as the root block.
- * @param {boolean} [initAppender=true] - Flag to indicate whether to initialize the root appender.
- * @param {string} [appenderTooltipText='Add Row'] - The tooltip text to be displayed on the root appender.
- */
-export const setRootBlock = (rootBlockName, initAppender = true, appenderTooltipText = 'Add Row') => {
+export const addSetRootBlockFilter = (rootBlockName) => {
     addFilter(
         'blocks.registerBlockType',
-        'ssm/with-root-block',
+        'ssm/set-root-block',
         (settings, name) => {
             const isRootBlock = name === rootBlockName;
             const isBaseBlock = name === 'core/block';
@@ -28,8 +18,73 @@ export const setRootBlock = (rootBlockName, initAppender = true, appenderTooltip
             return settings;
         },
     );
-
-    if (initAppender) {
-        initRootBlockAppender(rootBlockName, appenderTooltipText);
-    }
 };
+
+export const addUnsetRootBlockFilter = (rootBlockName) => {
+    addFilter(
+        'blocks.registerBlockType',
+        'ssm/unset-root-block',
+        (settings) => {
+            const hasRootAncestor = settings.ancestor && settings.ancestor.includes(rootBlockName);
+
+            if (hasRootAncestor) {
+                settings.ancestor = null;
+            }
+
+            return settings;
+        },
+    );
+};
+
+export const setRootBlock = (
+    rootBlockName,
+    postTypes = ['page', 'ssm_design_system'],
+    initAppender = true,
+    appenderTooltipText = 'Add Row',
+    matchPostTypeCallback = null,
+    notMatchPostTypeCallback = null,
+) => {
+    let isRootBlockEnabled = false;
+
+    subscribe(() => {
+        const currentPostType = select('core/editor').getCurrentPostType();
+
+        if (!currentPostType) return;
+
+        const isMatchPostType = postTypes.includes(currentPostType);
+
+        if (isMatchPostType) {
+            if (!isRootBlockEnabled) {
+                removeFilter('blocks.registerBlockType', 'ssm/unset-root-block');
+                addSetRootBlockFilter(rootBlockName);
+                dispatch('core/blocks').reapplyBlockTypeFilters();
+
+                if (initAppender) {
+                    setRootBlockAppender(rootBlockName, appenderTooltipText);
+                }
+
+                if (matchPostTypeCallback) {
+                    matchPostTypeCallback();
+                }
+
+                isRootBlockEnabled = true;
+            }
+        } else {
+            if (isRootBlockEnabled) {
+                removeFilter('blocks.registerBlockType', 'ssm/set-root-block');
+                addUnsetRootBlockFilter(rootBlockName);
+                dispatch('core/blocks').reapplyBlockTypeFilters();
+
+                if (initAppender) {
+                    unsetRootBlockAppender(rootBlockName);
+                }
+
+                if (notMatchPostTypeCallback) {
+                    notMatchPostTypeCallback();
+                }
+
+                isRootBlockEnabled = false;
+            }
+        }
+    }, 'core/editor');
+}
