@@ -17,6 +17,9 @@
     "build",
     "src"
   ],
+  "exports": {
+    ".": "./build/index.js"
+  },
   "type": "module",
   "scripts": {
     "build": "rollup -c",
