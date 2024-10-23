@@ -1,12 +1,11 @@
 import { Notice, Placeholder, Spinner } from '@wordpress/components';
 
-const DEFAULT_EMPTY_MESSAGE = 'No resources were found matching your criteria. Please try to adjust the query.';
+const DEFAULT_EMPTY_RESOURCES_MESSAGE = 'No resources were found matching your criteria. Please try to adjust the query.';
+const DEFAULT_EMPTY_SELECTION_MESSAGE = 'No items are selected. Please use the corresponding relationship field to populate this block.';
 
-export const EmptyNotice = ({
-    message
-}) => (
+export const EmptyNotice = ({ message }) => (
     <Notice status="info" isDismissible={false}>
-        <p>{message || DEFAULT_EMPTY_MESSAGE}</p>
+        <p>{message}</p>
     </Notice>
 );
 
@@ -26,9 +25,11 @@ export const PlaceholderContent = ({
 
 export const ResourcesWrapper = ({
     isLoading,
-    isEmpty,
+    isEmptyResources,
+    isEmptySelection,
     isPlaceholder,
-    emptyMessage,
+    emptyResourcesMessage,
+    emptySelectionMessage,
     placeholderProps = {},
     children,
 }) => {
@@ -36,8 +37,12 @@ export const ResourcesWrapper = ({
         return <LoadingSpinner />;
     }
 
-    if (isEmpty) {
-        return <EmptyNotice message={emptyMessage} />;
+    if (isEmptySelection) {
+        return <EmptyNotice message={emptySelectionMessage || DEFAULT_EMPTY_SELECTION_MESSAGE} />;
+    }
+
+    if (isEmptyResources) {
+        return <EmptyNotice message={emptyResourcesMessage || DEFAULT_EMPTY_RESOURCES_MESSAGE} />;
     }
 
     if (isPlaceholder) {
