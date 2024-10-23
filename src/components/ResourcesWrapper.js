@@ -1,16 +1,18 @@
 import { Notice, Placeholder, Spinner } from '@wordpress/components';
 
-const EmptyNotice = ({
-    message = 'No resources were found matching your criteria. Please try to adjust the query.'
+const DEFAULT_EMPTY_MESSAGE = 'No resources were found matching your criteria. Please try to adjust the query.';
+
+export const EmptyNotice = ({
+    message
 }) => (
     <Notice status="info" isDismissible={false}>
-        <p>{message}</p>
+        <p>{message || DEFAULT_EMPTY_MESSAGE}</p>
     </Notice>
 );
 
-const LoadingSpinner = () => <Spinner className="bc-spinner" />;
+export const LoadingSpinner = () => <Spinner className="bc-spinner" />;
 
-const PlaceholderContent = ({
+export const PlaceholderContent = ({
     icon = 'info-outline',
     instructions = 'Please configure the block in the sidebar.',
     ...restProps
