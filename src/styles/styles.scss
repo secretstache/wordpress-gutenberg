@@ -78,8 +78,12 @@
         @import "responsive-spacing";
         @import "new-child-btn";
     }
-}
 
-.block-editor-inserter__quick-inserter-results .block-editor-block-types-list > [role=presentation] {
-    justify-content: center;
+    .block-editor-inserter__insertable-blocks-at-selection + .block-editor-inserter__all-blocks {
+        display: none;
+    }
+
+    .block-editor-block-types-list > [role=presentation] {
+        justify-content: center;
+    }
 }
