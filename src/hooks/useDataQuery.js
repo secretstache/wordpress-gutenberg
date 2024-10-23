@@ -5,8 +5,8 @@ export const useDataQuery = (config, dependencies = []) => {
         postType,
         curatedPostsIds,
 
-        categoriesTaxonomy,
-        curatedCategoriesIds,
+        taxonomySlug,
+        curatedTermsIds,
 
         numberOfPosts = -1,
         extraQueryArgs,
@@ -21,8 +21,8 @@ export const useDataQuery = (config, dependencies = []) => {
             ...extraQueryArgs,
         };
 
-        if (categoriesTaxonomy && curatedCategoriesIds?.length > 0) {
-            queryArgs[categoriesTaxonomy] = curatedCategoriesIds.join(',');
+        if (taxonomySlug && curatedTermsIds?.length > 0) {
+            queryArgs[taxonomySlug] = curatedTermsIds.join(',');
         }
 
         if (curatedPostsIds?.length > 0) {
