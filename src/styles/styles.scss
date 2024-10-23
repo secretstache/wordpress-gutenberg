@@ -1,12 +1,85 @@
 .block-editor__container {
-    @import "editor-base";
-    @import "animation-file-renderer";
-    @import "icon-picker";
-    @import "image-wrapper";
-    @import "link-control";
-    @import "media-picker";
-    @import "sortable-select";
-    @import "responsive-spacing";
-    @import "new-child-btn";
-    @import "root-block-appender";
+    .editor-visual-editor {
+        z-index: 1;
+
+        &:not(.is-resizable) {
+            .editor-styles-wrapper::after {
+                display: none;
+            }
+        }
+
+        &.is-resizable {
+            // Hide then editing a pattern/reusable block
+            .root-block-appender {
+                display: none;
+            }
+
+            & + .edit-post-layout__metaboxes {
+                display: none;
+            }
+        }
+
+        .editor-styles-wrapper {
+            .edit-post-visual-editor__post-title-wrapper {
+                margin-top: 10px;
+                margin-bottom: 10px;
+
+                h1.editor-post-title {
+                    margin: 0;
+                    border-bottom: 1px dashed #ddd;
+                    padding-bottom: 10px;
+                    font-weight: normal;
+                    font-size: 30px;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+                    text-align: center;
+                }
+            }
+
+            .is-root-container {
+                @import "root-block-appender";
+                @import "empty-block-appender";
+
+                margin-bottom: 0;
+                padding-bottom: 0;
+
+                &:has(.root-block-appender) {
+                    margin-bottom: 3rem;
+                    padding-bottom: 200px;
+                }
+
+                &.has-background {
+                    transition:
+                        background 1s,
+                        color 1s;
+                }
+
+                & > .block-list-appender.wp-block:only-child {
+                    p {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+                }
+
+                & > .block-list-appender.wp-block:only-child,
+                & > p.wp-block:only-child {
+                    margin: 2rem 0;
+                }
+            }
+        }
+    }
+
+    .editor-sidebar {
+        @import "link-control";
+        @import "animation-file-renderer";
+        @import "icon-picker";
+        @import "image-wrapper";
+        @import "media-picker";
+        @import "sortable-select";
+        @import "responsive-spacing";
+        @import "new-child-btn";
+    }
+}
+
+.block-editor-inserter__quick-inserter-results .block-editor-block-types-list > [role=presentation] {
+    justify-content: center;
 }

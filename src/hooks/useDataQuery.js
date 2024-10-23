@@ -8,13 +8,13 @@ export const useDataQuery = (config, dependencies = []) => {
         categoriesTaxonomy,
         curatedCategoriesIds,
 
-        numberOfPosts = 100,
+        numberOfPosts = -1,
         extraQueryArgs,
     } = config;
 
     return useSelect((select) => {
         const queryArgs = {
-            per_page: numberOfPosts,
+            per_page: numberOfPosts === -1 ? 100 : numberOfPosts,
             order: 'desc',
             orderby: 'date',
             _embed: true,

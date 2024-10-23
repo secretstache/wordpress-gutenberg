@@ -43,7 +43,6 @@ export const cleanSvgString = (svgString) => {
     return svgString;
 };
 
-
 const SVG_MIME_TYPE = 'image/svg+xml';
 
 export const getImage = async (mediaData) => {

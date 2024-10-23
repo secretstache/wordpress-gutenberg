@@ -1,0 +1,82 @@
+.empty-block-appender {
+    --button-color: #192f5f;
+    --button-border: var(--button-color);
+    --button-hover-color: var(--wp-admin-theme-color);
+    --button-hover-border: var(--wp-admin-theme-color);
+    --tr: .3s;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+
+    &__content {
+        text-align: center;
+    }
+
+    &__icon {
+        width: 48px;
+        height:48px;
+        color: var(--button-color);
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 110%;
+        color: var(--button-color);
+        margin-bottom: 0.5rem;
+    }
+
+    &__text {
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--button-color);
+        margin-bottom: 1.5rem;
+    }
+
+    &__button {
+        .block-editor-button-block-appender {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition:
+                color var(--tr),
+                border-color var(--tr);
+            cursor: pointer;
+            border: 2px solid var(--button-border) !important;
+            box-shadow: none;
+            border-radius: 10px;
+            background: transparent !important;
+            padding: 12px 24px;
+            min-height: 50px;
+            min-width: 200px;
+            color: var(--button-color);
+            font-weight: 600;
+            font-size: 22px;
+
+            &:hover,
+            &:focus {
+                color: var(--button-hover-color);
+                border-color: var(--button-hover-border) !important;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            &::before,
+            &::after {
+                display: none !important;
+            }
+
+            .block-editor-button-block-appender__content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}

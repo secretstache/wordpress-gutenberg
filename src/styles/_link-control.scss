@@ -1,6 +1,61 @@
+// Backward compatibility
+// TODO: remove when the custom LinkControl will be removed
 .bc-url-input {
     input {
         width: 100%;
         border: 1px solid #949494;
+    }
+}
+
+// if the LinkControl is placed inside the BaseControl
+.components-base-control {
+    .block-editor-link-control {
+        .block-editor-url-input {
+            margin-top: 0;
+        }
+
+        .block-editor-link-control__search-item {
+            padding-top: 0;
+        }
+    }
+}
+
+.block-editor-link-control {
+    min-width: 100%;
+    width: 100%;
+
+    .block-editor-url-input__input {
+        width: 100%;
+    }
+
+    .components-base-control {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .block-editor-link-control__search-enter {
+        right: 5px;
+    }
+
+    .components-spinner {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .block-editor-link-control__tools,
+    .block-editor-link-control__search-actions,
+    .block-editor-link-control__search-results,
+    .block-editor-link-control__search-item {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .components-menu-item__item {
+        min-width: unset;
+    }
+
+    .components-button.block-editor-link-control__drawer-toggle {
+        box-shadow: none;
+        outline: none;
     }
 }

@@ -1,6 +1,7 @@
 import { BaseControl, CheckboxControl } from '@wordpress/components';
 import { URLInput } from '@wordpress/block-editor';
-import { useUpdateAttribute } from '../hooks';
+
+import { deprecationWarning } from '../utils/internal/helpers.js';
 
 export const LinkControl = ({
     url = { value: '#', attrName: 'linkSource' },
@@ -8,7 +9,7 @@ export const LinkControl = ({
     setAttributes,
     label = 'Source',
 }) => {
-    const updateAttribute = useUpdateAttribute(setAttributes);
+    deprecationWarning('Warning: LinkControl is deprecated since version 0.4.1 and will be removed in future versions. Please use native one instead.');
 
     return (
         <>

@@ -3,7 +3,6 @@ export { useSlider } from './useSlider.js';
 export { useParentBlock } from './useParentBlock.js';
 export { useColorChange } from './useColorChange';
 export { useThemeColors } from './useThemeColors';
-export { useUpdateAttribute } from './useUpdateAttribute';
 export { useDataQuery } from './useDataQuery';
 export { useAccordionItem } from './useAccordionItem.js';
 export { useTabs } from './useTabs.js';
