@@ -1,15 +1,20 @@
 import { TabPanel } from '@wordpress/components';
-import { useCallback } from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 
 import { SpacingControl } from './SpacingControl.js';
 
+const getTabName = (deviceType = 'Desktop') => {
+    return deviceType === 'Desktop' ? 'desktop' : 'mobile';
+};
+
 export const ResponsiveSpacingControl = ({
-     max = 6,
-     min = -1,
-     hasMargin = true,
-     hasPadding = true,
-     onChange,
-     value = { desktop: { margin: {}, padding: {} }, mobile: { margin: {}, padding: {} } },
+    max = 6,
+    min = -1,
+    hasMargin = true,
+    hasPadding = true,
+    onChange,
+    value = { desktop: { margin: {}, padding: {} }, mobile: { margin: {}, padding: {} } },
+    deviceType,
  }) => {
     const handleDesktopChange = useCallback(
         (desktop) => {
@@ -31,9 +36,20 @@ export const ResponsiveSpacingControl = ({
         [ onChange, value.desktop ],
     );
 
+    const initialTabName = getTabName(deviceType);
+
+    const [ selectedTab, setSelectedTab ] = useState(initialTabName);
+
+    useEffect(() => {
+        setSelectedTab(getTabName());
+    }, [ deviceType ]);
+
     return (
         <TabPanel
             className="bc-responsive-spacing-control"
+            initialTabName={initialTabName}
+            onSelect={setSelectedTab}
+            selectedTabName={selectedTab}
             tabs={[
                 { name: 'desktop', title: 'Desktop', className: 'bc-responsive-spacing-tab bc-responsive-spacing-tab--desktop' },
                 { name: 'mobile', title: 'Mobile', className: 'bc-responsive-spacing-tab bc-responsive-spacing-tab--mobile' },
