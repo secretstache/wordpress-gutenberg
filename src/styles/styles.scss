@@ -36,6 +36,7 @@
             }
 
             .is-root-container {
+                @import "image-wrapper";
                 @import "root-block-appender";
                 @import "empty-block-appender";
 
@@ -72,7 +73,6 @@
         @import "link-control";
         @import "animation-file-renderer";
         @import "icon-picker";
-        @import "image-wrapper";
         @import "media-picker";
         @import "sortable-select";
         @import "responsive-spacing";
