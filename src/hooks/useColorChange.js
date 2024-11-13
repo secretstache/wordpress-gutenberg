@@ -7,6 +7,9 @@ export const useColorChange = (colors, setAttributes) => (colorValue, property) 
                 value: colorValue,
                 slug: selectedColor.slug,
             }
-            : null,
+            : {
+                value: '',
+                slug: '',
+            },
     });
 };
