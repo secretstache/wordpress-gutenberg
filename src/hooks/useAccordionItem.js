@@ -1,6 +1,12 @@
 import { useEffect, useRef } from '@wordpress/element';
 
-export const useAccordionItem = (itemId, activeItemId, setActiveItemId, contentSelector) => {
+export const useAccordionItem = ({
+    itemId,
+    activeItemId,
+    setActiveItemId,
+    contentSelector,
+    heightObserverDeps = []
+}) => {
     const isActive = itemId === activeItemId;
     const blockRef = useRef(null);
 
@@ -44,7 +50,7 @@ export const useAccordionItem = (itemId, activeItemId, setActiveItemId, contentS
         resizeObserver.observe(blockRef.current);
 
         return () => resizeObserver.disconnect();
-    }, [ isActive ]);
+    }, [ isActive, ...heightObserverDeps ]);
 
     return {
         blockRef,
