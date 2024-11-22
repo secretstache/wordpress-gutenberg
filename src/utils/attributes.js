@@ -1,3 +1,7 @@
+/**
+ * @deprecated since 0.4.9
+ * @type {{linkLabel: {default: string, type: string}, linkIsOpenInNewTab: {default: boolean, type: string}, linkSource: {default: string, type: string}}}
+ */
 export const linkControlAttribute = {
     linkLabel: {
         type: 'string',
@@ -13,6 +17,10 @@ export const linkControlAttribute = {
     },
 };
 
+/**
+ * @param name
+ * @returns {{[p: string]: {default: {filename: null, mime: null, alt: null, name: null, id: null, url: null}, type: string}}}
+ */
 export const getMediaAttribute = (name = 'media') => ({
     [`${name}`]: {
         type: 'object',
@@ -27,6 +35,10 @@ export const getMediaAttribute = (name = 'media') => ({
     },
 });
 
+/**
+ * @deprecated since 0.4.9
+ * @type {{description: {default: string, type: string}, title: {default: string, type: string}}}
+ */
 export const contentAttribute = {
     title: {
         type: 'string',
@@ -38,6 +50,10 @@ export const contentAttribute = {
     },
 };
 
+/**
+ * @param name
+ * @returns {{[p: string]: {default: {filename: null, mime: null, alt: null, name: null, id: null, url: null}, type: string}, isAnimationLooped: {default: boolean, type: string}}}
+ */
 export const getAnimationAttribute = (name = 'animationFile') => ({
     ...getMediaAttribute(name),
     isAnimationLooped: {
@@ -134,7 +150,7 @@ export const getDataQueryAttributes = (
  * @param {string} [options.mediaAttributeName='media'] - Background media attribute name.
  * @param {boolean} [options.hasOverlay=false] - Flag to determine if overlay attributes should be included.
  *
- * @returns {Object} An object containing the attributes for the block's background configuration.
+ * @returns {{[p: string]: {default: {filename: null, mime: null, alt: null, name: null, id: null, url: null}, type: string}, backgroundMediaType?: {type: string}, backgroundColor: {type: string}, isIncludeBackgroundMedia?: {type: string}, isIncludeOverlay?: {type: string}, overlayColor?: {type: string}}}
  */
 export const getBaseBackgroundAttributes = ({
     hasBackgroundMedia = false,
@@ -214,3 +230,23 @@ export const responsiveSpacingAttribute = {
         }
     }
 }
+
+/**
+ * @since 0.4.9
+ * @param prefix
+ * @returns {{[p: string]: {default: string, type: string}|{default: string, type: string}|{default: boolean, type: string}}}
+ */
+export const getLinkAttributes = (prefix = 'link') => ({
+    [`${prefix}Label`]: {
+        type: 'string',
+        default: '',
+    },
+    [`${prefix}Source`]: {
+        type: 'string',
+        default: '',
+    },
+    [`${prefix}IsOpenInNewTab`]: {
+        type: 'boolean',
+        default: false,
+    },
+});
