@@ -1,9 +1,15 @@
 // Backward compatibility
 // TODO: remove when the custom LinkControl will be removed
 .bc-url-input {
+    min-width: 100%;
+
     input {
         width: 100%;
         border: 1px solid #949494;
+    }
+
+    &__suggestions {
+        max-width: 245px;
     }
 }
 
