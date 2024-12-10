@@ -36,6 +36,7 @@
     @import "image-wrapper";
     @import "root-block-appender";
     @import "empty-block-appender";
+    @import "new-child-btn";
 
     margin-bottom: 0;
     padding-bottom: 0;
@@ -71,7 +72,6 @@
     @import "media-picker";
     @import "sortable-select";
     @import "responsive-spacing";
-    @import "new-child-btn";
 }
 
 .block-editor-block-types-list > [role=presentation] {
