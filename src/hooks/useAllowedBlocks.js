@@ -20,6 +20,6 @@ export const useAllowedBlocks = (blockName, excludedBlocks) => {
                     && (!blockHasAncestor || isAncestor);
             })
             ?.map((block) => block.name),
-        [allBlocks, excludedBlocks, blockName],
+        [ allBlocks, excludedBlocks, blockName ],
     );
 };

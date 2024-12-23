@@ -27,7 +27,6 @@ const Control = ({ label, max, min, value, onChange, disabled, tooltip, ...other
                     max={max}
                     marks={generateMarks(min, max)}
                     resetFallbackValue={-1}
-                    help="Use -1 for default settings."
                     renderTooltipContent={(value) => {
                         if (value === -1) return 'Default';
 

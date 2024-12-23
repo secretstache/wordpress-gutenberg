@@ -1,3 +1,4 @@
+import { filters } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 import slugify from 'slugify';
 import classNames from 'classnames';
@@ -143,4 +144,24 @@ export const getSpacingClasses = (
         [`${mobilePrefix}pt-${spacing?.mobile?.padding?.top}`]: spacing?.mobile?.padding?.top !== -1,
         [`${mobilePrefix}pb-${spacing?.mobile?.padding?.bottom}`]: spacing?.mobile?.padding?.bottom !== -1,
     });
+};
+
+/**
+ * @param namespace
+ * @returns {*[]}
+ */
+const getFiltersByNamespace = (namespace) => {
+    const list = [];
+
+    Object.entries(filters).forEach(([filterName, filterData]) => {
+        const handlers = filterData.handlers || [];
+
+        handlers.forEach((handler) => {
+            if (handler.namespace.startsWith(namespace)) {
+                list.push({ filterName, namespace: handler.namespace });
+            }
+        });
+    });
+
+    return list;
 };
