@@ -2,7 +2,17 @@ import { filters } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 import slugify from 'slugify';
 import classNames from 'classnames';
+import { select, subscribe } from '@wordpress/data';
+import { getBlockType, unregisterBlockType } from '@wordpress/blocks';
 
+/**
+ * Loads select options by fetching posts from WordPress REST API.
+ * @async
+ * @param {string} inputValue - Search term to filter posts
+ * @param {string} postType - WordPress post type to query
+ * @param {Function|null} [mapper=null] - Optional function to transform API response items
+ * @returns {Promise<Array<{value: number, label: string}>>} Array of select options
+ */
 export const loadSelectOptions = async (inputValue, postType, mapper = null) => {
     const response = await apiFetch({
         path: `/wp/v2/${postType}?search=${encodeURIComponent(inputValue)}`,
@@ -24,12 +34,22 @@ export const loadSelectOptions = async (inputValue, postType, mapper = null) => 
     }
 };
 
+/**
+ * Converts a string to a URL-friendly slug.
+ * @param {string} name - String to convert to slug
+ * @returns {string} URL-friendly slug in lowercase with hyphens
+ */
 export const getSlug = (name) => slugify(name, {
     replacement: '-',
     lower: true,
     strict: true,
 });
 
+/**
+ * Cleans SVG string by removing XML declaration and extra whitespace.
+ * @param {string} svgString - Raw SVG string
+ * @returns {string} Cleaned SVG string
+ */
 export const cleanSvgString = (svgString) => {
     if (svgString.startsWith('<?xml')) {
         const endOfXml = svgString.indexOf('?>');
@@ -44,9 +64,20 @@ export const cleanSvgString = (svgString) => {
     return svgString;
 };
 
-const SVG_MIME_TYPE = 'image/svg+xml';
-
+/**
+ * Fetches and processes image data, handling both SVG and regular images.
+ * @async
+ * @param {Object} mediaData - WordPress media object
+ * @param {string} mediaData.mime - Media MIME type
+ * @param {string} mediaData.mime_type - Alternative MIME type property
+ * @param {string} mediaData.url - Media URL
+ * @param {number} mediaData.width - Image width
+ * @param {number} mediaData.height - Image height
+ * @returns {Promise<{isSvg: boolean, imageUrl: string|null, svgCode: string|null, width: number, height: number}>}
+ */
 export const getImage = async (mediaData) => {
+    const SVG_MIME_TYPE = 'image/svg+xml';
+
     const isSvg = mediaData?.mime === SVG_MIME_TYPE || mediaData?.mime_type === SVG_MIME_TYPE;
     const imagePayload = {
         isSvg,
@@ -65,6 +96,11 @@ export const getImage = async (mediaData) => {
     return imagePayload;
 };
 
+/**
+ * Formats a phone number string into XXX-XXX-XXXX format.
+ * @param {string} phone - Phone number starting with '+1' followed by 10 digits
+ * @returns {string} Formatted phone number or empty string if invalid
+ */
 export const getPhoneNumber = (phone) => {
     if (!phone) return '';
 
@@ -80,6 +116,16 @@ export const getPhoneNumber = (phone) => {
     return formatted;
 };
 
+/**
+ * Generates a formatted address string from location components.
+ * @param {Object} location - Location object
+ * @param {string} [location.street_number] - Street number
+ * @param {string} [location.street_name] - Street name
+ * @param {string} [location.city] - City
+ * @param {string} [location.state_short] - State abbreviation
+ * @param {string} [location.post_code] - Postal code
+ * @returns {string} Formatted address with HTML line breaks
+ */
 export const getLocationAddress = (location) => {
     const {
         street_number = '',
@@ -111,6 +157,11 @@ export const getLocationAddress = (location) => {
     return addressParts.join('');
 };
 
+/**
+ * Decodes HTML entities to their corresponding characters.
+ * @param {string} text - Text containing HTML entities
+ * @returns {string} Decoded text
+ */
 export const decodeHtmlEntities = (text) => {
     const tempElement = document.createElement('div');
     tempElement.innerHTML = text;
@@ -147,8 +198,9 @@ export const getSpacingClasses = (
 };
 
 /**
- * @param namespace
- * @returns {*[]}
+ * Retrieves WordPress filters by namespace.
+ * @param {string} namespace - Filter namespace to search for
+ * @returns {Array<{filterName: string, namespace: string}>} Array of matching filters
  */
 const getFiltersByNamespace = (namespace) => {
     const list = [];
@@ -165,3 +217,21 @@ const getFiltersByNamespace = (namespace) => {
 
     return list;
 };
+
+/**
+ * Unregisters a block type for a specific post type when editor loads.
+ * @param {string} blockName - Name of the block to unregister
+ * @param {string} postType - Post type to check against
+ */
+const unsetBlockForPostType = (blockName, postType) => {
+    const unsubscribe = subscribe(
+        () => {
+            const currentPostType = select('core/editor').getCurrentPostType();
+            if (currentPostType === postType && getBlockType(blockName)) {
+                unregisterBlockType(blockName);
+                unsubscribe();
+            }
+        },
+        'core/editor'
+    );
+}
