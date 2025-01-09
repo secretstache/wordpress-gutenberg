@@ -3,7 +3,7 @@ import apiFetch from '@wordpress/api-fetch';
 import slugify from 'slugify';
 import classNames from 'classnames';
 import { select, subscribe } from '@wordpress/data';
-import { getBlockType, unregisterBlockType } from '@wordpress/blocks';
+import { getBlockType, registerBlockType, unregisterBlockType } from '@wordpress/blocks';
 
 /**
  * Loads select options by fetching posts from WordPress REST API.
@@ -234,4 +234,23 @@ const unsetBlockForPostType = (blockName, postType) => {
         },
         'core/editor'
     );
+};
+
+/**
+ * Update the API version of a specific block.
+ *
+ * @param {string} blockName - The name of the block to update (e.g., 'gravityforms/form').
+ * @param {number} [apiVersion=3] - The API version to set for the block. Defaults to 3.
+ */
+export function updateBlockApiVersion(blockName, apiVersion = 3) {
+    const blockSettings = getBlockType(blockName);
+
+    if (blockSettings) {
+        unregisterBlockType(blockName);
+
+        registerBlockType(blockName, {
+            ...blockSettings,
+            apiVersion,
+        });
+    }
 }
