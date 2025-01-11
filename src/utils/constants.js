@@ -1,9 +1,3 @@
-export const QUERY_TYPE = {
-    LATEST: 'latest',
-    CURATED: 'curated',
-    BY_CATEGORY: 'by_category'
-};
-
 export const MEDIA_TYPE = {
     IMAGE: 'image',
     VIDEO: 'video',

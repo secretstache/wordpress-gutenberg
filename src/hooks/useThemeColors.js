@@ -14,6 +14,6 @@ export const useThemeColors = (allowedColors = []) => {
         }
 
         return allColors;
-    }, [allowedColors]);
+    }, [ allowedColors ]);
 };
 

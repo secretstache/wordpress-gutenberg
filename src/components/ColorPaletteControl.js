@@ -1,5 +1,5 @@
 import { BaseControl, ColorPalette } from '@wordpress/components';
-import { useThemeColors, useColorChange } from '../hooks/index.js';
+import { useThemeColors } from '../hooks/index.js';
 
 export const ColorPaletteControl = ({
     label = 'Color',
@@ -7,9 +7,29 @@ export const ColorPaletteControl = ({
     attributeName,
     setAttributes,
     allowedColors,
+    ...other
 }) => {
     const colors = useThemeColors(allowedColors);
-    const onColorChange = useColorChange(colors, setAttributes);
+
+    const onChange = (colorValue) => {
+        const selectedColor = colors.find(color => color.color === colorValue);
+
+        if (colorValue) {
+            setAttributes({
+                [attributeName]: {
+                    value: colorValue,
+                    slug: selectedColor?.slug || '',
+                }
+            })
+        } else {
+            setAttributes({
+                [attributeName]: {
+                    value: '',
+                    slug: '',
+                }
+            })
+        }
+    };
 
     return (
         <BaseControl label={label}>
@@ -17,7 +37,8 @@ export const ColorPaletteControl = ({
                 colors={colors}
                 value={value}
                 disableCustomColors={true}
-                onChange={(colorValue) => onColorChange(colorValue, attributeName)}
+                onChange={onChange}
+                {...other}
             />
         </BaseControl>
     );
