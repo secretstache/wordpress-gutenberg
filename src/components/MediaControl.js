@@ -135,8 +135,8 @@ export const MediaControl = ({
                             onImageClick={open}
                             onSelectClick={open}
                             onRemoveClick={onRemove}
-                            selectButtonLabel={selectButtonLabel}
-                            removeButtonLabel={removeButtonLabel}
+                            selectButtonLabel={selectButtonLabel || 'Select Image'}
+                            removeButtonLabel={removeButtonLabel || 'Remove Image'}
                         />
                     )}
                     {...other}
@@ -156,8 +156,8 @@ export const MediaControl = ({
                             videoUrl={mediaUrl}
                             onSelectClick={open}
                             onRemoveClick={onRemove}
-                            selectButtonLabel={selectButtonLabel}
-                            removeButtonLabel={removeButtonLabel}
+                            selectButtonLabel={selectButtonLabel || 'Select Video'}
+                            removeButtonLabel={removeButtonLabel || 'Remove Video'}
                         />
                     )}
                     {...other}
@@ -178,8 +178,8 @@ export const MediaControl = ({
                             animationFileName={mediaFileName}
                             onSelectClick={open}
                             onRemoveClick={onRemove}
-                            selectButtonLabel={selectButtonLabel}
-                            removeButtonLabel={removeButtonLabel}
+                            selectButtonLabel={selectButtonLabel || 'Select File'}
+                            removeButtonLabel={removeButtonLabel || 'Remove File'}
                         />
                     )}
                     {...other}
