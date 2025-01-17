@@ -1,4 +1,4 @@
-import { Button, Icon as WPIcon } from '@wordpress/components';
+import { BaseControl, Button, Icon as WPIcon } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { page as pageIcon } from '@wordpress/icons';
 
@@ -110,6 +110,7 @@ export const AnimationRenderer = ({
 };
 
 export const MediaControl = ({
+    label,
     mediaId,
     mediaUrl,
     mediaFileName = '',
@@ -122,69 +123,75 @@ export const MediaControl = ({
 }) => {
     if (type === MEDIA_TYPE.IMAGE) {
         return (
-            <MediaUploadCheck>
-                <MediaUpload
-                    onSelect={onSelect}
-                    allowedTypes={['image', 'image/svg+xml']}
-                    accept="image/*"
-                    value={mediaId}
-                    render={({ open }) => (
-                        <ImageRenderer
-                            imageId={mediaId}
-                            imageUrl={mediaUrl}
-                            onImageClick={open}
-                            onSelectClick={open}
-                            onRemoveClick={onRemove}
-                            selectButtonLabel={selectButtonLabel || 'Select Image'}
-                            removeButtonLabel={removeButtonLabel || 'Remove Image'}
-                        />
-                    )}
-                    {...other}
-                />
-            </MediaUploadCheck>
+            <BaseControl label={label || 'Image'}>
+                <MediaUploadCheck>
+                    <MediaUpload
+                        onSelect={onSelect}
+                        allowedTypes={['image', 'image/svg+xml']}
+                        accept="image/*"
+                        value={mediaId}
+                        render={({ open }) => (
+                            <ImageRenderer
+                                imageId={mediaId}
+                                imageUrl={mediaUrl}
+                                onImageClick={open}
+                                onSelectClick={open}
+                                onRemoveClick={onRemove}
+                                selectButtonLabel={selectButtonLabel || 'Select Image'}
+                                removeButtonLabel={removeButtonLabel || 'Remove Image'}
+                            />
+                        )}
+                        {...other}
+                    />
+                </MediaUploadCheck>
+            </BaseControl>
         );
     } else if (type === MEDIA_TYPE.VIDEO) {
         return (
-            <MediaUploadCheck>
-                <MediaUpload
-                    onSelect={onSelect}
-                    allowedTypes={['video']}
-                    value={mediaId}
-                    render={({ open }) => (
-                        <VideoRenderer
-                            videoId={mediaId}
-                            videoUrl={mediaUrl}
-                            onSelectClick={open}
-                            onRemoveClick={onRemove}
-                            selectButtonLabel={selectButtonLabel || 'Select Video'}
-                            removeButtonLabel={removeButtonLabel || 'Remove Video'}
-                        />
-                    )}
-                    {...other}
-                />
-            </MediaUploadCheck>
+            <BaseControl label={label || 'Video'}>
+                <MediaUploadCheck>
+                    <MediaUpload
+                        onSelect={onSelect}
+                        allowedTypes={['video']}
+                        value={mediaId}
+                        render={({ open }) => (
+                            <VideoRenderer
+                                videoId={mediaId}
+                                videoUrl={mediaUrl}
+                                onSelectClick={open}
+                                onRemoveClick={onRemove}
+                                selectButtonLabel={selectButtonLabel || 'Select Video'}
+                                removeButtonLabel={removeButtonLabel || 'Remove Video'}
+                            />
+                        )}
+                        {...other}
+                    />
+                </MediaUploadCheck>
+            </BaseControl>
         );
     } else if (type === MEDIA_TYPE.ANIMATION) {
         return (
-            <MediaUploadCheck>
-                <MediaUpload
-                    onSelect={onSelect}
-                    allowedTypes={['application/json', 'text/plain', 'application/lottie']}
-                    value={mediaId}
-                    render={({ open }) => (
-                        <AnimationRenderer
-                            animationFileId={mediaId}
-                            animationFileUrl={mediaUrl}
-                            animationFileName={mediaFileName}
-                            onSelectClick={open}
-                            onRemoveClick={onRemove}
-                            selectButtonLabel={selectButtonLabel || 'Select File'}
-                            removeButtonLabel={removeButtonLabel || 'Remove File'}
-                        />
-                    )}
-                    {...other}
-                />
-            </MediaUploadCheck>
+            <BaseControl label={label || 'Animation'}>
+                <MediaUploadCheck>
+                    <MediaUpload
+                        onSelect={onSelect}
+                        allowedTypes={['application/json', 'text/plain', 'application/lottie']}
+                        value={mediaId}
+                        render={({ open }) => (
+                            <AnimationRenderer
+                                animationFileId={mediaId}
+                                animationFileUrl={mediaUrl}
+                                animationFileName={mediaFileName}
+                                onSelectClick={open}
+                                onRemoveClick={onRemove}
+                                selectButtonLabel={selectButtonLabel || 'Select Animation'}
+                                removeButtonLabel={removeButtonLabel || 'Remove Animation'}
+                            />
+                        )}
+                        {...other}
+                    />
+                </MediaUploadCheck>
+            </BaseControl>
         );
     } else {
         throw new Error('Unrecognized media type.');
