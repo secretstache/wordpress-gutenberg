@@ -254,3 +254,22 @@ export function updateBlockApiVersion(blockName, apiVersion = 3) {
         });
     }
 }
+
+/**
+ * Creates object-position style based on focal point coordinates
+ *
+ * @param {Object} focalPoint - Focal point coordinates { x, y }
+ * @returns {Object} Style object with objectPosition property
+ */
+export const getFocalPointStyle = (focalPoint) => {
+    if (!focalPoint) {
+        return { objectPosition: '50% 50%' };
+    }
+
+    // Handle edge case where x or y is 0
+    const x = (focalPoint.x !== undefined && focalPoint.x !== null) ? focalPoint.x * 100 : 50;
+    const y = (focalPoint.y !== undefined && focalPoint.y !== null) ? focalPoint.y * 100 : 50;
+
+    return { objectPosition: `${x}% ${y}%` };
+};
+
