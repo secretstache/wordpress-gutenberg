@@ -1,4 +1,4 @@
-import { BaseControl, Button, Icon as WPIcon } from '@wordpress/components';
+import { BaseControl, Button, FocalPointPicker, Icon as WPIcon } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { page as pageIcon } from '@wordpress/icons';
 
@@ -110,41 +110,67 @@ export const AnimationRenderer = ({
 };
 
 export const MediaControl = ({
+    type = MEDIA_TYPE.IMAGE,
     label,
+
     mediaId,
     mediaUrl,
     mediaFileName = '',
+
     onSelect,
     onRemove,
-    type = MEDIA_TYPE.IMAGE,
+
     selectButtonLabel,
     removeButtonLabel,
+
+    hasFocalPoint = true,
+    focalPointLabel = 'Focal Point',
+    focalPoint = { x: 0.5, y: 0.5 },
+    onFocalPointChange,
+
     ...other
 }) => {
     if (type === MEDIA_TYPE.IMAGE) {
         return (
-            <BaseControl label={label || 'Image'}>
-                <MediaUploadCheck>
-                    <MediaUpload
-                        onSelect={onSelect}
-                        allowedTypes={['image', 'image/svg+xml']}
-                        accept="image/*"
-                        value={mediaId}
-                        render={({ open }) => (
-                            <ImageRenderer
-                                imageId={mediaId}
-                                imageUrl={mediaUrl}
-                                onImageClick={open}
-                                onSelectClick={open}
-                                onRemoveClick={onRemove}
-                                selectButtonLabel={selectButtonLabel || 'Select Image'}
-                                removeButtonLabel={removeButtonLabel || 'Remove Image'}
+            <>
+                <BaseControl label={label || 'Image'}>
+                    <MediaUploadCheck>
+                        <MediaUpload
+                            onSelect={onSelect}
+                            allowedTypes={['image', 'image/svg+xml']}
+                            accept="image/*"
+                            value={mediaId}
+                            render={({ open }) => (
+                                <ImageRenderer
+                                    imageId={mediaId}
+                                    imageUrl={mediaUrl}
+                                    onImageClick={open}
+                                    onSelectClick={open}
+                                    onRemoveClick={onRemove}
+                                    selectButtonLabel={selectButtonLabel || 'Select Image'}
+                                    removeButtonLabel={removeButtonLabel || 'Remove Image'}
+                                />
+                            )}
+                            {...other}
+                        />
+                    </MediaUploadCheck>
+                </BaseControl>
+
+                {
+                    hasFocalPoint && mediaId && mediaUrl && (
+                        <BaseControl label={focalPointLabel}>
+                            <FocalPointPicker
+                                __nextHasNoMarginBottom
+                                url={mediaUrl}
+                                value={focalPoint}
+                                onDragStart={onFocalPointChange}
+                                onDrag={onFocalPointChange}
+                                onChange={onFocalPointChange}
                             />
-                        )}
-                        {...other}
-                    />
-                </MediaUploadCheck>
-            </BaseControl>
+                        </BaseControl>
+                    )
+                }
+            </>
         );
     } else if (type === MEDIA_TYPE.VIDEO) {
         return (
