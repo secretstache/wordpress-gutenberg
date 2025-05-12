@@ -13,4 +13,4 @@ export { MediaTypeControl } from './MediaTypeControl.js';
 export { InsertBlockToolbar } from './InsertBlockToolbar.js';
 export { PreviewControl } from './PreviewControl.js';
 export { EmptyBlockAppender } from './EmptyBlockAppender.js';
-export { MediaFocalPointControl } from './MediaFocalPointControl.js';
+export { MediaWithFocalPointControl } from './MediaWithFocalPointControl.js';

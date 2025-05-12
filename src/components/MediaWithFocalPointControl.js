@@ -1,6 +1,8 @@
 import { BaseControl, FocalPointPicker } from '@wordpress/components';
 import { useCallback, memo } from '@wordpress/element';
-import { MediaControl } from '@secretstache/wordpress-gutenberg';
+
+import { MediaControl } from './MediaControl.js';
+import { MEDIA_TYPE } from '../utils/index.js';
 
 /**
  * Media control with focal point functionality
@@ -8,42 +10,35 @@ import { MediaControl } from '@secretstache/wordpress-gutenberg';
  * @param {Object} props - Component props
  * @returns {JSX.Element} Component JSX
  */
-export const MediaFocalPointControl = memo(({
+export const MediaWithFocalPointControl = memo(({
     attributes,
     setAttributes,
     mediaAttributeName = 'media',
     focalPointAttributeName = 'focalPoint',
     mediaLabel = 'Image',
     focalPointLabel = 'Focal Point',
-    mediaControlProps = {}
+    mediaControlProps = {},
 }) => {
     const media = attributes[mediaAttributeName];
     const focalPoint = attributes[focalPointAttributeName] || { x: 0.5, y: 0.5 };
 
-    // Handle focal point changes directly
-    const handleFocalPointChange = useCallback((newFocalPoint) => {
+    const onFocalPointChange = useCallback((newFocalPoint) => {
         setAttributes({ [focalPointAttributeName]: newFocalPoint });
     }, [ focalPointAttributeName ]);
 
-    // Reset focal point to center
-    const resetFocalPoint = useCallback(() => {
-        setAttributes({ [focalPointAttributeName]: { x: 0.5, y: 0.5 } });
-    }, [ focalPointAttributeName ]);
-
-    // Handle media selection
-    const handleMediaSelect = useCallback((newMedia) => {
+    const onMediaSelect = useCallback((newMedia) => {
         setAttributes({
             [mediaAttributeName]: {
                 id: newMedia.id,
                 url: newMedia.url,
                 alt: newMedia.alt || '',
-            }
-        });
-        resetFocalPoint();
-    }, [ mediaAttributeName, resetFocalPoint ]);
+            },
 
-    // Handle media removal
-    const handleMediaRemove = useCallback(() => {
+            [focalPointAttributeName]: { x: 0.5, y: 0.5 }
+        });
+    }, [ mediaAttributeName ]);
+
+    const onMediaRemove = useCallback(() => {
         setAttributes({
             [mediaAttributeName]: {
                 id: null,
@@ -57,10 +52,11 @@ export const MediaFocalPointControl = memo(({
         <>
             <BaseControl label={mediaLabel}>
                 <MediaControl
+                    type={MEDIA_TYPE.IMAGE}
                     mediaId={media?.id}
                     mediaUrl={media?.url}
-                    onSelect={handleMediaSelect}
-                    onRemove={handleMediaRemove}
+                    onSelect={onMediaSelect}
+                    onRemove={onMediaRemove}
                     {...mediaControlProps}
                 />
             </BaseControl>
@@ -71,9 +67,9 @@ export const MediaFocalPointControl = memo(({
                         __nextHasNoMarginBottom
                         url={media.url}
                         value={focalPoint}
-                        onDragStart={handleFocalPointChange}
-                        onDrag={handleFocalPointChange}
-                        onChange={handleFocalPointChange}
+                        onDragStart={onFocalPointChange}
+                        onDrag={onFocalPointChange}
+                        onChange={onFocalPointChange}
                     />
                 </BaseControl>
             )}
