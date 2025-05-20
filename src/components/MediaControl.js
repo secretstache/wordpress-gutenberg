@@ -123,7 +123,7 @@ export const MediaControl = ({
     selectButtonLabel,
     removeButtonLabel,
 
-    hasFocalPoint = true,
+    hasFocalPoint = false,
     focalPointLabel = 'Focal Point',
     focalPoint = { x: 0.5, y: 0.5 },
     onFocalPointChange,
