@@ -1,6 +1,6 @@
 {
   "name": "@secretstache/wordpress-gutenberg",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "",
   "author": "Secret Stache",
   "license": "GPL-2.0-or-later",
@@ -13,13 +13,14 @@
   },
   "main": "build/index.js",
   "module": "build/index.js",
+  "exports": {
+    ".": "./build/index.js",
+    "./build/styles.css": "./build/styles.css"
+  },
   "files": [
     "build",
     "src"
   ],
-  "exports": {
-    ".": "./build/index.js"
-  },
   "type": "module",
   "scripts": {
     "build": "rollup -c",
