@@ -20,6 +20,11 @@ export const useParentBlock = (
             return null;
         }
 
+        // Return the selected block if it already matches the target type
+        if (currentBlock?.name === parentBlockName) {
+            return currentBlock;
+        }
+
         // Get the list of parent blocks for the current block, from down to top
         const parentBlocks = getBlockParents(currentBlock.clientId, true);
 
@@ -27,11 +32,6 @@ export const useParentBlock = (
         // of the current(selected) block, i.e. check if it's in the scope of searching
         if (!parentBlocks.includes(blockClientIdToLimitSearch)) {
             return null;
-        }
-
-        // Return the selected block if it already matches the target type
-        if (currentBlock?.name === parentBlockName) {
-            return currentBlock;
         }
 
         if (parentBlocks?.length) {
