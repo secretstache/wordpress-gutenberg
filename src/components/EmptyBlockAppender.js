@@ -1,14 +1,17 @@
 import { InnerBlocks } from '@wordpress/block-editor';
+import classNames from 'classnames';
 
 export const EmptyBlockAppender = (props) => {
     const {
         showIcon = true,
+        showAppender = true,
         title = 'This block is empty',
         text = 'Use the "+" button below to add content blocks',
+        className,
     } = props;
 
     return (
-        <div className="empty-block-appender">
+        <div className={classNames('empty-block-appender', className)}>
             <div className="empty-block-appender__content">
                 {
                     showIcon && (
@@ -22,9 +25,13 @@ export const EmptyBlockAppender = (props) => {
                 <p className="empty-block-appender__text">{text}</p>
             </div>
 
-            <div className="empty-block-appender__button">
-                <InnerBlocks.ButtonBlockAppender />
-            </div>
+            {
+                showAppender && (
+                    <div className="empty-block-appender__button">
+                        <InnerBlocks.ButtonBlockAppender />
+                    </div>
+                )
+            }
         </div>
     );
 };
