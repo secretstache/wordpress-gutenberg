@@ -1,4 +1,4 @@
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useLayoutEffect, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
@@ -50,11 +50,39 @@ export const useTabs = (tabsClientId, tabItemName) => {
 
     const parentBlock = useParentBlock(tabItemName, tabsClientId);
 
+    /**
+     * Sets the active tab when focus/selection is inside any inner block of a tab item.
+     * For example, if the user selects text inside a tab, that tab should become active.
+     */
     useLayoutEffect(() => {
         if (parentBlock) {
             setActiveItemId(parentBlock.clientId);
         }
     }, [ parentBlock ]);
+
+    /**
+     * Sets the active tab when the tab-item block itself is selected in the editor sidebar.
+     * Ensures the selected tab-item belongs directly to this Tabs block (avoids conflicts if there are multiple Tabs on the page).
+     */
+    useLayoutEffect(() => {
+        // Early return if there is no selected block, or if the selected block is not a tab-item.
+        const isTabItemBlockSelected = selectedBlock && selectedBlock.name === tabItemName;
+
+        if (!isTabItemBlockSelected) {
+            return;
+        }
+
+        // Get the parent block clientId for this selected tab-item block.
+        const selectedTabItemBlock = selectedBlock;
+        const tabItemParentId = select('core/block-editor').getBlockRootClientId(selectedTabItemBlock.clientId);
+
+        // Only activate the tab if it is a direct child of this Tabs instance.
+        const isDirectChildOfCurrentTabs = tabItemParentId === tabsClientId;
+
+        if (isDirectChildOfCurrentTabs) {
+            setActiveItemId(selectedTabItemBlock.clientId);
+        }
+    }, [ selectedBlock, tabItemName, tabsClientId ]);
 
     const createTab = (blockName, attributes = {}, position = tabsCount) => {
         const newTab = createBlock(blockName, attributes);

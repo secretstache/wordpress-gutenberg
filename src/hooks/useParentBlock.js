@@ -20,8 +20,7 @@ export const useParentBlock = (
             return null;
         }
 
-        // Return the selected block if it already matches the target type
-        if (currentBlock?.name === parentBlockName) {
+        if (currentBlock.clientId === blockClientIdToLimitSearch && currentBlock.name === parentBlockName) {
             return currentBlock;
         }
 
