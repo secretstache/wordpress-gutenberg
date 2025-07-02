@@ -11,18 +11,33 @@ import { getBlockType, registerBlockType, unregisterBlockType } from '@wordpress
  * @param {string} inputValue - Search term to filter posts
  * @param {string} postType - WordPress post type to query
  * @param {Function|null} [mapper=null] - Optional function to transform API response items
+ * @param {Object} [extraParams={}] - Additional query parameters
  * @returns {Promise<Array<{value: number, label: string}>>} Array of select options
  */
-export const loadSelectOptions = async (inputValue, postType, mapper = null) => {
+export const loadSelectOptions = async (inputValue, postType, mapper = null, extraParams = {}) => {
+     const defaultParams = {
+        per_page: -1,
+        status: 'publish',
+        orderby: 'title',
+        order: 'asc'
+    };
+
+    const queryParams = { ...defaultParams, ...extraParams };
+
+    if (inputValue && inputValue.trim()) {
+        queryParams.search = inputValue;
+    }
+
+    const queryString = new URLSearchParams(queryParams).toString();
+
     const response = await apiFetch({
-        path: `/wp/v2/${postType}?search=${encodeURIComponent(inputValue)}`,
+        path: `/wp/v2/${postType}?${queryString}`,
     });
 
     if (mapper) {
         return response?.map(mapper);
     } else {
         return response?.map((post) => {
-            // Create a temporary DOM element to decode HTML entities
             const tempElement = document.createElement('div');
             tempElement.innerHTML = post?.title?.rendered;
 
