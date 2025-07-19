@@ -1,4 +1,4 @@
-import { useEffect, useRef } from '@wordpress/element';
+import { useCallback, useEffect, useMemo, useRef } from '@wordpress/element';
 
 export const useAccordionItem = ({
     itemId,
@@ -7,26 +7,26 @@ export const useAccordionItem = ({
     contentSelector,
     heightObserverDeps = []
 }) => {
-    const isActive = itemId === activeItemId;
+    const isActive = useMemo(() => itemId === activeItemId, [ itemId, activeItemId ]);
     const blockRef = useRef(null);
 
-    const openContent = () => {
+    const openContent = useCallback(() => {
         const content = blockRef.current?.querySelector(contentSelector);
         if (content) {
             content.style.maxHeight = content.scrollHeight + 'px';
         }
-    };
+    }, [ contentSelector ]);
 
-    const closeContent = () => {
+    const closeContent = useCallback(() => {
         const content = blockRef.current?.querySelector(contentSelector);
         if (content) {
             content.style.maxHeight = 0;
         }
-    };
+    }, [ contentSelector ]);
 
-    const toggleItem = () => {
+    const toggleItem = useCallback(() => {
         setActiveItemId(isActive ? null : itemId);
-    };
+    }, [ isActive, setActiveItemId ]);
 
     useEffect(() => {
         if (isActive) {

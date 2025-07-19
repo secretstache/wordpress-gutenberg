@@ -1,8 +1,11 @@
 .empty-block-appender {
     --button-color: #192f5f;
-    --button-border: var(--button-color);
-    --button-hover-color: var(--wp-admin-theme-color);
-    --button-hover-border: var(--wp-admin-theme-color);
+    --button-color-hover: var(--wp-admin-theme-color);
+    --button-border: #192f5f;
+    --button-border-hover: var(--wp-admin-theme-color);
+    --button-background: transparent;
+    --button-background-hover: transparent;
+    --text-color: #192f5f;
     --tr: .3s;
 
     display: flex;
@@ -11,14 +14,27 @@
     justify-content: center;
     padding: 32px;
 
+    &--light {
+        --button-color: #fff;
+        --button-color-hover: #192f5f;
+        --button-border: #fff;
+        --button-border-hover: #fff;
+        --button-background: transparent;
+        --button-background-hover: #fff;
+        --text-color: #fff;
+    }
+
     &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
     }
 
     &__icon {
         width: 48px;
         height:48px;
-        color: var(--button-color);
+        color: var(--text-color);
         margin-bottom: 16px;
     }
 
@@ -26,14 +42,14 @@
         font-size: 32px;
         font-weight: 600;
         line-height: 110%;
-        color: var(--button-color);
+        color: var(--text-color);
         margin-bottom: 0.5rem;
     }
 
     &__text {
         font-size: 1rem;
         font-weight: 400;
-        color: var(--button-color);
+        color: var(--text-color);
         margin-bottom: 1.5rem;
     }
 
@@ -49,7 +65,7 @@
             border: 2px solid var(--button-border) !important;
             box-shadow: none;
             border-radius: 10px;
-            background: transparent !important;
+            background: var(--button-background) !important;
             padding: 12px 24px;
             min-height: 50px;
             min-width: 200px;
@@ -59,10 +75,11 @@
 
             &:hover,
             &:focus {
-                color: var(--button-hover-color);
-                border-color: var(--button-hover-border) !important;
+                color: var(--button-color-hover) !important;
+                border-color: var(--button-border-hover) !important;
                 outline: none !important;
                 box-shadow: none !important;
+                background: var(--button-background-hover) !important;
             }
 
             &::before,

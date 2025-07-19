@@ -7,11 +7,12 @@ export const EmptyBlockAppender = (props) => {
         showAppender = true,
         title = 'This block is empty',
         text = 'Use the "+" button below to add content blocks',
+        isLight = false,
         className,
     } = props;
 
     return (
-        <div className={classNames('empty-block-appender', className)}>
+        <div className={classNames('empty-block-appender', className, { 'empty-block-appender--light': isLight })}>
             <div className="empty-block-appender__content">
                 {
                     showIcon && (
