@@ -1,7 +1,7 @@
 import { useMemo } from '@wordpress/element';
 import { SelectControl } from '@wordpress/components';
 
-import { MediaControl } from './MediaControl.js';
+import { MediaControl } from './MediaControl.jsx';
 import { MEDIA_TYPE_LABEL, MEDIA_TYPE } from '../utils/index.js';
 
 export const MediaTypeControl = (props) => {
