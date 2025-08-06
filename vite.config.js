@@ -1,30 +1,52 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import pkg from './package.json' assert { type: 'json' };
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { viteExternalsPlugin } from 'vite-plugin-externals';
+import babel from '@rollup/plugin-babel';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    babel({
+      babelHelpers: 'runtime',
+      exclude: /node_modules/,
+      presets: [
+        '@babel/preset-env',
+        ['@babel/preset-react', { runtime: 'automatic' }],
+      ],
+      plugins: [
+        ['@babel/plugin-transform-runtime', { helpers: true, regenerator: true }],
+      ],
+      extensions: ['.js', '.jsx'],
+    }),
+    viteExternalsPlugin({
+      '@wordpress/api-fetch': ['wp', 'apiFetch'],
+      '@wordpress/block-editor': ['wp', 'blockEditor'],
+      '@wordpress/blocks': ['wp', 'blocks'],
+      '@wordpress/components': ['wp', 'components'],
+      '@wordpress/data': ['wp', 'data'],
+      '@wordpress/dom-ready': ['wp', 'domReady'],
+      '@wordpress/element': ['wp', 'element'],
+      '@wordpress/hooks': ['wp', 'hooks'],
+      '@wordpress/icons': ['wp', 'icons'],
+    }),
+  ],
   build: {
+    outDir: 'build',
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      entry: './src/index.js',
       formats: ['es'],
       fileName: 'index',
     },
-    outDir: 'build',
     sourcemap: true,
     rollupOptions: {
-      external: [
-        ...Object.keys(pkg.peerDependencies || {}),
-        /react\/jsx-runtime/
-      ],
+      external: ['react', 'react-dom'],
       output: {
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+        assetFileNames: assetInfo => {
+          if (assetInfo.name === 'style.css' || assetInfo.name === 'index.css') {
             return 'styles.css';
           }
           return assetInfo.name;
