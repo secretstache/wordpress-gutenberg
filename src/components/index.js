@@ -1,9 +1,9 @@
-export { ColorPaletteControl } from './ColorPaletteControl';
-export { IconPicker } from './IconPicker';
-export { ImageActions } from './ImageActions';
-export { LinkControl } from './LinkControl';
+export { ColorPaletteControl } from './ColorPaletteControl.jsx';
+export { IconPicker } from './IconPicker.jsx';
+export { ImageActions } from './ImageActions.jsx';
+export { LinkControl } from './LinkControl.jsx';
 export { ImageRenderer, VideoRenderer, AnimationRenderer, MediaControl } from './MediaControl.jsx';
-export { SortableSelect, SortableSelectAsync } from './SortableSelect';
+export { SortableSelect, SortableSelectAsync } from './SortableSelect.jsx';
 export { DataQueryControls } from './DataQueryControls.jsx';
 export { SpacingControl } from './SpacingControl.jsx';
 export { ResponsiveSpacingControl } from './ResponsiveSpacingControl.jsx';

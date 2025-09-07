@@ -16,7 +16,7 @@
 .editor-visual-editor {
     z-index: 1;
 
-    // Pattern editor
+    // Hide metaboxes in Pattern editor
     &.is-resizable {
         & + .edit-post-layout__metaboxes {
             display: none;

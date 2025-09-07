@@ -2,10 +2,10 @@ import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useLayoutEffect, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
-import { plus as plusIcon } from '@wordpress/icons';
 import { createBlock } from '@wordpress/blocks';
 
-import { useParentBlock } from './useParentBlock';
+import { plusIcon } from '../icons/index.jsx';
+import { useParentBlock } from './useParentBlock.js';
 
 export const useTabs = (tabsClientId, tabItemName) => {
     const { insertBlock } = useDispatch(blockEditorStore);
