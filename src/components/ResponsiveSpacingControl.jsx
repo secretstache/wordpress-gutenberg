@@ -1,7 +1,7 @@
 import { TabPanel } from '@wordpress/components';
 import { useCallback, useEffect, useState } from '@wordpress/element';
 
-import { SpacingControl } from './SpacingControl.js';
+import { SpacingControl } from './SpacingControl.jsx';
 
 const getTabName = (deviceType = 'Desktop') => {
     return deviceType === 'Desktop' ? 'desktop' : 'mobile';

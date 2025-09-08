@@ -1,7 +1,7 @@
 import { BaseControl, Button, FocalPointPicker, Icon as WPIcon } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { page as pageIcon } from '@wordpress/icons';
 
+import { pageIcon } from '../icons/index.jsx';
 import { MEDIA_TYPE } from '../utils/index.js';
 
 export const ImageRenderer = ({

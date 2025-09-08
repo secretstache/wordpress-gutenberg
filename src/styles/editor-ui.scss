@@ -1,0 +1,28 @@
+.editor-sidebar {
+    @import "link-control";
+    @import "animation-file-renderer";
+    @import "icon-picker";
+    @import "media-picker";
+    @import "sortable-select";
+    @import "responsive-spacing";
+    @import "image-wrapper";
+}
+
+.editor-visual-editor {
+    z-index: 1;
+
+    // Hide metaboxes in Pattern editor
+    &.is-resizable {
+        & + .edit-post-layout__metaboxes {
+            display: none;
+        }
+    }
+}
+
+.block-editor-block-types-list > [role=presentation] {
+    justify-content: center;
+}
+
+.block-editor-inserter__insertable-blocks-at-selection + .block-editor-inserter__all-blocks {
+    display: none;
+}

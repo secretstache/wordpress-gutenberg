@@ -1,6 +1,4 @@
-export * from './components';
-export * from './hooks';
+export * from './components/index.js';
+export * from './hooks/index.js';
 
-export * from './utils';
-
-import './styles/styles.scss';
+export * from './utils/index.js';

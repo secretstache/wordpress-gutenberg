@@ -1,7 +1,7 @@
 import { BaseControl, FocalPointPicker } from '@wordpress/components';
 import { useCallback, memo } from '@wordpress/element';
 
-import { MediaControl } from './MediaControl.js';
+import { MediaControl } from './MediaControl.jsx';
 import { MEDIA_TYPE } from '../utils/index.js';
 
 /**

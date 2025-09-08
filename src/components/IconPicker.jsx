@@ -4,7 +4,8 @@ import {
     MediaUploadCheck,
 } from '@wordpress/block-editor';
 import { Button, Icon } from '@wordpress/components';
-import { edit as editIcon, trash as trashIcon } from '@wordpress/icons';
+
+import { editIcon, trashIcon } from '../icons/index.jsx';
 
 export const IconPicker = ({ imageId, imageUrl, imageAlt, svgCode, onSelect, onRemove }) => {
     const hasImage = imageId && imageUrl;

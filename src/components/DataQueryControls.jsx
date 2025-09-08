@@ -9,7 +9,7 @@ import { useSelect } from '@wordpress/data';
 import { arrayMove } from 'react-sortable-hoc';
 import Select from 'react-select';
 
-import { SortableSelectAsync } from './SortableSelect.js';
+import { SortableSelectAsync } from './SortableSelect.jsx';
 import { decodeHtmlEntities, loadSelectOptions } from '../utils/index.js';
 
 const DataQueryContext = createContext({});
