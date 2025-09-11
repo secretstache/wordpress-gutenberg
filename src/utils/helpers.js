@@ -217,7 +217,7 @@ export const getSpacingClasses = (
  * @param {string} namespace - Filter namespace to search for
  * @returns {Array<{filterName: string, namespace: string}>} Array of matching filters
  */
-const getFiltersByNamespace = (namespace) => {
+export const getFiltersByNamespace = (namespace) => {
     const list = [];
 
     Object.entries(filters).forEach(([filterName, filterData]) => {
@@ -238,7 +238,7 @@ const getFiltersByNamespace = (namespace) => {
  * @param {string} blockName - Name of the block to unregister
  * @param {string} postType - Post type to check against
  */
-const unsetBlockForPostType = (blockName, postType) => {
+export const unsetBlockForPostType = (blockName, postType) => {
     const unsubscribe = subscribe(
         () => {
             const currentPostType = select('core/editor').getCurrentPostType();
