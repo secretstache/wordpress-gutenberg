@@ -1,5 +1,5 @@
 .bc-selected-media-wrapper {
-    max-width: 200px;
+    max-width: 100%;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.3);
 }
@@ -10,6 +10,10 @@
 
     &--image {
         max-height: 300px;
+    }
+
+    &--video {
+        min-height: 130px;
     }
 }
 
