@@ -270,42 +270,6 @@ export const unsetBlockForPostType = (blockName, postType) => {
 };
 
 /**
- * Register a block type for a specific post type when editor loads.
- * @param {string} blockName - Name of the block to unregister
- * @param {string} postType - Post type to check against
- */
-export const setBlockForPostType = (blockName, postType) => {
-    const unsubscribe = subscribe(
-        () => {
-            const currentPostType = select('core/editor').getCurrentPostType();
-            if (currentPostType && currentPostType !== postType && getBlockType(blockName)) {
-                unregisterBlockType(blockName);
-                unsubscribe();
-            }
-        },
-        'core/editor',
-    );
-};
-
-/**
- * Unregisters a block type for a specific post type when editor loads.
- * @param {string} blockName - Name of the block to unregister
- * @param {string} postType - Post type to check against
- */
-export const unsetBlockForPostType = (blockName, postType) => {
-    const unsubscribe = subscribe(
-        () => {
-            const currentPostType = select('core/editor').getCurrentPostType();
-            if (currentPostType && currentPostType === postType && getBlockType(blockName)) {
-                unregisterBlockType(blockName);
-                unsubscribe();
-            }
-        },
-        'core/editor'
-    );
-};
-
-/**
  * Update the API version of a specific block.
  *
  * @param {string} blockName - The name of the block to update (e.g., 'gravityforms/form').
