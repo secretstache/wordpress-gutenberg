@@ -234,7 +234,25 @@ export const getFiltersByNamespace = (namespace) => {
 };
 
 /**
- * Unregisters a block type for a specific post type when editor loads.
+ * Allow a block for a specific post type
+ * @param {string} blockName - Name of the block to unregister
+ * @param {string} postType - Post type to check against
+ */
+export const setBlockForPostType = (blockName, postType) => {
+    const unsubscribe = subscribe(
+        () => {
+            const currentPostType = select('core/editor').getCurrentPostType();
+            if (currentPostType && currentPostType !== postType && getBlockType(blockName)) {
+                unregisterBlockType(blockName);
+                unsubscribe();
+            }
+        },
+        'core/editor',
+    );
+};
+
+/**
+ * Disallow a block for a specific post type
  * @param {string} blockName - Name of the block to unregister
  * @param {string} postType - Post type to check against
  */
@@ -242,7 +260,7 @@ export const unsetBlockForPostType = (blockName, postType) => {
     const unsubscribe = subscribe(
         () => {
             const currentPostType = select('core/editor').getCurrentPostType();
-            if (currentPostType === postType && getBlockType(blockName)) {
+            if (currentPostType && currentPostType === postType && getBlockType(blockName)) {
                 unregisterBlockType(blockName);
                 unsubscribe();
             }
