@@ -190,26 +190,36 @@ export const decodeHtmlEntities = (text) => {
  * @param {Object} spacing - The spacing object containing margin and padding values.
  * @param desktopPrefix - Prefix for desktop classes
  * @param mobilePrefix - Prefix for mobile classes
+ * @param valuePrefix - Prefix for value
  * @returns {string} - A string of class names for the specified spacing.
  */
 export const getSpacingClasses = (
     spacing,
-    desktopPrefix = 'md:',
-    mobilePrefix = '',
+    {
+        desktopPrefix = 'md:',
+        mobilePrefix = '',
+        valuePrefix = '',
+    } = {}
 ) => {
-    return classNames({
-        [`${desktopPrefix}mt-${spacing?.desktop?.margin?.top}`]: spacing?.desktop?.margin?.top !== -1,
-        [`${desktopPrefix}mb-${spacing?.desktop?.margin?.bottom}`]: spacing?.desktop?.margin?.bottom !== -1,
+    const SKIP = -1;
 
-        [`${desktopPrefix}pt-${spacing?.desktop?.padding?.top}`]: spacing?.desktop?.padding?.top !== -1,
-        [`${desktopPrefix}pb-${spacing?.desktop?.padding?.bottom}`]: spacing?.desktop?.padding?.bottom !== -1,
+    const buildClass = (prefix, property, valuePrefix, value) => {
+        if (value === SKIP) return null;
 
-        [`${mobilePrefix}mt-${spacing?.mobile?.margin?.top}`]: spacing?.mobile?.margin?.top !== -1,
-        [`${mobilePrefix}mb-${spacing?.mobile?.margin?.bottom}`]: spacing?.mobile?.margin?.bottom !== -1,
+        return `${prefix}${property}-${valuePrefix}${value}`;
+    };
 
-        [`${mobilePrefix}pt-${spacing?.mobile?.padding?.top}`]: spacing?.mobile?.padding?.top !== -1,
-        [`${mobilePrefix}pb-${spacing?.mobile?.padding?.bottom}`]: spacing?.mobile?.padding?.bottom !== -1,
-    });
+    return classNames(
+        buildClass(desktopPrefix, 'mt', valuePrefix, spacing?.desktop?.margin?.top),
+        buildClass(desktopPrefix, 'mb', valuePrefix, spacing?.desktop?.margin?.bottom),
+        buildClass(desktopPrefix, 'pt', valuePrefix, spacing?.desktop?.padding?.top),
+        buildClass(desktopPrefix, 'pb', valuePrefix, spacing?.desktop?.padding?.bottom),
+
+        buildClass(mobilePrefix, 'mt', valuePrefix, spacing?.mobile?.margin?.top),
+        buildClass(mobilePrefix, 'mb', valuePrefix, spacing?.mobile?.margin?.bottom),
+        buildClass(mobilePrefix, 'pt', valuePrefix, spacing?.mobile?.padding?.top),
+        buildClass(mobilePrefix, 'pb', valuePrefix, spacing?.mobile?.padding?.bottom),
+    );
 };
 
 /**
