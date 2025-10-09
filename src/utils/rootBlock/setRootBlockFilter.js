@@ -14,8 +14,9 @@ export const setRootBlockFilter = {
                 const isRootBlock = name === rootBlockName;
                 const isBaseBlock = name === 'core/block';
                 const hasAncestor = !!settings?.ancestor;
+                const hasParent = !!settings?.parent;
 
-                if (!isRootBlock && !isBaseBlock && !hasAncestor) {
+                if (!isRootBlock && !isBaseBlock && !hasAncestor && !hasParent) {
                     settings.ancestor = [rootBlockName];
                 }
 
