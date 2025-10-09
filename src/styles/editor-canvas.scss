@@ -1,7 +1,7 @@
 .editor-styles-wrapper {
     // Hide default appender clickable area
     &::after {
-        display: none;
+        display: none !important;
     }
 
     .editor-visual-editor__post-title-wrapper {
