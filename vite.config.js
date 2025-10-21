@@ -14,16 +14,12 @@ export default defineConfig({
             cssFileName: 'styles',
         },
         sourcemap: true,
-        rollupOptions: {
-            external: [
-                'react',
-                'react-dom',
-            ],
-        },
     },
     plugins: [
         react(),
         viteExternalsPlugin({
+            'react': 'React',
+            'react-dom': 'ReactDOM',
             '@wordpress/api-fetch': ['wp', 'apiFetch'],
             '@wordpress/block-editor': ['wp', 'blockEditor'],
             '@wordpress/blocks': ['wp', 'blocks'],
