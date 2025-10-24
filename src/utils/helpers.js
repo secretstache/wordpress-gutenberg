@@ -1,53 +1,78 @@
 import { filters } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
-import slugify from 'slugify';
-import classNames from 'classnames';
 import { select, subscribe } from '@wordpress/data';
 import { getBlockType, registerBlockType, unregisterBlockType } from '@wordpress/blocks';
+import slugify from 'slugify';
+import classNames from 'classnames';
+import debounce from 'debounce-promise';
+
+let controller;
 
 /**
- * Loads select options by fetching posts from WordPress REST API.
- * @async
- * @param {string} inputValue - Search term to filter posts
- * @param {string} postType - WordPress post type to query
- * @param {Function|null} [mapper=null] - Optional function to transform API response items
- * @param {Object} [extraParams={}] - Additional query parameters
- * @returns {Promise<Array<{value: number, label: string}>>} Array of select options
+ * Performs the raw REST API request for loading select options.
+ * Automatically aborts any previous pending request.
+ *
+ * @param {string} inputValue - Search term used to filter posts.
+ * @param {string} postType - WordPress post type slug (e.g., "post", "page", custom type).
+ * @param {Function|null} [mapper=null] - Optional callback to transform each API result.
+ * @param {Object} [extraParams={}] - Additional query parameters for the REST API call.
+ * @returns {Promise<Array<{ value: number, label: string }>>} Promise resolving to an array of select options.
  */
-export const loadSelectOptions = async (inputValue, postType, mapper = null, extraParams = {}) => {
-     const defaultParams = {
+export const loadSelectOptionsRaw = async (inputValue, postType, mapper = null, extraParams = {}) => {
+    // Cancel previous request if still active
+    if (controller) controller.abort();
+    controller = new AbortController();
+
+    const defaultParams = {
         per_page: -1,
         status: 'publish',
         orderby: 'title',
-        order: 'asc'
+        order: 'asc',
     };
 
     const queryParams = { ...defaultParams, ...extraParams };
-
-    if (inputValue && inputValue.trim()) {
-        queryParams.search = inputValue;
-    }
+    const q = inputValue?.trim();
+    if (q) queryParams.search = q;
 
     const queryString = new URLSearchParams(queryParams).toString();
 
-    const response = await apiFetch({
-        path: `/wp/v2/${postType}?${queryString}`,
-    });
-
-    if (mapper) {
-        return response?.map(mapper);
-    } else {
-        return response?.map((post) => {
-            const tempElement = document.createElement('div');
-            tempElement.innerHTML = post?.title?.rendered;
-
-            return {
-                value: post.id,
-                label: tempElement.textContent || tempElement.innerText || '',
-            };
+    try {
+        const response = await apiFetch({
+            path: `/wp/v2/${postType}?${queryString}`,
+            signal: controller.signal,
         });
+
+        const list = mapper
+            ? response?.map(mapper)
+            : response?.map((post) => {
+                const temp = document.createElement('div');
+                temp.innerHTML = post?.title?.rendered;
+                return {
+                    value: post.id,
+                    label: temp.textContent || temp.innerText || '',
+                };
+            });
+
+        return Array.isArray(list) ? list : [];
+    } catch (err) {
+        if (err?.name === 'AbortError') return [];
+        throw err;
     }
 };
+
+/**
+ * Debounced, abort-safe function to fetch WordPress posts for select options.
+ * Combines:
+ *  - AbortController: cancels previous in-flight requests.
+ *  - debounce-promise: delays execution and resolves to the final async result.
+ *
+ * @example
+ * const options = await loadSelectOptions('John', 'team');
+ */
+export const loadSelectOptions = debounce(loadSelectOptionsRaw, 300, {
+    leading: false,
+    trailing: true,
+});
 
 /**
  * Converts a string to a URL-friendly slug.
