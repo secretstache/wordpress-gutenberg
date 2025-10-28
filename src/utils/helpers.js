@@ -1,10 +1,11 @@
 import { filters } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
-import { select, subscribe } from '@wordpress/data';
+import { select, subscribe, useSelect } from '@wordpress/data';
 import { getBlockType, registerBlockType, unregisterBlockType } from '@wordpress/blocks';
 import slugify from 'slugify';
 import classNames from 'classnames';
 import debounce from 'debounce-promise';
+import { useMemo } from '@wordpress/element';
 
 let controller;
 
@@ -341,3 +342,40 @@ export const getFocalPointStyle = (focalPoint) => {
     return { objectPosition: `${x}% ${y}%` };
 };
 
+/**
+ * Default options for Select via core-data cache
+ *
+ * @param {string} postType
+ * @param {(post:any)=>{value:number,label:string}} [mapper]
+ * @param {Object} [extraParams={}]
+ *
+ * @returns {{ options: Array<{value:number,label:string}>, isResolving: boolean }}
+ */
+export const useDefaultSelectOptions = (postType, mapper = null, extraParams = {}) => {
+    const query = useMemo(() => ({
+        per_page: 100,
+        status: 'publish',
+        order: 'asc',
+        orderby: 'title',
+        _fields: 'id,title,acf',
+        ...extraParams,
+    }), [ postType, JSON.stringify(extraParams) ]);
+
+    return useSelect((select) => {
+        const core = select('core');
+        const posts = core.getEntityRecords('postType', postType, query) || [];
+        const isResolving = core.isResolving('getEntityRecords', [ 'postType', postType, query ]);
+
+        const options = mapper
+            ? posts.map(mapper)
+            : posts.map((post) => ({
+                value: post.id,
+                label: decodeHtmlEntities(post?.title?.rendered || ''),
+            }));
+
+        return {
+            options,
+            isResolving,
+        };
+    }, [ postType, JSON.stringify(query) ]);
+};

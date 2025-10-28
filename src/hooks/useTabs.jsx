@@ -12,6 +12,7 @@ export const useTabs = (tabsClientId, tabItemName) => {
 
     const {
         tabs,
+        tabsAttributes,
         tabsCount,
         tabsOrder,
 
@@ -30,6 +31,7 @@ export const useTabs = (tabsClientId, tabItemName) => {
 
             return {
                 tabs: getBlock(tabsClientId)?.innerBlocks || [],
+                tabsAttributes: getBlock(tabsClientId)?.innerBlocks?.map((block) => block?.attributes) || [],
                 tabsCount: getBlockCount(tabsClientId),
                 tabsOrder: getBlockOrder(tabsClientId),
 
@@ -108,6 +110,7 @@ export const useTabs = (tabsClientId, tabItemName) => {
 
     return {
         tabs,
+        tabsAttributes,
         tabsCount,
         tabsOrder,
 
