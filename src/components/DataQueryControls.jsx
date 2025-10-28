@@ -10,7 +10,7 @@ import { arrayMove } from 'react-sortable-hoc';
 import Select from 'react-select';
 
 import { SortableSelectAsync } from './SortableSelect.jsx';
-import { decodeHtmlEntities, loadSelectOptions } from '../utils/index.js';
+import { decodeHtmlEntities, loadSelectOptions, useDefaultSelectOptions } from '../utils/index.js';
 
 const DataQueryContext = createContext({});
 
@@ -192,11 +192,7 @@ const CuratedPosts = memo(({
         return await loadSelectOptions(inputValue, postType);
     }, []);
 
-    const [ defaultPostsOptions, setDefaultPostsOptions ] = useState([]);
-
-    useEffect(() => {
-        loadSelectOptions('', postType).then(setDefaultPostsOptions);
-    }, []);
+    const { options: defaultPostsOptions } = useDefaultSelectOptions(postType);
 
     const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
         const newCuratedPosts = arrayMove(curatedPosts, oldIndex, newIndex);
