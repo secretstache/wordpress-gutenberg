@@ -3,7 +3,7 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - var(--content-padding) * 2);
+    width: calc(100% - 60px);
 
     &::after {
         content: attr(data-tooltip);
