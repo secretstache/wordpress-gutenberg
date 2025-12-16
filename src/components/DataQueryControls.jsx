@@ -59,10 +59,11 @@ const QueryType = memo(({
     label = 'Query',
     options = [],
     onChange,
-    disabled = false,
+    isDisabled = false,
     help = '',
     attributeName = 'queryType',
     render = null,
+    hasDivider = true,
 }) => {
     const { attributes, updateAttribute } = useDataQueryContext();
     const queryType = attributes[attributeName];
@@ -80,7 +81,7 @@ const QueryType = memo(({
             value: queryType,
             onChange: handleChange,
             options,
-            disabled,
+            isDisabled,
             attributeName,
         });
     }
@@ -92,11 +93,11 @@ const QueryType = memo(({
                 selected={queryType}
                 options={options}
                 onChange={handleChange}
-                disabled={disabled}
+                disabled={isDisabled}
                 help={help}
             />
 
-            <Divider />
+            { hasDivider && ( <Divider /> ) }
         </>
     );
 });
@@ -109,9 +110,11 @@ const TaxonomySelect = memo(({
     attributeName = 'selectedCategories',
     taxonomy = 'categories',
     placeholder = 'Categories to show',
-    disabled = false,
+    isDisabled = false,
     render = null,
     customOptions = null,
+    hasDivider = true,
+    isMulti = true,
 }) => {
     const { attributes, updateAttribute } = useDataQueryContext();
 
@@ -151,25 +154,26 @@ const TaxonomySelect = memo(({
             onChange,
             options: selectOptions,
             placeholder,
-            disabled,
+            isDisabled,
             attributeName,
+            isMulti,
         });
     }
 
     return (
         <>
             <Select
-                isMulti
+                isMulti={isMulti}
                 options={selectOptions}
                 value={selectedOptions}
                 onChange={onChange}
                 className="react-select-container"
                 classNamePrefix="react-select"
                 placeholder={placeholder}
-                isDisabled={disabled}
+                isDisabled={isDisabled}
             />
 
-            <Divider />
+            { hasDivider && ( <Divider /> ) }
         </>
     );
 });
@@ -182,8 +186,10 @@ const CuratedPosts = memo(({
     attributeName = 'curatedPosts',
     postType = 'post',
     placeholder = 'Posts to show',
-    disabled = false,
+    isDisabled = false,
     render = null,
+    hasDivider = true,
+    isMulti = true,
 }) => {
     const { attributes, updateAttribute } = useDataQueryContext();
     const curatedPosts = attributes[attributeName] || [];
@@ -213,8 +219,9 @@ const CuratedPosts = memo(({
             loadOptions: loadPostsOptions,
             defaultOptions: defaultPostsOptions,
             placeholder,
-            disabled,
+            isDisabled,
             attributeName,
+            isMulti,
         });
     }
 
@@ -227,9 +234,11 @@ const CuratedPosts = memo(({
                 loadOptions={loadPostsOptions}
                 onChange={onChange}
                 placeholder={placeholder}
-                isDisabled={disabled}
+                isDisabled={isDisabled}
+                isMulti={isMulti}
             />
-            <Divider />
+
+            { hasDivider && ( <Divider /> ) }
         </>
     );
 });
@@ -246,6 +255,7 @@ const NumberOfPosts = memo(({
     help = 'The maximum number of posts to show (-1 for no limit)',
     disabled = false,
     render = null,
+    hasDivider = true,
 }) => {
     const { attributes, updateAttribute } = useDataQueryContext();
     const numberOfPosts = attributes[attributeName];
@@ -280,7 +290,7 @@ const NumberOfPosts = memo(({
                 disabled={disabled}
             />
 
-            <Divider />
+            { hasDivider && ( <Divider /> ) }
         </>
     );
 });
@@ -289,19 +299,20 @@ const NumberOfPosts = memo(({
  * OrderByControl component for controlling ordering
  */
 const OrderByControl = memo(({
-     condition = true,
-     orderByAttributeName = 'orderBy',
-     orderAttributeName = 'order',
-     disabled = false,
-     orderByOptions = [
-         { label: 'Date', value: 'date' },
-         { label: 'Title', value: 'title' },
-     ],
-     orderOptions = [
-         { label: 'Ascending', value: 'asc' },
-         { label: 'Descending', value: 'desc' },
-     ],
-     render = null,
+    condition = true,
+    orderByAttributeName = 'orderBy',
+    orderAttributeName = 'order',
+    disabled = false,
+    orderByOptions = [
+        { label: 'Date', value: 'date' },
+        { label: 'Title', value: 'title' },
+    ],
+    orderOptions = [
+        { label: 'Ascending', value: 'asc' },
+        { label: 'Descending', value: 'desc' },
+    ],
+    render = null,
+    hasDivider = true,
  }) => {
     const { attributes, updateAttribute } = useDataQueryContext();
     const orderBy = attributes[orderByAttributeName] || 'date';
@@ -349,7 +360,7 @@ const OrderByControl = memo(({
                 disabled={disabled}
             />
 
-            <Divider />
+            { hasDivider && ( <Divider /> ) }
         </>
     );
 });
