@@ -1,6 +1,6 @@
 import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { useLayoutEffect, useState } from '@wordpress/element';
+import { useCallback, useLayoutEffect, useMemo, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { createBlock } from '@wordpress/blocks';
 
@@ -26,7 +26,6 @@ export const useTabs = (tabsClientId, tabItemName) => {
                 getSelectedBlock,
                 getSelectedBlockClientId,
                 getBlockOrder,
-                getBlockRootClientId,
             } = select(blockEditorStore);
 
             return {
@@ -86,27 +85,27 @@ export const useTabs = (tabsClientId, tabItemName) => {
         }
     }, [ selectedBlock, tabItemName, tabsClientId ]);
 
-    const createTab = (blockName, attributes = {}, position = tabsCount) => {
+    const createTab = useCallback((blockName, attributes = {}, position = tabsCount) => {
         const newTab = createBlock(blockName, attributes);
         insertBlock(newTab, position, tabsClientId);
 
         return newTab;
-    };
+    }, [ tabsCount, tabsClientId, insertBlock ]);
 
-    const onTabAppenderClick = () => {
+    const onTabAppenderClick = useCallback(() => {
         const newItem = createTab(tabItemName);
         setActiveItemId(newItem.clientId);
-    };
+    }, [ tabItemName, createTab, setActiveItemId ]);
 
-    const TabAppender = ({ label = 'Add new tab', ...other }) => (
+    const TabAppender = useMemo(() => ({ label = 'Add new tab', ...other }) => (
         <Button
-            className="bc-add-new-child-btn"
-            icon={plusIcon}
             label={label}
+            icon={plusIcon}
+            className="bc-add-new-child-btn"
             onClick={onTabAppenderClick}
             {...other}
         />
-    );
+    ), [ onTabAppenderClick ]);
 
     return {
         tabs,
