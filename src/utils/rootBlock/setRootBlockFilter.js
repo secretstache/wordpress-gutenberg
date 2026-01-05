@@ -6,7 +6,7 @@ import { addFilter, removeFilter } from '@wordpress/hooks';
  * making them only insertable within the root block.
  */
 export const setRootBlockFilter = {
-    add(rootBlockName) {
+    add({ rootBlockName }) {
         addFilter(
             'blocks.registerBlockType',
             'ssm/set-root-block',
