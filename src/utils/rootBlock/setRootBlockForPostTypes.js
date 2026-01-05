@@ -34,7 +34,7 @@ export const setRootBlockForPostTypes = (
             if (postTypes.includes(currentPostType) && !isRootBlockEnabled) {
                 isRootBlockEnabled = true;
 
-                setRootBlockFilter.add(rootBlockName);
+                setRootBlockFilter.add({ rootBlockName });
                 unsetRootBlockFilter.remove();
 
                 if (filters?.length > 0) {
