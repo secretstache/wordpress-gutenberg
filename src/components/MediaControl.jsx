@@ -1,7 +1,7 @@
-import { BaseControl, Button, FocalPointPicker, Icon as WPIcon } from '@wordpress/components';
+import { BaseControl, Button, FocalPointPicker } from '@wordpress/components';
+import { Icon, page } from '@wordpress/icons';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
-import { pageIcon } from '../icons/index.jsx';
 import { MEDIA_TYPE } from '../utils/index.js';
 
 export const ImageRenderer = ({
@@ -90,7 +90,7 @@ export const AnimationRenderer = ({
     return animationFileId && animationFileUrl ? (
         <>
             <div className="bc-animation-block-json-file" onClick={onSelectClick}>
-                <WPIcon icon={pageIcon} size={36} />
+                <Icon icon={page} size={36} />
                 <span>{animationFileName}</span>
             </div>
             <Button

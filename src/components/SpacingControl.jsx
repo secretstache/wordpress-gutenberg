@@ -1,7 +1,6 @@
 import { RangeControl, Tooltip } from '@wordpress/components';
 import { useCallback } from '@wordpress/element';
-
-import { sidesBottomIcon, sidesTopIcon } from '../icons/index.jsx';
+import { sidesBottom, sidesTop } from '@wordpress/icons';
 
 const generateMarks = (min, max) => [
     { value: min, label: min === -1 ? 'Default' : min.toString() },
@@ -78,7 +77,7 @@ export const SpacingControl = ({
                         onChange={handleChange('margin', 'top')}
                         disabled={disabledMargin.top}
                         tooltip={marginTooltips.top}
-                        afterIcon={sidesTopIcon}
+                        afterIcon={sidesTop}
                         withInputField={false}
                     />
 
@@ -90,7 +89,7 @@ export const SpacingControl = ({
                         onChange={handleChange('margin', 'bottom')}
                         disabled={disabledMargin.bottom}
                         tooltip={marginTooltips.bottom}
-                        afterIcon={sidesBottomIcon}
+                        afterIcon={sidesBottom}
                         withInputField={false}
                     />
                 </>
@@ -106,7 +105,7 @@ export const SpacingControl = ({
                         onChange={handleChange('padding', 'top')}
                         disabled={disabledPadding.top}
                         tooltip={paddingTooltips.top}
-                        afterIcon={sidesTopIcon}
+                        afterIcon={sidesTop}
                         withInputField={false}
                     />
 
@@ -118,7 +117,7 @@ export const SpacingControl = ({
                         onChange={handleChange('padding', 'bottom')}
                         disabled={disabledPadding.bottom}
                         tooltip={paddingTooltips.bottom}
-                        afterIcon={sidesBottomIcon}
+                        afterIcon={sidesBottom}
                         withInputField={false}
                     />
                 </>

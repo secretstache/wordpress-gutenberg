@@ -3,8 +3,8 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useCallback, useLayoutEffect, useMemo, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { createBlock } from '@wordpress/blocks';
+import { plus } from '@wordpress/icons';
 
-import { plusIcon } from '../icons/index.jsx';
 import { useParentBlock } from './useParentBlock.js';
 
 export const useTabs = (tabsClientId, tabItemName) => {
@@ -100,7 +100,7 @@ export const useTabs = (tabsClientId, tabItemName) => {
     const TabAppender = useMemo(() => ({ label = 'Add new tab', ...other }) => (
         <Button
             label={label}
-            icon={plusIcon}
+            icon={plus}
             className="bc-add-new-child-btn"
             onClick={onTabAppenderClick}
             {...other}

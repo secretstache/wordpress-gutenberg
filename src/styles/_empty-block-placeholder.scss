@@ -1,4 +1,4 @@
-.empty-block-appender {
+.empty-block-placeholder {
     --button-color: #192f5f;
     --button-color-hover: var(--wp-admin-theme-color);
     --button-border: #192f5f;
@@ -22,6 +22,11 @@
         --button-background: transparent;
         --button-background-hover: #fff;
         --text-color: #fff;
+    }
+
+    &__buttons-wrapper {
+        display: flex;
+        gap: 16px;
     }
 
     &__content {

@@ -325,6 +325,22 @@ export function updateBlockApiVersion(blockName, apiVersion = 3) {
 }
 
 /**
+ * Updates the API version of all registered blocks with an API version less than 3.
+ *
+ * Retrieves the list of registered blocks from the `core/blocks` store, filters out blocks
+ * with an API version less than 3, and updates their API version to the specified value.
+ *
+ * @param {number} apiVersion - The target API version to update blocks to.
+ */
+export const updateAllBlocksApiVersion = (apiVersion) => {
+    select('core/blocks')
+        ?.getBlockTypes()
+        ?.filter((block) => block.apiVersion < 3)
+        ?.map((block) => block.name)
+        ?.forEach((blockName) => updateBlockApiVersion(blockName, apiVersion));
+};
+
+/**
  * Creates object-position style based on focal point coordinates
  *
  * @param {Object} focalPoint - Focal point coordinates { x, y }
@@ -378,4 +394,41 @@ export const useDefaultSelectOptions = (postType, mapper = null, extraParams = {
             isResolving,
         };
     }, [ postType, JSON.stringify(query) ]);
+};
+
+export const hideBlockForInlineInserter = (blockName) => {
+    const styleElementId = `ssm-hide-${blockName}-for-inline-inserter`;
+
+    // Construct the CSS rule
+    const cssRule = `[id*="-block-${blockName}"] { display: none !important; }`;
+
+    // Create a style element
+    const styleElement = document.createElement('style');
+    styleElement.id = styleElementId;
+
+    // Set the CSS rule as the content of the style element
+    styleElement.appendChild(document.createTextNode(cssRule));
+
+    // Append the style element to the document's head
+    document.head.appendChild(styleElement);
+
+    // cleanup function
+    return () => {
+        document.head.removeChild(styleElement);
+    }
+};
+
+export const subscribeForPostTypeChange = (callback) => {
+    let prevPostType = null;
+
+    return subscribe(() => {
+        const currentPostType = select('core/editor').getCurrentPostType();
+        const isPostTypeChanged = currentPostType && (currentPostType !== prevPostType);
+
+        if (isPostTypeChanged) {
+            callback(currentPostType, prevPostType);
+
+            prevPostType = currentPostType;
+        }
+    }, 'core/block-editor');
 };

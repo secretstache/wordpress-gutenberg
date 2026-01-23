@@ -28,6 +28,10 @@ export default defineConfig({
             '@wordpress/dom-ready': ['wp', 'domReady'],
             '@wordpress/element': ['wp', 'element'],
             '@wordpress/hooks': ['wp', 'hooks'],
+            // skip this package as it is not externalized in WP and should be bundled directly with the theme
+            // '@wordpress/icons': ['wp', 'icons'],
+            '@wordpress/plugins': ['wp', 'plugins'],
+            '@wordpress/compose': ['wp', 'compose'],
         }),
     ],
 });

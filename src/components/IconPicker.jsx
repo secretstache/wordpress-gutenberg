@@ -3,9 +3,8 @@ import {
     MediaUpload,
     MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { Button, Icon } from '@wordpress/components';
-
-import { editIcon, trashIcon } from '../icons/index.jsx';
+import { Button } from '@wordpress/components';
+import { Icon, pencil, trash } from '@wordpress/icons';
 
 export const IconPicker = ({ imageId, imageUrl, imageAlt, svgCode, onSelect, onRemove }) => {
     const hasImage = imageId && imageUrl;
@@ -38,7 +37,7 @@ export const IconPicker = ({ imageId, imageUrl, imageAlt, svgCode, onSelect, onR
                                     onClick={open}
                                 >
                                     <Icon
-                                        icon={editIcon}
+                                        icon={pencil}
                                         size={20}
                                         className="bc-image-wrapper__btn-icon"
                                     />
@@ -50,7 +49,7 @@ export const IconPicker = ({ imageId, imageUrl, imageAlt, svgCode, onSelect, onR
                                     onClick={onRemove}
                                 >
                                     <Icon
-                                        icon={trashIcon}
+                                        icon={trash}
                                         size={20}
                                         className="bc-image-wrapper__btn-icon"
                                     />

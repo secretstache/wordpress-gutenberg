@@ -19,19 +19,25 @@
         }
     }
 
-
     .block-editor-block-list__layout.is-root-container {
         @import "root-block-appender";
-        @import "empty-block-appender";
+        @import "root-pattern-appender";
+        @import "empty-block-placeholder";
+
         @import "new-child-btn";
         @import "image-wrapper";
 
         margin-bottom: 0;
         padding-bottom: 0;
 
-        &:has(.root-block-appender) {
+        &:has(.root-block-appender),
+        &:has(.root-pattern-appender) {
             margin-bottom: 3rem;
             padding-bottom: 200px;
+
+            & > .block-list-appender.wp-block {
+                display: none;
+            }
         }
 
         &.has-background {
