@@ -27,7 +27,7 @@ export const ImageRenderer = ({
             <Button
                 className="bc-remove-btn"
                 onClick={onRemoveClick}
-                isSecondary
+                variant="secondary"
                 isDestructive
             >
                 {removeButtonLabel}
@@ -61,7 +61,7 @@ export const VideoRenderer = ({
             <Button
                 className="bc-remove-btn"
                 onClick={onRemoveClick}
-                isSecondary
+                variant="secondary"
                 isDestructive
             >
                 {removeButtonLabel}
@@ -158,16 +158,15 @@ export const MediaControl = ({
 
                 {
                     hasFocalPoint && mediaId && mediaUrl && (
-                        <BaseControl label={focalPointLabel}>
-                            <FocalPointPicker
-                                __nextHasNoMarginBottom
-                                url={mediaUrl}
-                                value={focalPoint}
-                                onDragStart={onFocalPointChange}
-                                onDrag={onFocalPointChange}
-                                onChange={onFocalPointChange}
-                            />
-                        </BaseControl>
+                        <FocalPointPicker
+                            __nextHasNoMarginBottom
+                            label={focalPointLabel}
+                            url={mediaUrl}
+                            value={focalPoint}
+                            onDragStart={onFocalPointChange}
+                            onDrag={onFocalPointChange}
+                            onChange={onFocalPointChange}
+                        />
                     )
                 }
             </>

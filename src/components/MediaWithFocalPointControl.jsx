@@ -36,7 +36,7 @@ export const MediaWithFocalPointControl = memo(({
 
             [focalPointAttributeName]: { x: 0.5, y: 0.5 }
         });
-    }, [ mediaAttributeName ]);
+    }, [ mediaAttributeName, focalPointAttributeName ]);
 
     const onMediaRemove = useCallback(() => {
         setAttributes({
@@ -62,16 +62,15 @@ export const MediaWithFocalPointControl = memo(({
             </BaseControl>
 
             {media?.url && (
-                <BaseControl label={focalPointLabel}>
-                    <FocalPointPicker
-                        __nextHasNoMarginBottom
-                        url={media.url}
-                        value={focalPoint}
-                        onDragStart={onFocalPointChange}
-                        onDrag={onFocalPointChange}
-                        onChange={onFocalPointChange}
-                    />
-                </BaseControl>
+                <FocalPointPicker
+                    __nextHasNoMarginBottom
+                    label={focalPointLabel}
+                    url={media.url}
+                    value={focalPoint}
+                    onDragStart={onFocalPointChange}
+                    onDrag={onFocalPointChange}
+                    onChange={onFocalPointChange}
+                />
             )}
         </>
     );

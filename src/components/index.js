@@ -13,7 +13,6 @@ export * from './MediaTypeControl.jsx';
 export * from './InsertBlockToolbar.jsx';
 export * from './PreviewControl.jsx';
 export * from './MediaWithFocalPointControl.jsx';
-export * from './MediaWithFocalPointControl.jsx';
 export * from './EmptyBlockPlaceholder.jsx';
 export * from './PatternAppender.jsx';
 export * from './PatternsModal.jsx';
