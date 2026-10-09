@@ -3,6 +3,7 @@ import { dispatch } from '@wordpress/data';
 export * from './hide-root-block-for-other.js';
 export * from './inner-blocks-cleanup.jsx';
 export * from './root-block.js';
+export * from './root-block-default.js';
 export * from './block-categories.js';
 
 export const setPostTypeFilters = (filters, currentPostType, onSet) => {
